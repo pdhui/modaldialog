@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pdhui/modaldialog.git"
+    "url": "https://github.com/pdhui/modaldialog.git"
   },
   "publishConfig": {
     "registry": "http://172.17.132.227:8888/"
