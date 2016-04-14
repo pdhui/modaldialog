@@ -18,7 +18,8 @@
  
  -----首先 
 ```javascript 
-    var dialog = require('modaldialog')
+    require('@flyme/modaldialog/lib/main.css')'//加载css文件，然后在html页面可引用
+    var dialog = require('@flyme/modaldialog')
 ```
 每种类型的弹出框都有两种调用方式，直接传多个参数或者使用对象作为参数。
 

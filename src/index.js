@@ -313,6 +313,16 @@ var _ = {
       hideMask: function(){
         dialogMask.style.display = 'none';
       },
+      showLoading: function(){
+        if(!document.getElementById('loading-box')){
+          $('body').append('<div id="loading-box" class="dialog-mask"><div class="load-contain">' +
+            '<span class="load1"></span><span class="load2"></span></div></div>');
+        }
+        document.getElementById('loading-box').style.display = 'block';
+      },
+      hideLoading: function(){
+        document.getElementById('loading-box').style.display = 'none';
+      },
       initTouch: function(dialog){
         var dlgContent =  dialog.querySelector('.dialog-content'),
             section = dialog.getElementsByTagName('section')[0],
