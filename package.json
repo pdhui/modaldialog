@@ -1,0 +1,28 @@
+{
+  "name": "modaldialog",
+  "version": "1.0.0-beta",
+  "description": "",
+  "main": "./build/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pdhui/modaldialog.git"
+  },
+  "publishConfig": {
+    "registry": "http://172.17.132.227:8888/"
+  },
+  "homepage": "https://github.com/pdhui/modaldialog#readme",
+  "author": "panda.xiong",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^1.12.14",
+    "less-loader": "^2.2.3",
+    "less": "^2.6.1",
+    "style-loader": "^0.13.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "css-loader": "^0.23.1"
+  }
+}

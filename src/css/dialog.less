@@ -1,0 +1,186 @@
+.modal-dialog{
+  background: #fafafa;
+  width: 90%;
+  z-index: 9000;
+  border-radius: 3px;
+  text-align: center;
+  .dialog-title{
+    color: #000;
+  }
+  .dialog-content{
+    color: #7d7d7d;
+  }
+  header{
+    height: 40px;
+    line-height: 40px;
+  }
+  section{
+    text-align: left;
+    width: 83%;
+    margin: 0 auto;
+    max-height: 200px;
+    overflow: auto;
+    position: relative;
+    .dialog-content{
+      // position: absolute;
+    }
+  }
+  footer{
+    border-top: 1px solid #ccc;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 20px;
+    overflow: hidden;
+    .sure-btn,.cancle-btn{
+      width: 50%;
+      float: left;
+      position: relative;
+    }
+    .cancle-btn{
+      a{
+        color: #323232;
+      }
+      &:after{
+        content: '';
+        border-right: 1px solid #ccc;
+        position: absolute;
+        top: 0px;
+        display: block;
+        height: 100%;
+        right: 0px;
+      }
+    }
+    .sure-btn{
+      a{
+        color: #64a45e;
+      }
+    }
+  }
+  &.alert-dialog{
+    footer{
+      text-align: center;
+      .sure-btn{
+        float: none;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+.dialog-mask{
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 8999;
+  background: rgba(0,0,0,0.5);
+  display: none;
+}
+.dlg-award-list{
+  ul{
+    li{
+      overflow: hidden;
+      padding: 10px 0px;
+      position: relative;
+      &:after{
+        content: '';
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        border-bottom: 1px dashed #000;
+        width: 80%;
+        display: block;
+      }
+      img{
+        float: left;
+        width: 50px;
+        position: relative;
+        z-index: 3;
+        width: 20%
+      }
+      .item-title{
+        float: left;
+      }
+    }
+  }
+  .address-controller{
+    height: 50px;
+    line-height: 50px;
+    color:#323232;
+    text-align: left;
+    padding-top: 25px;
+    .dlg-address{
+      float: left;
+      width: 40%;
+      margin-left: 16%;
+    }
+    .dlg-input{
+      float: left;
+      width: 40%;
+      color: #64a45e;
+    }
+  }
+}
+.personinfo-dialog{
+  header{
+    height: 10px;
+  }
+  section{
+    max-height: 215px;
+  }
+  footer{
+    border-top:none;
+    text-align: center;
+    margin: 10px 0px 20px 0px;
+    font-size: 16px;
+    .sure-btn,.cancle-btn{
+      float: none;
+      display: inline-block;
+      width: 115px;
+      border-radius: 15px;
+      height: 32px;
+      line-height: 32px;
+      margin-right: 10px;
+      a{
+        color: #fff;
+      }
+    }
+    .sure-btn{
+      background: #64a45e;
+    }
+    .cancle-btn{
+      background: #afafaf;
+
+      &:after{
+        content: '';
+        display: none;
+      }
+    }
+  }
+  .form-item{
+    height: 40px;
+    position: relative;
+    line-height: 40px;
+    color: #323232;
+    margin-bottom: 15px;
+    &:after{
+      content: '';
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      border-bottom: 1px dashed #000;
+      width: 100%;
+      display: block;
+    }
+    .form-text{
+      height: 32px;
+      line-height: 32px;
+      background: #fafafa;
+      outline: none;
+      border: none;
+      padding-left: 5px;
+    }
+  }
+}
