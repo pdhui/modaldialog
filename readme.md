@@ -1,32 +1,32 @@
-##modalDialog µ¯³ö¿ò
+##modalDialog å¼¹å‡ºæ¡†
 
-ÄÚº¬ÁË ÌáÊ¾¿ò£¬È·ÈÏ¿ò£¬ÎÒµÄ½±Æ·ÁĞ±í¿ò£¬ÌîĞ´¸öÈËĞÅÏ¢¿ò£¬¼ÓÔØÖĞÌáÊ¾¿ò¡£
-##¹«¹²²ÎÊı
+å†…å«äº† æç¤ºæ¡†ï¼Œç¡®è®¤æ¡†ï¼Œæˆ‘çš„å¥–å“åˆ—è¡¨æ¡†ï¼Œå¡«å†™ä¸ªäººä¿¡æ¯æ¡†ï¼ŒåŠ è½½ä¸­æç¤ºæ¡†ã€‚
+##å…¬å…±å‚æ•°
 
- * clazz: µ¯³ö¿òµÄcssÀàÃû
- * cancelStr: È¡Ïû°´Å¥µÄ°´Å¥Ãû
- * sureStr: È·¶¨°´Å¥µÄ°´Å¥Ãû
- * title: µ¯³ö¿òµÄ±êÌâ
- * content: µ¯³ö¿òÄÚÈİ
- * okBtn: ±íÊ¾È·¶¨°´Å¥µÄhtmlÄ£°å
- * cancelBtn: ±íÊ¾È¡Ïû°´Å¥µÄhtmlÄ£°å
- * header: ±íÊ¾Í·²¿µÄhtmlÄ£°å
- * type: ´´½¨ÌáÊ¾¿ò»¹ÊÇÈ·¶¨ÌáÊ¾¿ò
- * okCallback£ºÈ·¶¨°´Å¥µÄ»Øµ÷º¯Êı¡¾alert¿òÊ±Ö»ÓĞÕâ¸ö»Øµ÷º¯Êı£¬Ã»ÓĞÆäËûµÄ»Øµ÷º¯Êı¡¿
- * cancelCallback£ºÈ¡Ïû°´Å¥µÄ»Øµ÷º¯Êı
- * selector£ºhtmlÒ³ÃæµÄÄ³¸ödomÔªËØ½Úµã£¬»á×÷Îªµ¯³ö¿òµÄÄÚÈİ£¬´ËÊ±£¬content¶¨ÒåµÄÄÚÈİÎŞĞ§¡¾Ö»ÓĞÌáÊ¾¿òºÍÈ·ÈÏ¿òÓĞÓÃ¡¿
+ * clazz: å¼¹å‡ºæ¡†çš„cssç±»å
+ * cancelStr: å–æ¶ˆæŒ‰é’®çš„æŒ‰é’®å
+ * sureStr: ç¡®å®šæŒ‰é’®çš„æŒ‰é’®å
+ * title: å¼¹å‡ºæ¡†çš„æ ‡é¢˜
+ * content: å¼¹å‡ºæ¡†å†…å®¹
+ * okBtn: è¡¨ç¤ºç¡®å®šæŒ‰é’®çš„htmlæ¨¡æ¿
+ * cancelBtn: è¡¨ç¤ºå–æ¶ˆæŒ‰é’®çš„htmlæ¨¡æ¿
+ * header: è¡¨ç¤ºå¤´éƒ¨çš„htmlæ¨¡æ¿
+ * type: åˆ›å»ºæç¤ºæ¡†è¿˜æ˜¯ç¡®å®šæç¤ºæ¡†
+ * okCallbackï¼šç¡®å®šæŒ‰é’®çš„å›è°ƒå‡½æ•°ã€alertæ¡†æ—¶åªæœ‰è¿™ä¸ªå›è°ƒå‡½æ•°ï¼Œæ²¡æœ‰å…¶ä»–çš„å›è°ƒå‡½æ•°ã€‘
+ * cancelCallbackï¼šå–æ¶ˆæŒ‰é’®çš„å›è°ƒå‡½æ•°
+ * selectorï¼šhtmlé¡µé¢çš„æŸä¸ªdomå…ƒç´ èŠ‚ç‚¹ï¼Œä¼šä½œä¸ºå¼¹å‡ºæ¡†çš„å†…å®¹ï¼Œæ­¤æ—¶ï¼Œcontentå®šä¹‰çš„å†…å®¹æ— æ•ˆã€åªæœ‰æç¤ºæ¡†å’Œç¡®è®¤æ¡†æœ‰ç”¨ã€‘
  
- -----Ê×ÏÈ 
+ -----é¦–å…ˆ 
 ```javascript 
     var dialog = require('modaldialog')
 ```
-Ã¿ÖÖÀàĞÍµÄµ¯³ö¿ò¶¼ÓĞÁ½ÖÖµ÷ÓÃ·½Ê½£¬Ö±½Ó´«¶à¸ö²ÎÊı»òÕßÊ¹ÓÃ¶ÔÏó×÷Îª²ÎÊı¡£
+æ¯ç§ç±»å‹çš„å¼¹å‡ºæ¡†éƒ½æœ‰ä¸¤ç§è°ƒç”¨æ–¹å¼ï¼Œç›´æ¥ä¼ å¤šä¸ªå‚æ•°æˆ–è€…ä½¿ç”¨å¯¹è±¡ä½œä¸ºå‚æ•°ã€‚
 
-1. ÌáÊ¾¿ò£º
+1. æç¤ºæ¡†ï¼š
 ```javascript 
 dialog.alert(content,title,callback,dom)
 ```
-»òÕß
+æˆ–è€…
 ```javascript 
 var context = {
             title: title,
@@ -36,12 +36,12 @@ var context = {
           };
 dialog.alert(context)
 ```
-2. È·ÈÏ¿ò
+2. ç¡®è®¤æ¡†
 
 ```javascript 
 dialog.confirm(msg,sureFn,title,btText1,btText2,cancelFn)
 ```
-»òÕß
+æˆ–è€…
 ```javascript
 var context = {
         title: title,
@@ -53,41 +53,41 @@ var context = {
     };
 dialog.confirm(context)
 ```
-3.½±Æ·ÁĞ±í¿ò
+3.å¥–å“åˆ—è¡¨æ¡†
 
-inputCallbackÊÇÌîĞ´°´Å¥µÄ»Øµ÷º¯Êı
+inputCallbackæ˜¯å¡«å†™æŒ‰é’®çš„å›è°ƒå‡½æ•°
 
-datalist²ÎÊı¸ñÊ½ÈçÏÂ£º[{imgUrl:'xx.jpg',name:'pro 5'},{imgUrl:'xx.jpg',name:'÷È×å 5'},{imgUrl:'xx.jpg',name:'pro 6'}]
+datalistå‚æ•°æ ¼å¼å¦‚ä¸‹ï¼š[{imgUrl:'xx.jpg',name:'pro 5'},{imgUrl:'xx.jpg',name:'é­…æ— 5'},{imgUrl:'xx.jpg',name:'pro 6'}]
 ```javascript 
 dialog.alertAwardList(datalist,title,inputCallback,okFn,cancelFn,btText1,btText2)
 ```
-4.¸öÈËĞÅÏ¢¿ò
+4.ä¸ªäººä¿¡æ¯æ¡†
 
-formField£º±íµ¥µÄÎÄ±¾Óò¶ÔÏó£¬Ä¬ÈÏÖµÊÇÕâ¸ö
+formFieldï¼šè¡¨å•çš„æ–‡æœ¬åŸŸå¯¹è±¡ï¼Œé»˜è®¤å€¼æ˜¯è¿™ä¸ª
 
 [
-    {name:'recName',value:'ÊÕ¼şÈË:'},
-    {name:'mobilephone',value:'ÊÖ»úºÅÂë:'},
-    {name:'recAddress',value:'ÊÕ¼şµØÖ·:'},
-    {name:'message',value:'ÁôÑÔ:'}
+    {name:'recName',value:'æ”¶ä»¶äºº:'},
+    {name:'mobilephone',value:'æ‰‹æœºå·ç :'},
+    {name:'recAddress',value:'æ”¶ä»¶åœ°å€:'},
+    {name:'message',value:'ç•™è¨€:'}
 ]
 
-values£ºÃ¿¸ö±íµ¥ÓòµÄÖµ£¬Êı×éÀàĞÍ£¬ÓëformFieldµÄË³ĞòÒ»Ò»¶ÔÓ¦¡£
+valuesï¼šæ¯ä¸ªè¡¨å•åŸŸçš„å€¼ï¼Œæ•°ç»„ç±»å‹ï¼Œä¸formFieldçš„é¡ºåºä¸€ä¸€å¯¹åº”ã€‚
 ```javascript 
 dialog.alertPersonInfoDlg(formField,values,okFn,cancelFn,cancelStr,sureStr)
 ```
-5.¼ÓÔØÌáÊ¾¿ò
+5.åŠ è½½æç¤ºæ¡†
 
-* ÏÔÊ¾
+* æ˜¾ç¤º
 ```javascript 
 dialog.showLoading()
 ```
-* Òş²Ø
+* éšè—
 ```javascript 
 dialog.hideLoading()
 ```
 
-##ÓĞÎÊÌâ·´À¡
-ÔÚÊ¹ÓÃÖĞÓĞÈÎºÎÎÊÌâ£¬»¶Ó­·´À¡¸øÎÒ£¬¿ÉÒÔÓÃÒÔÏÂÁªÏµ·½Ê½¸úÎÒ½»Á÷
+##æœ‰é—®é¢˜åé¦ˆ
+åœ¨ä½¿ç”¨ä¸­æœ‰ä»»ä½•é—®é¢˜ï¼Œæ¬¢è¿åé¦ˆç»™æˆ‘ï¼Œå¯ä»¥ç”¨ä»¥ä¸‹è”ç³»æ–¹å¼è·Ÿæˆ‘äº¤æµ
 
-* ÓÊ¼ş(xuweixiong@meizu.com)
+* é‚®ä»¶(xuweixiong2006@gmail.com)
