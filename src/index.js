@@ -1,3 +1,4 @@
+require('./css/dialog.less');
 var domUtil = require('./dom.js');
 var _ = {
   assign: domUtil.assign
