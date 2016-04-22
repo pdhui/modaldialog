@@ -10,7 +10,9 @@ var _ = {
     var templateHtml = [],
         sureBtn = options.okBtn,
         cancelBtn = options.cancelBtn,
-        header = options.header;
+        header = options.header,
+        oneBtnClz = '',
+        btns = [];
 
     sureBtn = utils.replaceTemlate(sureBtn,options);
     cancelBtn = utils.replaceTemlate(cancelBtn,options);
@@ -20,9 +22,16 @@ var _ = {
     templateHtml.push(header);
     templateHtml.push('</header><section><div class="dialog-content"></div></section><footer>');
     if(options.btnCount == 2){
-      templateHtml.push('<div class="cancle-btn">' + cancelBtn +'</div>');
-    }
-    templateHtml.push('<div class="sure-btn">' + sureBtn +'</div>');
+      btns.push('<div class="cancle-btn">' + cancelBtn +'</div>');
+    }else if(options.btnCount == 1)
+      oneBtnClz = ' modal-dialog-onebtn';
+
+    btns.push('<div class="sure-btn' + oneBtnClz + '">' + sureBtn +'</div>');
+
+    if(options.reverse)
+      btns = btns.reverse();
+
+    templateHtml = templateHtml.concat(btns);
     templateHtml.push('</footer></div>');
 
     return templateHtml.join('');
@@ -46,10 +55,11 @@ var _ = {
           title: '温馨提示',
           okBtn: '<a href="javascript:void(0);">{sureStr}</a>',
           cancelBtn: '<a href="javascript:void(0);">{cancelStr}</a>',
-          header: '<span class="dialog-title">{title}</span>'
+          header: '<span class="dialog-title">{title}</span>',
+          animated: true
         },
-        winH = document.documentElement.clientHeight,
-        winW = document.documentElement.clientWidth,
+        winH,
+        winW,
         dialogMask = document.querySelector('.dialog-mask');
 
     var dialogType = {
@@ -69,7 +79,7 @@ var _ = {
           dom.querySelector('.dialog-content').appendChild(options.selector);
         }
         else
-          dom.querySelector('.dialog-content').innerHTML = options.content;
+          dom.querySelector('.dialog-content').innerHTML = options.content.replace(/(\r\n|\n|\r)/gm, '<br/>');
       },
       createAlert: function(options){
         var clz = 'alert-dialog ',
@@ -224,21 +234,32 @@ var _ = {
 
         this.initTouch(dialogDom);
 
+        if(!winH)
+          winH = window.innerHeight ? window.innerHeight : document.body.clientHeight;
+        if(!winW)
+          winW = window.innerWidth ? window.innerWidth : document.body.clientWidth;
+
         dlgH = dialogDom.offsetHeight;
         dlgW = dialogDom.offsetWidth;
         dlgPosY = (winH - dlgH > 0 ) ? (winH - dlgH)/2 : winH*0.1;
         dlgPosX = (winW - dlgW > 0 ) ? (winW - dlgW)/2 : winW*0.1;
 
         utils.addCallback(function(event){
+          setTimeout(function(){
+            self.closeDialog(dialogDom,options);
+          },1);
           if(typeof options.okCallback == 'function'){
             options.okCallback(event);
           }
-          self.closeDialog(dialogDom,options);
+
         },function(event){
+          setTimeout(function(){
+            self.closeDialog(dialogDom,options);
+          },1);
           if(typeof options.cancelCallback == 'function'){
             options.cancelCallback(event);
           }
-          self.closeDialog(dialogDom,options);
+
         });
 
         self.showMask();
@@ -248,6 +269,8 @@ var _ = {
           top: dlgPosY + 'px'
         });
 
+        if(options.animated)
+          dialogDom.className += ' dlg-animation';
       },
       confirm: function(msg,sureFn,title,btText1,btText2,cancelFn){
         if(typeof msg == 'object')
@@ -329,7 +352,8 @@ var _ = {
             maxHeight, startPosx, startPosy, isTouch,
             lastPosY, timer;
 
-        maxHeight = getComputedStyle(section).getPropertyValue('height').replace('px','')*1 -dlgContent.offsetHeight;
+        maxHeight = getComputedStyle(section).getPropertyValue('height').replace('px','')*1 -
+                    getHeight(dlgContent,true);
 
         utils.bindEvent(dialog,'touchmove',stopScrollMove);
         utils.bindEvent(dialog,'touchstart',startTouch);
@@ -348,6 +372,7 @@ var _ = {
           var touch = e.touches[0],
               target = e.target,
               currentTarget = e.currentTarget,
+              nodeName = target.nodeName.toLowerCase(),
               posX = touch.screenX,
               posY = touch.screenY,
               currentPosY = currentTarget.attributes['data-pos'].value*1 || 0,
@@ -367,10 +392,10 @@ var _ = {
               startPosy = posY;
             }
           }
-
-          e.preventDefault();
-          e.stopPropagation()
-
+          if( nodeName != 'input' && nodeName != 'select' && nodeName != 'textarea'){
+            e.preventDefault();
+            e.stopPropagation();
+          }
           return false;
         }
         function toucheEnd(){
@@ -403,6 +428,23 @@ var _ = {
             clearInterval(timer);
           }
         }
+        function getHeight(sel,isOuter){
+          var sectionStyle = getComputedStyle(sel),
+              marginH = 0;
+
+          if(isOuter){
+            marginH = sectionStyle.getPropertyValue('margin-top').replace('px','')*1 +
+                      sectionStyle.getPropertyValue('margin-bottom').replace('px','')*1
+          }
+          return (
+                  sectionStyle.getPropertyValue('height').replace('px','')*1 +
+                  sectionStyle.paddingTop.replace('px','')*1 +
+                  sectionStyle.paddingBottom.replace('px','')*1 +
+                  sectionStyle.borderTopWidth.replace('px','')*1 +
+                  sectionStyle.borderBottomWidth.replace('px','')*1 +
+                  marginH
+                );
+        }
       }
     }
 
@@ -427,17 +469,26 @@ var _ = {
           callback = utils.callbacks.pop();
 
       utils.clearListener(target,callback);
-      if(callback.cancelFn)
-        callback.cancelFn(event);
+      if(callback.cancelFn){
+        if(!callback.cancelFn(event)){
+          utils.clearListener(target,callback);
+        }else{
+          utils.callbacks.push(callback);
+        }
+      }
 
     },
     sureCallback: function(event){
       var target = event.target,
           callback = utils.callbacks.pop();
 
-      utils.clearListener(target,callback);
-      if(callback.okFn)
-        callback.okFn(event);
+      if(callback.okFn){
+        if(!callback.okFn(event)){
+          utils.clearListener(target,callback);
+        }else{
+          utils.callbacks.push(callback);
+        }
+      }
 
     },
     clearListener: function(target,callback){

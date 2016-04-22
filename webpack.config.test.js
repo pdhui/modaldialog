@@ -5,15 +5,14 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: {
-      main:"./src/index.js"
+      "test":"./src/example/entry.js"
     },
     output: {
         filename: "[name].js",
-        path: path.join(__dirname , "/build/"),
-        libraryTarget: "umd",
-        library: "pdDialog",
+        path: path.join(__dirname , "/example/"),
+        libraryTarget: "umd"
     },
-    //devtool:'sourcemap',
+    devtool:'sourcemap',
     module: {
         loaders: [
             {
@@ -29,11 +28,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin("../lib/[name].css"),
-        new webpack.optimize.UglifyJsPlugin({
-            mangle: {
-                except: ['$', 'exports', 'require']
-            }
-        })
+        new ExtractTextPlugin("../lib/[name].css")
     ]
 }

@@ -67,6 +67,31 @@
       }
     }
   }
+  &.dlg-animation{
+    --webkit-transform-origin: center center;
+    -webkit-animation: dialogAnimate 0.15s ease-in;
+  }
+  @-webkit-keyframes dialogAnimate {
+    0% {
+      -webkit-transform: rotateZ(0); }
+    20% {
+      -webkit-transform: rotateZ(3deg); }
+    40% {
+      -webkit-transform: rotateZ(0); }
+    60% {
+      -webkit-transform: rotateZ(-3deg); }
+    70% {
+      -webkit-transform: rotateZ(0deg); }
+    80% {
+      -webkit-transform: rotateZ(1deg); }
+    90% {
+      -webkit-transform: rotateZ(0deg); }
+    95% {
+      -webkit-transform: rotateZ(-1deg); }
+    100% {
+      -webkit-transform: rotateZ(0);
+    }
+  }
 }
 .dialog-mask{
   position: fixed;
@@ -223,4 +248,10 @@
       0%, 100% { -webkit-transform: scale(0.0) }
       50% { -webkit-transform: scale(1.0) }
   }
+}
+.dlg-animation{
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
