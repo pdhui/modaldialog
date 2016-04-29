@@ -18,7 +18,7 @@ var _ = {
     cancelBtn = utils.replaceTemlate(cancelBtn,options);
     header = utils.replaceTemlate(header,options);
     // options.
-    templateHtml.push('<div class="modal-dialog ' + options.clazz + '" style="position:fixed;"><header>');
+    templateHtml.push('<div class="modal-dialog ' + options.clazz + '" style="position:fixed;"><div class="dialog-mask"></div><div class="modal-dialog-main"><header>');
     templateHtml.push(header);
     templateHtml.push('</header><section><div class="dialog-content"></div></section><footer>');
     if(options.btnCount == 2){
@@ -32,7 +32,7 @@ var _ = {
       btns = btns.reverse();
 
     templateHtml = templateHtml.concat(btns);
-    templateHtml.push('</footer></div>');
+    templateHtml.push('</footer></div></div>');
 
     return templateHtml.join('');
   }
@@ -90,7 +90,7 @@ var _ = {
           clz += options.clazz;
 
         settings = _.assign({},options,{clazz: clz,btnCount:1});
-        dialog = utils.createHtmlDom(getHtmlContent(settings))
+        dialog = utils.createHtmlDom(getHtmlContent(settings));
         dialog.setAttribute('data-pos',0);
         this.insertContent(dialog,options);
 
@@ -100,14 +100,14 @@ var _ = {
         return dialog;
       },
       createConfirm: function(options){
-        var clz = 'alert-dialog ',
+        var clz = 'confirm-dialog ',
             settings,
             dialog;
 
         if(options.clazz)
           clz += options.clazz;
 
-        settings = _.assign({},options,{clazz: 'confirm-dialog',btnCount:2});
+        settings = _.assign({},options,{clazz: clz,btnCount:2});
         dialog = utils.createHtmlDom(getHtmlContent(settings));
         dialog.setAttribute('data-pos',0);
         this.insertContent(dialog,options);
@@ -468,7 +468,6 @@ var _ = {
       var target = event.target,
           callback = utils.callbacks.pop();
 
-      utils.clearListener(target,callback);
       if(callback.cancelFn){
         if(!callback.cancelFn(event)){
           utils.clearListener(target,callback);
