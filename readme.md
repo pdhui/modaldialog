@@ -8,27 +8,24 @@
  * sureStr: 确定按钮的按钮名
  * title: 弹出框的标题
  * content: 弹出框内容
- * okBtn: 表示确定按钮的html模板
- * cancelBtn: 表示取消按钮的html模板
  * header: 表示头部的html模板
- * type: 创建提示框还是确定提示框
  * okCallback：确定按钮的回调函数【alert框时只有这个回调函数，没有其他的回调函数】
  * cancelCallback：取消按钮的回调函数
  * selector：html页面的某个dom元素节点，会作为弹出框的内容，此时，content定义的内容无效【只有提示框和确认框有用】
- 
- -----首先 
-```javascript 
+
+ -----首先
+```javascript
     require('@flyme/modaldialog/lib/main.css')'//加载css文件，然后在html页面可引用
     var dialog = require('@flyme/modaldialog')
 ```
 每种类型的弹出框都有两种调用方式，直接传多个参数或者使用对象作为参数。
 
 1. 提示框：
-```javascript 
+```javascript
 dialog.alert(content,title,callback,dom)
 ```
 或者
-```javascript 
+```javascript
 var context = {
             title: title,
             content: content,
@@ -39,7 +36,7 @@ dialog.alert(context)
 ```
 2. 确认框
 
-```javascript 
+```javascript
 dialog.confirm(msg,sureFn,title,btText1,btText2,cancelFn)
 ```
 或者
@@ -59,7 +56,7 @@ dialog.confirm(context)
 inputCallback是填写按钮的回调函数
 
 datalist参数格式如下：[{imgUrl:'xx.jpg',name:'pro 5'},{imgUrl:'xx.jpg',name:'魅族 5'},{imgUrl:'xx.jpg',name:'pro 6'}]
-```javascript 
+```javascript
 dialog.alertAwardList(datalist,title,inputCallback,okFn,cancelFn,btText1,btText2)
 ```
 4.个人信息框
@@ -74,17 +71,17 @@ formField：表单的文本域对象，默认值是这个
 ]
 
 values：每个表单域的值，数组类型，与formField的顺序一一对应。
-```javascript 
+```javascript
 dialog.alertPersonInfoDlg(formField,values,okFn,cancelFn,cancelStr,sureStr)
 ```
 5.加载提示框
 
 * 显示
-```javascript 
+```javascript
 dialog.showLoading()
 ```
 * 隐藏
-```javascript 
+```javascript
 dialog.hideLoading()
 ```
 

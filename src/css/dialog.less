@@ -1,18 +1,22 @@
 .modal-dialog{
   border-radius: 3px;
   text-align: center;
+  width: 90%;
+  margin: 0 auto;
+  .dialog-mask{
+    display: block;
+  }
   .modal-dialog-main{
     position: relative;
     z-index: 9000;
     background: #fafafa;
-    width: 90%;
   }
   .dialog-title{
     color: #000;
     font-size: 16px;
   }
   .dialog-content{
-    color: #7d7d7d;
+    color: #000;
   }
   header{
     height: 40px;
@@ -32,18 +36,19 @@
   }
   footer{
     border-top: 1px solid #ccc;
-    height: 40px;
-    line-height: 40px;
+    height: 46px;
+    line-height: 46px;
     margin-top: 20px;
     overflow: hidden;
-    .sure-btn,.cancle-btn{
-      width: 50%;
-      float: left;
-      position: relative;
-    }
-    .cancle-btn{
-      a{
-        color: #323232;
+    button{
+      outline: none;
+      border: 0;
+      padding: 0;
+      background: none;
+      font-size: 16px;
+      height: 46px;
+      &.modal-dialog-onebtn{
+        width: 100%;
       }
       &:after{
         content: '';
@@ -54,11 +59,22 @@
         height: 100%;
         right: 0px;
       }
+      &.last{
+        &:after{
+          display: none;
+        }
+      }
+    }
+    .sure-btn,.cancle-btn{
+      width: 50%;
+      float: left;
+      position: relative;
+    }
+    .cancle-btn{
+      color: #000000;
     }
     .sure-btn{
-      a{
-        color: #64a45e;
-      }
+      color: #65bd6a;
     }
   }
   &.alert-dialog{
@@ -173,9 +189,7 @@
       height: 32px;
       line-height: 32px;
       margin-right: 10px;
-      a{
-        color: #fff;
-      }
+      color: #fff;
     }
     .sure-btn{
       background: #64a45e;
