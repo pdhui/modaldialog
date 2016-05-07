@@ -1,6 +1,7 @@
 import {bindEvent,unBindEvent} from './dom.js';
 
 const HashChangeEvent = 'hashchange';
+const query_key = '_dg_hash'
 
 const hashHistory = (options)=>{
 
@@ -8,9 +9,24 @@ const hashHistory = (options)=>{
       listeners = [];
 
   const getCurrentHashPath = () => {
-    const href = window.location.href
-    const index = href.indexOf('#')
-    return index === -1 ? '' : href.substring(index + 1)
+    const href = window.location.href,
+          regx =new RegExp(`^${query_key}=(.*)`);
+    let index = href.indexOf('#'),
+        queryIndex,
+        str = '',
+        matches;
+
+    if(index != -1){
+      str = href.substring(index + 1) || '';
+      if(queryIndex = str.indexOf('?') > 0){
+        str = str.substring(0,queryIndex);
+      }
+      matches = regx.exec(str);
+      if(matches){
+        str = matches[1];
+      }
+    }
+    return str;
   }
 
   const stopListener = ()=>{
@@ -38,7 +54,7 @@ const hashHistory = (options)=>{
       hashPath = 1;
     else
       hashPath ++;
-    pushHashPath(hashPath);
+    pushHashPath(query_key + '=' + hashPath);
     return hashPath;
   };
 
