@@ -19,10 +19,14 @@ module.exports = {
     return str;
   },
   bindEvent: function(dom,name,fn){
-    dom.addEventListener(name,fn,false);
+    dom.addEventListener
+      ? dom.addEventListener(name,fn,false)
+      : dom.attachEvent('on' + name, fn);
   },
   unBindEvent: function(dom,name,fn){
-    dom.removeEventListener(name,fn);
+    dom.removeEventListener
+      ? dom.removeEventListener(name,fn,false)
+      : dom.detachEvent('on' + name, fn);
   },
   getUrlParam: function (key) {
       var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)", "i");

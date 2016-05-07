@@ -25,7 +25,7 @@ var _ = {
    */
   function createButtons(options){
     var btns = options.buttons || [],
-        template = '<button class="{cls}" data-id="{id}" >{name}</button>',
+        template = '<button type="button" class="{cls}" data-id="{id}" >{name}</button>',
         btnTmpls = '',
         self = this,
         oneBtnClz='';
@@ -91,7 +91,6 @@ var _ = {
  * sureStr 确定按钮的按钮名
  * title 弹出框的标题
  * header 表示头部的html模板
- * type 创建提示框还是确定提示框
  * okCallback 确定按钮回调函数
  * cancelCallback 取消按钮回调函数
  * buttons [{cls:'sure',callback:fn,name:'name'}]
@@ -104,19 +103,40 @@ var _ = {
         header: '<span class="dialog-title">{title}</span>',
         animated: true,
         buttons: null
-      };
+      },
+      beforeListeners = [],
+      afterListeners = [],
+      closedListeners = [],
+      _count = 0;
 
   var ModalDialog = function(options){
+    var dialog,
+        id;
+
     options = _.assign({},defaultSettings,options);
 
     options._callBacks = options._callBacks || {};
+    id = options.id = options.id || _count;
 
     Object.keys(options).forEach(function(name){
       if (typeof options[name] === 'function') {
         options._callBacks[name] = options[name];
       }
     });
-    return new ModalDialog.create(options);
+
+    beforeListeners.forEach(function(listener){
+      listener(options);
+    });
+
+    ModalDialog.dialogList[id] = dialog = new ModalDialog.create(options);
+
+    afterListeners.forEach(function(listener){
+      listener(dialog);
+    });
+
+    _count ++;
+
+    return dialog;
   };
 
   ModalDialog.create = function(options){
@@ -125,6 +145,8 @@ var _ = {
         dlgW, dlgH;
 
     this.callbacks = options._callBacks;
+    this.id = options.id;
+
     dialogDom = utils.createHtmlDom(getHtmlContent.call(this,options));
     dialogDom.setAttribute('data-pos',0);
     insertContent(dialogDom,options);
@@ -152,15 +174,20 @@ var _ = {
       dialogDom.className += ' dlg-animation';
 
     this._eventListener = this.proxy(this._clickEvent,dialogDom,options);
+    this.dialogDom = dialogDom;
+    this.options = options;
     utils.bindEvent(dialogDom,'click',this._eventListener);
 
     return this;
   };
   _.assign(ModalDialog.create.prototype,{
     callbacks: null,
-    closeDialog:function(dialogDom,options){
-      var selector,
-          _commentDom;
+    closeDialog:function(isNotInvoke){
+      var dialogDom = this.dialogDom,
+          options = this.options,
+          selector,
+          _commentDom,
+          self = this;
 
       dialogDom.style.display = 'none';
       if(options.selector && dialogDom._commentDom){
@@ -176,8 +203,16 @@ var _ = {
       utils.unBindEvent(dialogDom,'click',this._eventListener);
       dialogDom.parentNode.removeChild(dialogDom);
       this.destroyScroll();
+
+      if(!isNotInvoke)
+        closedListeners.forEach(function(listener){
+          listener(self);
+        });
+
       this._eventListener = null;
-      dialogDom = null;
+      this.dialogDom = dialogDom = null;
+
+      delete ModalDialog.dialogList[this.id];
     },
     _clickEvent: function(e,dialogDom,options){
       var target = e.target,
@@ -186,7 +221,7 @@ var _ = {
 
       if(typeof this.callbacks[id] == 'function' && !this.callbacks[id].call(this,e)){
         setTimeout(function(){
-          self.closeDialog(dialogDom,options);
+          self.closeDialog();
         },1);
       }
     },
@@ -204,5 +239,37 @@ var _ = {
       }
     }
   });
+
+  ModalDialog.afterListener = function(listener){
+    afterListeners.push(listener);
+
+    return function(){
+      afterListeners = afterListeners.filter(function(item){
+        return item != listener;
+      })
+    }
+  };
+
+  ModalDialog.preListener = function(listener){
+    beforeListeners.push(listener);
+
+    return function(){
+      beforeListeners = beforeListeners.filter(function(item){
+        return item != listener;
+      })
+    }
+  };
+
+  ModalDialog.closedListener = function(listener){
+    closedListeners.push(listener);
+
+    return function(){
+      closedListeners = closedListeners.filter(function(item){
+        return item != listener;
+      })
+    }
+  };
+
+  ModalDialog.dialogList = {};
 
   module.exports = ModalDialog;

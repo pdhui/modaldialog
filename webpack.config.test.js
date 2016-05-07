@@ -24,7 +24,8 @@ module.exports = {
                 test: /\.less$/,
                 loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
                 exclude: '/node_modules/'
-            }
+            },
+            { test: /\.js$/, exclude: /node_modules/, loader: 'babel' }
         ]
     },
     plugins: [

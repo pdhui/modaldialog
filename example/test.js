@@ -54,39 +54,837 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var dialog = __webpack_require__(1);
+	'use strict';
 	
-	dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少。<input type="text" style="width:100px;" />然而，我们可以看到 Webpack 打包后的 all.js 文件不仅没有压缩，而且代码当中的注释也没有去掉Webpack 同样提供了 UglifyJsPlugin 的插件来进行压缩代码操作。但是在我尝试的过程中，这个插件和 html-loader 配合使用的时候会出现错误，因此在这里我使用了 Gulp 来进行代码压缩的工作。Webpack 与 Gulp 配合使用也相当简单，只需要安装 gulp-webpack安装 Gulp 和其他所需的工具缺点：通过设备宽度范围区间这样的媒体查询来动态改变rem基准值，其实不够精确，比如：宽度为360px 和 宽度为320px的手机，因为屏宽在同一范围区间内(<375px)，所以会被同等对待(rem基准值相同)，而事实上他们的屏幕宽度并不相等，它们的布局也应该有所不同。最终，结论就是：这样的做法，没有做到足够的精确，但是够用。本部分将专注于 JavaScript 语言本身，而并非局限于网页或其他宿主环境。想要了解网页有关的 API',"确认放弃领奖",function(){
-	   console.log('i am alert');
-	 });
+	// import hashHistory from '../hashHistory.js';
+	var hashHistory = __webpack_require__(1);
+	var dialog = __webpack_require__(3);
+	var hasClose;
+	// document.getElementById('btn').addEventListener('click',function(){
+	//   dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少。<input type="text" style="width:100px;" />然而，我们可以看到 Webpack 打包后的 all.js 文件不仅没有压缩，而且代码当中的注释也没有去掉Webpack 同样提供了 UglifyJsPlugin 的插件来进行压缩代码操作。但是在我尝试的过程中，这个插件和 html-loader 配合使用的时候会出现错误，因此在这里我使用了 Gulp 来进行代码压缩的工作。Webpack 与 Gulp 配合使用也相当简单，只需要安装 gulp-webpack安装 Gulp 和其他所需的工具缺点：通过设备宽度范围区间这样的媒体查询来动态改变rem基准值，其实不够精确，比如：宽度为360px 和 宽度为320px的手机，因为屏宽在同一范围区间内(<375px)，所以会被同等对待(rem基准值相同)，而事实上他们的屏幕宽度并不相等，它们的布局也应该有所不同。最终，结论就是：这样的做法，没有做到足够的精确，但是够用。本部分将专注于 JavaScript 语言本身，而并非局限于网页或其他宿主环境。想要了解网页有关的 API',"确认放弃领奖",function(){
+	
+	//    console.log('i am alert');
+	//    if(!hasClose){
+	//     dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少。1<input type="t','kk',function(){
+	//       // hasClose = true;
+	//       dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少');
+	//       return true;
+	//    });
+	//    return true;
+	//    }
+	
+	//  });
+	// },false)
 	
 	// dialog.confirm('弹框内容区域此处展示各种描述弹框内容区域此处展示各种描述',function(){
 	//   console.log('i am confirm');
+	//   dialog.alert('在上线之前');
 	// },"确认放弃领奖");
 	// dialog.confirm('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少。然而，我们可以看到 Webpack 打包后的 all.js 文件不仅没有压缩，而且代码当中的注释也没有去掉Webpack 同样提供了 UglifyJsPlugin 的插件来进行压缩代码操作。但是在我尝试的过程中，这个插件和 html-loader 配合使用的时候会出现错误，因此在这里我使用了 Gulp 来进行代码压缩的工作。Webpack 与 Gulp 配合使用也相当简单，只需要安装 gulp-webpack安装 Gulp 和其他所需的工具缺点：通过设备宽度范围区间这样的媒体查询来动态改变rem基准值，其实不够精确，比如：宽度为360px 和 宽度为320px的手机，因为屏宽在同一范围区间内(<375px)，所以会被同等对待(rem基准值相同)，而事实上他们的屏幕宽度并不相等，它们的布局也应该有所不同。最终，结论就是：这样的做法，没有做到足够的精确，但是够用。本部分将专注于 JavaScript 语言本身，而并非局限于网页或其他宿主环境。想要了解网页有关的 API',function(){
 	//    console.log('i am confirm');
 	//  },"确认放弃领奖",'放弃奖品','继续填写',function(){
 	//    console.log('i am confirm cancel');
 	//  })
-	// dialog.alertAwardList([{imgUrl:'xx.jpg',name:'pro 5'},{imgUrl:'xx.jpg',name:'魅族 5'},{imgUrl:'xx.jpg',name:'pro 6'}],'确认放弃领奖?',
-	//     function(){
-	//       dialog.alertPersonInfoDlg();
-	//     },
-	//     function(){
-	//      console.log('i am confirm');
-	//    },function(){
-	//      console.log('i am confirm cancel');
-	//    },'确定','分享到朋友圈');
+	dialog.alertAwardList([{ imgUrl: 'xx.jpg', name: 'pro 5' }, { imgUrl: 'xx.jpg', name: '魅族 5' }, { imgUrl: 'xx.jpg', name: 'pro 6' }], '确认放弃领奖?', function () {
+	  dialog.alertPersonInfoDlg({ okCallback: function okCallback() {
+	      var inputs = document.querySelectorAll('.personinfo-dialog input');
+	      [].slice.call(inputs).every(function (item) {
+	        console.log(item.value);
+	        return true;
+	      });
+	    }, values: [1, 2, 'sfwe e而无法', 'ef'] });
+	}, function () {
+	  console.log('i am confirm');
+	}, function () {
+	  console.log('i am confirm cancel');
+	}, '确定', '分享到朋友圈');
 	
-	
-	// dialog.alert({selector:document.getElementById('info-form')});
+	// dialog.alert({selector:document.getElementsByTagName('h1')[0]});
 	// dialog.confirm({selector:document.getElementById('info-form')});
+
+	// dialog.confirm({content:'弹框内容区域此处展示各种描述弹框内容区域此处展示各种描述<input type="text" id="username" />',okCallback:function(){
+	//   console.log('i am confirm: ' + document.getElementById('username').value);
+	//   dialog.alert('在上线之前');
+	// },title:"确认放弃领奖",reverse:true});
+
+	// dialog.showLoading();
+	// setTimeout(function(){
+	//   dialog.hideLoading();
+	// },3000);
+
+	// dialog.showMask();
+	// setTimeout(function(){
+	//   dialog.hideMask();
+	// },3000);
+
+	// hashHistory().startListener(function(path){
+	//   console.log(path);
+	// })
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	!function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.pdDialog=t():e.pdDialog=t()}(this,function(){return function(e){function t(a){if(n[a])return n[a].exports;var l=n[a]={exports:{},id:a,loaded:!1};return e[a].call(l.exports,l,l.exports,t),l.loaded=!0,l.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,exports,t){function n(e){var t=[],n=e.okBtn,a=e.cancelBtn,l=e.header;return n=c.replaceTemlate(n,e),a=c.replaceTemlate(a,e),l=c.replaceTemlate(l,e),t.push('<div class="modal-dialog '+e.clazz+'" style="position:fixed;"><header>'),t.push(l),t.push('</header><section><div class="dialog-content"></div></section><footer>'),2==e.btnCount&&t.push('<div class="cancle-btn">'+a+"</div>"),t.push('<div class="sure-btn">'+n+"</div>"),t.push("</footer></div>"),t.join("")}function a(){function e(e){var t={};for(var n in e)e.hasOwnProperty(n)&&"undefined"!=typeof e[n]&&(t[n]=e[n]);return t}var t={clazz:"dialog-theme",cancelStr:"取消",sureStr:"确定",title:"温馨提示",okBtn:'<a href="javascript:void(0);">{sureStr}</a>',cancelBtn:'<a href="javascript:void(0);">{cancelStr}</a>',header:'<span class="dialog-title">{title}</span>'},a=window.innerHeight?window.innerHeight:document.documentElement.clientHeight,l=window.innerWidth?window.innerWidth:document.documentElement.clientWidth,i=document.querySelector(".dialog-mask"),r={insertContent:function(e,t){if(t.selector){var n=document.createComment("dialog-target replace"),a=t.selector,l=getComputedStyle(a).getPropertyValue("display");a.parentNode.replaceChild(n,a),e._commentDom=n,"none"==l&&(a.style.display="block"),e._originDisplay=l,e.querySelector(".dialog-content").appendChild(t.selector)}else e.querySelector(".dialog-content").innerHTML=t.content},createAlert:function(e){var t,a,l="alert-dialog ";return e.clazz&&(l+=e.clazz),a=o.assign({},e,{clazz:l,btnCount:1}),t=c.createHtmlDom(n(a)),t.setAttribute("data-pos",0),this.insertContent(t,e),document.body.appendChild(t),c.bindEvent(t.querySelector(".sure-btn"),"click",c.sureCallback),t},createConfirm:function(e){var t,a,l="alert-dialog ";return e.clazz&&(l+=e.clazz),t=o.assign({},e,{clazz:"confirm-dialog",btnCount:2}),a=c.createHtmlDom(n(t)),a.setAttribute("data-pos",0),this.insertContent(a,e),document.body.appendChild(a),c.bindEvent(a.querySelector(".cancle-btn"),"click",c.cancelCallback),c.bindEvent(a.querySelector(".sure-btn"),"click",c.sureCallback),a},createMyAwardDlg:function(e){function t(){e.inputCallback(),c.unBindEvent(l.querySelector(".dlg-input"),"click",t),l.style.display="none",i.style.display="none",l.parentNode.removeChild(l)}for(var a=o.assign({},e,{clazz:"myaward-dialog",btnCount:2}),l=c.createHtmlDom(n(a)),r=e.dataList||[],s=['<div class="dlg-award-list"><ul>'],d=0,u=r.length;u>d;d++){var p=r[d];s.push('<li><img src="'+p.imgUrl+'" /><div class="item-title">'+p.name+"</div></li>")}return s.push('</ul><div class="address-controller"><span class="dlg-address">收货地址:</span><span class="dlg-input">填写</span></div></div>'),l.setAttribute("data-pos",0),l.querySelector(".dialog-content").innerHTML=s.join(""),document.body.appendChild(l),c.bindEvent(l.querySelector(".cancle-btn"),"click",c.cancelCallback),c.bindEvent(l.querySelector(".sure-btn"),"click",c.sureCallback),c.bindEvent(l.querySelector(".dlg-input"),"click",t),l},createPersonInfoDlg:function(e){for(var t,a=o.assign({},e,{clazz:"personinfo-dialog",btnCount:2,header:""}),l=c.createHtmlDom(n(a)),i=["<form>"],r=e.values,s=e.formField||[{name:"recName",value:"收件人:"},{name:"mobilephone",value:"手机号码:"},{name:"recAddress",value:"收件地址:"},{name:"message",value:"留言:"}],d=0,u=s.length;u>d;d++){var p=s[d];i.push('<div class="form-item"><label>'),i.push(p.value),i.push('</label><input class="form-text" type="text" name="'+p.name+'"/></div>')}i.push("</form>"),l.setAttribute("data-pos",0),l.querySelector(".dialog-content").innerHTML=i.join(""),t=l.querySelectorAll(".dialog-content input");for(var d=0,u=t.length;u>d;d++)"undefined"!=typeof r[d]&&t[d]&&(t[d].value=r[d]);return document.body.appendChild(l),c.bindEvent(l.querySelector(".sure-btn"),"click",c.sureCallback),c.bindEvent(l.querySelector(".cancle-btn"),"click",c.cancelCallback),l}};return i||(i=c.createHtmlDom("<div class='dialog-mask'></div>"),c.bindEvent(i,"touchstart",function(e){e.preventDefault()}),document.body.appendChild(i)),{closeDialog:function(e,t){var n,a;this.hideMask(),e.style.display="none",t.selector&&(n=t.selector,a=e._commentDom,n.style.display=e._originDisplay,a.parentNode.replaceChild(n,a),e._commentDom=null,e._originDisplay=null),e.parentNode.removeChild(e)},dialog:function(e){var n,i,s,d,u,p=e.type,f=this;switch(e=o.assign({},t,e),p){case"alert":n=r.createAlert(e);break;case"confirm":n=r.createConfirm(e);break;case"awardlist":n=r.createMyAwardDlg(e);break;case"personinfo":n=r.createPersonInfoDlg(e)}this.initTouch(n),u=n.offsetHeight,d=n.offsetWidth,i=a-u>0?(a-u)/2:.1*a,s=l-d>0?(l-d)/2:.1*l,c.addCallback(function(t){setTimeout(function(){f.closeDialog(n,e)},1),"function"==typeof e.okCallback&&e.okCallback(t)},function(t){setTimeout(function(){f.closeDialog(n,e)},1),"function"==typeof e.cancelCallback&&e.cancelCallback(t)}),f.showMask(),o.assign(n.style,{display:"block",left:s+"px",top:i+"px"})},confirm:function(t,n,a,l,c,i){if("object"==typeof t)this.dialog(o.assign({type:"confirm"},t));else{var r={type:"confirm",title:a,content:t,okCallback:n,cancelCallback:i,sureStr:c,cancelStr:l};this.dialog(e(r))}},alert:function(t,n,a,l){if("object"==typeof t)this.dialog(o.assign({type:"alert"},t));else{var c={type:"alert",title:n,content:t,okCallback:a,selector:l};this.dialog(e(c))}},alertAwardList:function(t,n,a,l,o,c,i){var r={type:"awardlist",dataList:t,title:n,okCallback:l,cancelCallback:o,sureStr:i||"分享到朋友圈",cancelStr:c||"确定",inputCallback:a};this.dialog(e(r))},alertPersonInfoDlg:function(t,n,a,l,o,c){var i={type:"personinfo",formField:t,okCallback:a,cancelCallback:l,sureStr:c,cancelStr:o,values:n||[]};this.dialog(e(i))},showMask:function(){i.style.display="block"},hideMask:function(){i.style.display="none"},showLoading:function(){document.getElementById("loading-box")||$("body").append('<div id="loading-box" class="dialog-mask"><div class="load-contain"><span class="load1"></span><span class="load2"></span></div></div>'),document.getElementById("loading-box").style.display="block"},hideLoading:function(){document.getElementById("loading-box").style.display="none"},initTouch:function(e){function t(e){var t=e.touches[0];e.target.className.indexOf("dialog-content")>=0&&(i=t.screenX,r=t.screenY,s=!0)}function n(e){var t,n=e.touches[0],a=e.target,c=e.currentTarget,d=a.nodeName.toLowerCase(),u=n.screenX,p=n.screenY,f=1*c.attributes["data-pos"].value||0;return s&&Math.abs(u-i)<10&&Math.abs(p-r)>10&&(t=f+p-r,o>t?t=o:t>0&&(t=0),c.attributes["data-pos"].value=t,l(a,f,t),i=u,r=p),"input"!=d&&"select"!=d&&"textarea"!=d&&(e.preventDefault(),e.stopPropagation()),!1}function a(){i=null,r=null,s=!1}function l(e,t,n){function a(){t-=o,d>t&&(l(),t=d),e.style.webkitTransform="translate3d(0px,"+t+"px,0px)"}function l(){u=null,clearInterval(u)}var o=5;d=n,null!=u&&l(),u=setInterval(a,18),a()}var o,i,r,s,d,u,p=e.querySelector(".dialog-content"),f=e.getElementsByTagName("section")[0];o=1*getComputedStyle(f).getPropertyValue("height").replace("px","")-p.offsetHeight,c.bindEvent(e,"touchmove",n),c.bindEvent(e,"touchstart",t),c.bindEvent(e,"touchend",a)}}}t(1);var l=t(5),o={assign:l.assign},c=o.assign({callbacks:[],cancelCallback:function(e){var t=e.target,n=c.callbacks.pop();c.clearListener(t,n),n.cancelFn&&(n.cancelFn(e)?c.callbacks.push(n):c.clearListener(t,n))},sureCallback:function(e){var t=e.target,n=c.callbacks.pop();n.okFn&&(n.okFn(e)?c.callbacks.push(n):c.clearListener(t,n))},clearListener:function(e,t){t.cancelFn&&c.unBindEvent(e,"click",c.cancelCallback),t.okFn&&c.unBindEvent(e,"click",c.sureCallback)},addCallback:function(e,t){t?c.callbacks.push({okFn:e,cancelFn:t}):c.callbacks.push({okFn:e})}},l);e.exports=a()},function(e,exports){},,,,function(e,exports){e.exports={createHtmlDom:function(){var e=document.createElement("div");return function(t){var n;return e.innerHTML=t,n=e.children[0],e.removeChild(n),n}}(),replaceTemlate:function(e,t){for(var n,a=new RegExp(/{(.*?)}/g);n=a.exec(e);)e=e.replace(n[0],t[n[1]]);return e},bindEvent:function(e,t,n){e.addEventListener(t,n,!1)},unBindEvent:function(e,t,n){e.removeEventListener(t,n)},getUrlParam:function(e){var t=new RegExp("(^|&)"+e+"=([^&]*)(&|$)","i"),n=window.location.search.substr(1).match(t);return null!=n?decodeURI(n[2]):null},assign:function(){for(var e=arguments[0],t=[].slice.call(arguments,1),n=0,a=t.length;a>n;n++){var l=t[n];for(var o in l)l.hasOwnProperty(o)&&(e[o]=l[o])}return e}}}])});
+	'use strict';
+	
+	var _dom = __webpack_require__(2);
+	
+	var HashChangeEvent = 'hashchange';
+	
+	var hashHistory = function hashHistory(options) {
+	
+	  var prevLocation = '',
+	      listeners = [];
+	
+	  var getCurrentHashPath = function getCurrentHashPath() {
+	    var href = window.location.href;
+	    var index = href.indexOf('#');
+	    return index === -1 ? '' : href.substring(index + 1);
+	  };
+	
+	  var stopListener = function stopListener() {
+	    (0, _dom.unBindEvent)(window, HashChangeEvent, handleHashChange);
+	  };
+	
+	  var listener = function listener(callback) {
+	    listeners.push(callback);
+	
+	    return function () {
+	      return listeners = listeners.filter(function (item) {
+	        return item !== callback;
+	      });
+	    };
+	  };
+	
+	  var pushHashPath = function pushHashPath(path) {
+	    return window.location.hash = path;
+	  };
+	
+	  var replaceHashPath = function replaceHashPath(path) {
+	    return window.location.replace(window.location.pathname + window.location.search + '#' + path);
+	  };
+	
+	  var autoUpdateHash = function autoUpdateHash() {
+	    var hashPath = getCurrentHashPath() * 1;
+	    if (!hashPath) hashPath = 1;else hashPath++;
+	    pushHashPath(hashPath);
+	    return hashPath;
+	  };
+	
+	  var go = function go(n) {
+	    if (n) window.history.go(n);
+	  };
+	  var back = function back() {
+	    window.history.back();
+	  };
+	
+	  var handleHashChange = function handleHashChange() {
+	    var currentLocation = getCurrentHashPath();
+	
+	    if (prevLocation === currentLocation) return;
+	
+	    listeners.forEach(function (listener) {
+	      listener(currentLocation, prevLocation);
+	    });
+	
+	    prevLocation = currentLocation;
+	  };
+	
+	  (0, _dom.bindEvent)(window, HashChangeEvent, handleHashChange);
+	
+	  return {
+	    getCurrentHashPath: getCurrentHashPath,
+	    listener: listener,
+	    stopListener: stopListener,
+	    pushHashPath: pushHashPath,
+	    replaceHashPath: replaceHashPath,
+	    autoUpdateHash: autoUpdateHash,
+	    go: go,
+	    back: back
+	  };
+	};
+	
+	module.exports = hashHistory;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = {
+	  createHtmlDom: function createHtml() {
+	    var div = document.createElement('div');
+	
+	    return function (html) {
+	      var temp;
+	      div.innerHTML = html;
+	      temp = div.children[0];
+	      div.removeChild(temp);
+	      return temp;
+	    };
+	  }(),
+	  replaceTemlate: function replaceTemlate(str, data) {
+	    var regx = new RegExp(/{(.*?)}/g),
+	        temp;
+	    while (temp = regx.exec(str)) {
+	      str = str.replace(temp[0], data[temp[1]]);
+	    }
+	    return str;
+	  },
+	  bindEvent: function bindEvent(dom, name, fn) {
+	    dom.addEventListener ? dom.addEventListener(name, fn, false) : dom.attachEvent('on' + name, fn);
+	  },
+	  unBindEvent: function unBindEvent(dom, name, fn) {
+	    dom.removeEventListener ? dom.removeEventListener(name, fn, false) : dom.detachEvent('on' + name, fn);
+	  },
+	  getUrlParam: function getUrlParam(key) {
+	    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)", "i");
+	    var r = window.location.search.substr(1).match(reg);
+	    if (r != null) return decodeURI(r[2]);
+	    return null;
+	  },
+	  assign: function assign() {
+	    var temp = arguments[0];
+	    var args = [].slice.call(arguments, 1);
+	    for (var i = 0, len = args.length; i < len; i++) {
+	      var item = args[i];
+	      for (var p in item) {
+	        if (item.hasOwnProperty(p)) {
+	          temp[p] = item[p];
+	        }
+	      }
+	    }
+	    return temp;
+	  }
+	};
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	__webpack_require__(4);
+	var domUtil = __webpack_require__(2);
+	var ModalDialog = __webpack_require__(8);
+	var hashHistory = __webpack_require__(1);
+	
+	function createParams(param) {
+	  var res = {};
+	
+	  for (var p in param) {
+	    if (param.hasOwnProperty(p)) {
+	      if (typeof param[p] != 'undefined') {
+	        res[p] = param[p];
+	      }
+	    }
+	  }
+	  return res;
+	}
+	
+	function isPlainObject(obj) {
+	  return Object.prototype.toString.call(obj) == '[object Object]';
+	}
+	function noop() {}
+	
+	ModalDialog.alert = function (content, title, callback, dom, cls) {
+	  var clz = content.clazz ? content.clazz : cls ? cls : '';
+	
+	  clz += ' alert-dialog';
+	
+	  if ((typeof content === 'undefined' ? 'undefined' : _typeof(content)) !== 'object') {
+	    content = createParams({
+	      title: title,
+	      content: content,
+	      okCallback: callback,
+	      selector: dom
+	    });
+	  }
+	
+	  content.okCallback = content.okCallback || noop;
+	  content.clazz = clz;
+	  return ModalDialog(content);
+	};
+	
+	ModalDialog.confirm = function (content, sureFn, title, btText1, btText2, cancelFn, cls) {
+	  var clz = content.clazz ? content.clazz : cls ? cls : '';
+	
+	  clz += ' confirm-dialog';
+	
+	  if ((typeof content === 'undefined' ? 'undefined' : _typeof(content)) !== 'object') {
+	    content = createParams({
+	      title: title,
+	      content: content,
+	      okCallback: sureFn,
+	      cancelCallback: cancelFn,
+	      sureStr: btText2,
+	      cancelStr: btText1
+	    });
+	  }
+	
+	  content.okCallback = content.okCallback || noop;
+	  content.cancelCallback = content.cancelCallback || noop;
+	  content.clazz = clz;
+	  return ModalDialog(content);
+	};
+	
+	ModalDialog.alertAwardList = function (datalist, title, inputCallback, okFn, cancelFn, btText1, btText2) {
+	  var awardListHtml = ['<div class="dlg-award-list"><ul>'],
+	      settings,
+	      result;
+	
+	  if (!isPlainObject(datalist)) {
+	    settings = createParams({
+	      dataList: datalist,
+	      title: title,
+	      okCallback: okFn,
+	      cancelCallback: cancelFn,
+	      sureStr: btText2 || "分享到朋友圈",
+	      cancelStr: btText1 || "确定",
+	      fillform: inputCallback
+	    });
+	  } else {
+	    settings = datalist;
+	  }
+	
+	  settings.clazz = 'myaward-dialog';
+	
+	  result = settings.dataList || [];
+	
+	  for (var i = 0, len = result.length; i < len; i++) {
+	    var item = result[i];
+	    awardListHtml.push('<li><img src="' + item.imgUrl + '" /><div class="item-title">' + item.name + "</div></li>");
+	  }
+	  awardListHtml.push('</ul><div class="address-controller"><span class="dlg-address">收货地址:</span><span class="dlg-input" data-id="fillform">填写</span></div></div>');
+	
+	  settings.content = awardListHtml.join('');
+	  return ModalDialog(settings);
+	};
+	
+	ModalDialog.alertPersonInfoDlg = function (formField, values, okFn, cancelFn, btText1, btText2) {
+	  var infoFormHtml = ["<form>"],
+	      inputs,
+	      values,
+	      settings,
+	      infoFormDom;
+	
+	  if (!isPlainObject(formField)) {
+	    settings = createParams({
+	      formField: formField,
+	      okCallback: okFn,
+	      cancelCallback: cancelFn,
+	      sureStr: btText2,
+	      cancelStr: btText1,
+	      values: values || []
+	    });
+	  } else {
+	    settings = formField;
+	  }
+	
+	  settings.okCallback = settings.okCallback || noop;
+	  settings.cancelCallback = settings.cancelCallback || noop;
+	  formField = settings.formField = settings.formField || [{ name: 'recName', value: '收件人:' }, { name: 'mobilephone', value: '手机号码:' }, { name: 'recAddress', value: '收件地址:' }, { name: 'message', value: '留言:' }];
+	  settings.clazz = 'personinfo-dialog';
+	  settings.header = '';
+	
+	  for (var i = 0, len = formField.length; i < len; i++) {
+	    var item = formField[i];
+	    infoFormHtml.push('<div class="form-item"><label>');
+	    infoFormHtml.push(item.value);
+	    infoFormHtml.push('</label><input class="form-text" type="text" name="' + item.name + '"/></div>');
+	  }
+	
+	  infoFormHtml.push("</form>");
+	
+	  infoFormDom = domUtil.createHtmlDom(infoFormHtml.join(''));
+	
+	  inputs = infoFormDom.querySelectorAll('input');
+	  values = settings.values;
+	  for (var i = 0, len = inputs.length; i < len; i++) {
+	    if (typeof values[i] != 'undefined') inputs[i].value = values[i];
+	  }
+	
+	  settings.selector = infoFormDom;
+	  return ModalDialog(settings);
+	};
+	
+	ModalDialog.showLoading = function () {
+	  if (!document.getElementById('loading-box')) {
+	    document.body.appendChild(domUtil.createHtmlDom('<div id="loading-box" class="dialog-mask"><div class="load-contain">' + '<span class="load1"></span><span class="load2"></span></div></div>'));
+	  }
+	  document.getElementById('loading-box').style.display = 'block';
+	};
+	
+	ModalDialog.hideLoading = function () {
+	  document.getElementById('loading-box').style.display = 'none';
+	};
+	ModalDialog.showMask = function () {
+	  var dialogMask = document.getElementById('app-mask');
+	
+	  if (!dialogMask) {
+	    dialogMask = domUtil.createHtmlDom("<div class='dialog-mask' id='app-mask'></div>");
+	    domUtil.bindEvent(dialogMask, 'touchstart', function (event) {
+	      event.preventDefault();
+	    });
+	    document.body.appendChild(dialogMask);
+	  }
+	  dialogMask.style.display = 'block';
+	};
+	ModalDialog.hideMask = function () {
+	  document.getElementById('app-mask').style.display = 'none';
+	};
+	
+	var hashListener = hashHistory(),
+	    dialogMap = {},
+	    hashQueue = [];
+	
+	var listener = hashListener.listener(function (path, prepath) {
+	  var prepath = prepath * 1;
+	
+	  if (!!prepath && path - prepath < 0) {
+	    removeDialogByHash(prepath);
+	  }
+	});
+	
+	/*
+	 queue --> hash --> dialogId --> modal
+	 */
+	ModalDialog.afterListener(function (dialog) {
+	  var hashVl = hashListener.autoUpdateHash();
+	  dialogMap[hashVl] = dialog.id;
+	  hashQueue.push(hashVl);
+	});
+	
+	ModalDialog.closedListener(function (dialog) {
+	  var unUsualIdx = hashQueue.length - 2,
+	      hashvl = hashQueue[unUsualIdx],
+	      lastItem;
+	
+	  if (dialogMap[hashvl] == dialog.id) {
+	    hashQueue.splice(unUsualIdx, 1);
+	    dialogMap[hashvl] = dialogMap[hashQueue[unUsualIdx]];
+	    delete dialogMap[hashQueue[unUsualIdx]];
+	    hashQueue[unUsualIdx]--;
+	  } else {
+	    lastItem = hashQueue.pop();
+	    delete dialogMap[lastItem];
+	  }
+	
+	  if (hashListener.getCurrentHashPath() > 0) hashListener.back();
+	});
+	
+	function removeDialogByHash(hashvl) {
+	  var dialogList = ModalDialog.dialogList,
+	      splitIndex;
+	
+	  hashQueue.every(function (item, index) {
+	    if (item == hashvl) {
+	      splitIndex = index;
+	    } else return true;
+	  });
+	
+	  if (splitIndex != null) {
+	
+	    hashQueue.slice(splitIndex).forEach(function (item) {
+	      dialogList[dialogMap[item]].closeDialog(true);
+	      delete dialogMap[item];
+	    });
+	    hashQueue = hashQueue.slice(0, splitIndex);
+	  }
+	}
+	
+	module.exports = ModalDialog;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var utils = __webpack_require__(2);
+	var scrollDlg = __webpack_require__(9);
+	var _ = {
+	  assign: utils.assign
+	};
+	/*
+	生成对话框模板内容
+	 */
+	function getHtmlContent(options) {
+	  var templateHtml = [],
+	      header = options.header;
+	
+	  header = utils.replaceTemlate(header, options);
+	
+	  templateHtml.push('<div class="modal-dialog ' + options.clazz + '" style="position:fixed;"><div class="dialog-mask"></div><div class="modal-dialog-main"><header>');
+	  templateHtml.push(header);
+	  templateHtml.push('</header><section><div class="dialog-content"></div></section><footer>');
+	  templateHtml.push(createButtons.call(this, options));
+	  templateHtml.push('</footer></div></div>');
+	
+	  return templateHtml.join('');
+	}
+	/*
+	创建底部按钮
+	 */
+	function createButtons(options) {
+	  var btns = options.buttons || [],
+	      template = '<button type="button" class="{cls}" data-id="{id}" >{name}</button>',
+	      btnTmpls = '',
+	      self = this,
+	      oneBtnClz = '';
+	
+	  if (options.cancelCallback) {
+	    btns.push({
+	      id: 'cancel',
+	      name: options.cancelStr,
+	      callback: options.cancelCallback,
+	      cls: "cancle-btn"
+	    });
+	  }
+	
+	  if (btns.length == 0) oneBtnClz = ' modal-dialog-onebtn';
+	
+	  if (options.okCallback) {
+	    btns.push({
+	      id: 'ok',
+	      name: options.sureStr,
+	      callback: options.okCallback,
+	      cls: "sure-btn" + oneBtnClz
+	    });
+	  }
+	
+	  if (options.reverse) btns = btns.reverse();
+	
+	  btns.forEach(function (item, index) {
+	    if (btns.length - 1 == index) item.cls += ' last';
+	    btnTmpls += utils.replaceTemlate(template, item);
+	    self.callbacks[item.id] = item.callback;
+	  });
+	
+	  return btnTmpls;
+	}
+	
+	function insertContent(dom, options) {
+	  if (options.selector) {
+	    var comment = document.createComment("dialog-target replace"),
+	        selector = options.selector,
+	        oriDisplay = getComputedStyle(selector).getPropertyValue('display');
+	
+	    if (selector.parentNode) {
+	      selector.parentNode.replaceChild(comment, selector);
+	      dom._commentDom = comment;
+	      if (oriDisplay == 'none') {
+	        selector.style.display = 'block';
+	      }
+	      dom._originDisplay = oriDisplay;
+	    }
+	
+	    dom.querySelector('.dialog-content').appendChild(selector);
+	  } else dom.querySelector('.dialog-content').innerHTML = options.content.replace(/(\r\n|\n|\r)/gm, '<br/>');
+	}
+	/**
+	 * [ModalDialog description]
+	 * clazz: 弹出框的css类名
+	 * cancelStr 取消按钮的按钮名
+	 * sureStr 确定按钮的按钮名
+	 * title 弹出框的标题
+	 * header 表示头部的html模板
+	 * okCallback 确定按钮回调函数
+	 * cancelCallback 取消按钮回调函数
+	 * buttons [{cls:'sure',callback:fn,name:'name'}]
+	 */
+	var defaultSettings = {
+	  clazz: 'dialog-theme',
+	  cancelStr: '取消',
+	  sureStr: '确定',
+	  title: '温馨提示',
+	  header: '<span class="dialog-title">{title}</span>',
+	  animated: true,
+	  buttons: null
+	},
+	    beforeListeners = [],
+	    afterListeners = [],
+	    closedListeners = [],
+	    _count = 0;
+	
+	var ModalDialog = function ModalDialog(options) {
+	  var dialog, id;
+	
+	  options = _.assign({}, defaultSettings, options);
+	
+	  options._callBacks = options._callBacks || {};
+	  id = options.id = options.id || _count;
+	
+	  Object.keys(options).forEach(function (name) {
+	    if (typeof options[name] === 'function') {
+	      options._callBacks[name] = options[name];
+	    }
+	  });
+	
+	  beforeListeners.forEach(function (listener) {
+	    listener(options);
+	  });
+	
+	  ModalDialog.dialogList[id] = dialog = new ModalDialog.create(options);
+	
+	  afterListeners.forEach(function (listener) {
+	    listener(dialog);
+	  });
+	
+	  _count++;
+	
+	  return dialog;
+	};
+	
+	ModalDialog.create = function (options) {
+	  var dialogDom, dlgPosY, dlgPosX, dlgW, dlgH;
+	
+	  this.callbacks = options._callBacks;
+	  this.id = options.id;
+	
+	  dialogDom = utils.createHtmlDom(getHtmlContent.call(this, options));
+	  dialogDom.setAttribute('data-pos', 0);
+	  insertContent(dialogDom, options);
+	  document.body.appendChild(dialogDom);
+	
+	  this.destroyScroll = scrollDlg.initTouch(dialogDom);
+	
+	  if (!this.winH) this.winH = window.innerHeight ? window.innerHeight : document.body.clientHeight;
+	  if (!this.winW) this.winW = window.innerWidth ? window.innerWidth : document.body.clientWidth;
+	
+	  dlgH = dialogDom.offsetHeight;
+	  dlgW = dialogDom.offsetWidth;
+	  dlgPosY = this.winH - dlgH > 0 ? (this.winH - dlgH) / 2 : this.winH * 0.1;
+	  dlgPosX = this.winW - dlgW > 0 ? (this.winW - dlgW) / 2 : this.winW * 0.1;
+	
+	  _.assign(dialogDom.style, {
+	    display: 'block',
+	    left: dlgPosX + 'px',
+	    top: dlgPosY + 'px'
+	  });
+	
+	  if (options.animated) dialogDom.className += ' dlg-animation';
+	
+	  this._eventListener = this.proxy(this._clickEvent, dialogDom, options);
+	  this.dialogDom = dialogDom;
+	  this.options = options;
+	  utils.bindEvent(dialogDom, 'click', this._eventListener);
+	
+	  return this;
+	};
+	_.assign(ModalDialog.create.prototype, {
+	  callbacks: null,
+	  closeDialog: function closeDialog(isNotInvoke) {
+	    var dialogDom = this.dialogDom,
+	        options = this.options,
+	        selector,
+	        _commentDom,
+	        self = this;
+	
+	    dialogDom.style.display = 'none';
+	    if (options.selector && dialogDom._commentDom) {
+	      selector = options.selector;
+	      _commentDom = dialogDom._commentDom;
+	
+	      selector.style.display = dialogDom._originDisplay;
+	      _commentDom.parentNode.replaceChild(selector, _commentDom);
+	
+	      dialogDom._commentDom = null;
+	      dialogDom._originDisplay = null;
+	    }
+	    utils.unBindEvent(dialogDom, 'click', this._eventListener);
+	    dialogDom.parentNode.removeChild(dialogDom);
+	    this.destroyScroll();
+	
+	    if (!isNotInvoke) closedListeners.forEach(function (listener) {
+	      listener(self);
+	    });
+	
+	    this._eventListener = null;
+	    this.dialogDom = dialogDom = null;
+	
+	    delete ModalDialog.dialogList[this.id];
+	  },
+	  _clickEvent: function _clickEvent(e, dialogDom, options) {
+	    var target = e.target,
+	        id = target.getAttribute('data-id'),
+	        self = this;
+	
+	    if (typeof this.callbacks[id] == 'function' && !this.callbacks[id].call(this, e)) {
+	      setTimeout(function () {
+	        self.closeDialog();
+	      }, 1);
+	    }
+	  },
+	  proxy: function proxy(fn) {
+	    var self = this,
+	        wrapArgs = Array.prototype.slice.call(arguments, 1);
+	
+	    return function () {
+	      var args = Array.prototype.slice.call(arguments);
+	
+	      if (wrapArgs.length > 0) args = args.concat(wrapArgs);
+	
+	      fn.apply(self, args);
+	    };
+	  }
+	});
+	
+	ModalDialog.afterListener = function (listener) {
+	  afterListeners.push(listener);
+	
+	  return function () {
+	    afterListeners = afterListeners.filter(function (item) {
+	      return item != listener;
+	    });
+	  };
+	};
+	
+	ModalDialog.preListener = function (listener) {
+	  beforeListeners.push(listener);
+	
+	  return function () {
+	    beforeListeners = beforeListeners.filter(function (item) {
+	      return item != listener;
+	    });
+	  };
+	};
+	
+	ModalDialog.closedListener = function (listener) {
+	  closedListeners.push(listener);
+	
+	  return function () {
+	    closedListeners = closedListeners.filter(function (item) {
+	      return item != listener;
+	    });
+	  };
+	};
+	
+	ModalDialog.dialogList = {};
+	
+	module.exports = ModalDialog;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var utils = __webpack_require__(2);
+	
+	function getHeight(sel, isOuter) {
+	  var sectionStyle = getComputedStyle(sel),
+	      marginH = 0;
+	
+	  if (isOuter) {
+	    marginH = sectionStyle.getPropertyValue('margin-top').replace('px', '') * 1 + sectionStyle.getPropertyValue('margin-bottom').replace('px', '') * 1;
+	  }
+	  return sectionStyle.getPropertyValue('height').replace('px', '') * 1 + sectionStyle.paddingTop.replace('px', '') * 1 + sectionStyle.paddingBottom.replace('px', '') * 1 + sectionStyle.borderTopWidth.replace('px', '') * 1 + sectionStyle.borderBottomWidth.replace('px', '') * 1 + marginH;
+	}
+	
+	module.exports = {
+	  initTouch: function initTouch(dialog) {
+	    var dlgContent = dialog.querySelector('.dialog-content'),
+	        section = dialog.getElementsByTagName('section')[0],
+	        maxHeight,
+	        startPosx,
+	        startPosy,
+	        isTouch,
+	        lastPosY,
+	        timer;
+	
+	    maxHeight = getComputedStyle(section).getPropertyValue('height').replace('px', '') * 1 - getHeight(dlgContent, true);
+	
+	    utils.bindEvent(dialog, 'touchmove', stopScrollMove);
+	    utils.bindEvent(dialog, 'touchstart', startTouch);
+	    utils.bindEvent(dialog, 'touchend', toucheEnd);
+	
+	    return function () {
+	      utils.unBindEvent(dialog, 'touchmove', stopScrollMove);
+	      utils.unBindEvent(dialog, 'touchstart', startTouch);
+	      utils.unBindEvent(dialog, 'touchend', toucheEnd);
+	    };
+	
+	    function startTouch(e) {
+	      var touch = e.touches[0];
+	
+	      if (e.target.className.indexOf('dialog-content') >= 0) {
+	        startPosx = touch.screenX;
+	        startPosy = touch.screenY;
+	        isTouch = true;
+	      }
+	    }
+	    function stopScrollMove(e) {
+	      var touch = e.touches[0],
+	          target = e.target,
+	          currentTarget = e.currentTarget,
+	          nodeName = target.nodeName.toLowerCase(),
+	          posX = touch.screenX,
+	          posY = touch.screenY,
+	          currentPosY = currentTarget.attributes['data-pos'].value * 1 || 0,
+	          distance;
+	
+	      if (isTouch) {
+	        if (Math.abs(posX - startPosx) < 10 && Math.abs(posY - startPosy) > 10) {
+	          distance = currentPosY + posY - startPosy;
+	          if (distance < maxHeight) distance = maxHeight;else if (distance > 0) distance = 0;
+	          currentTarget.attributes['data-pos'].value = distance;
+	          scrollTo(target, currentPosY, distance);
+	
+	          startPosx = posX;
+	          startPosy = posY;
+	        }
+	      }
+	      if (nodeName != 'input' && nodeName != 'select' && nodeName != 'textarea') {
+	        e.preventDefault();
+	        e.stopPropagation();
+	      }
+	      return false;
+	    }
+	    function toucheEnd() {
+	      startPosx = null;
+	      startPosy = null;
+	      isTouch = false;
+	    }
+	
+	    function scrollTo(target, curPosY, y) {
+	      var step = 5;
+	
+	      lastPosY = y;
+	      if (timer != null) {
+	        clearTimer();
+	      }
+	
+	      timer = setInterval(_innerScroll, 18);
+	      _innerScroll();
+	
+	      function _innerScroll() {
+	        curPosY -= step;
+	        if (curPosY < lastPosY) {
+	          clearTimer();
+	          curPosY = lastPosY;
+	        }
+	        target.style.webkitTransform = 'translate3d(0px,' + curPosY + 'px,0px)';
+	      }
+	      function clearTimer() {
+	        timer = null;
+	        clearInterval(timer);
+	      }
+	    }
+	  }
+	};
 
 /***/ }
 /******/ ])

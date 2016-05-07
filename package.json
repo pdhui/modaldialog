@@ -35,14 +35,9 @@
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   },
-  "dependencies": {
-    "history": "^2.1.0"
-  },
   "babel": {
     "presets": [
-      "es2015",
-      "stage-1",
-      "es2015-loose"
+      "es2015"
     ],
     "plugins": [
       "syntax-object-rest-spread",
