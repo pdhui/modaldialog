@@ -46,5 +46,19 @@ module.exports = {
       }
     }
     return temp;
+  },
+  closest: function(dom,cls){
+    var clsRegx = new RegExp('(^|\\s+)'+ cls + '(\\s+|$)'),
+        parent = dom;
+
+    if(!!dom.className.match(clsRegx))
+      return dom;
+
+    while(!!(parent = parent.parentNode) &&  parent.nodeName.toLowerCase() != 'html'){
+      if(!!parent.className.match(clsRegx)){
+        return parent;
+      }
+    }
+    return null;
   }
 }

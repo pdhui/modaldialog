@@ -13,11 +13,14 @@
  * cancelCallback：取消按钮的回调函数
  * selector：html页面的某个dom元素节点，会作为弹出框的内容，此时，content定义的内容无效【只有提示框和确认框有用】
 
+弹出框里面的dom元素如果有data-id属性值，则相当于绑定了click事件，事件的回调函数名为传给ModalDialog的options对象中key等于data-id的值所对应的value。
+
  -----首先
 ```javascript
     require('@flyme/modaldialog/lib/main.css')'//加载css文件，然后在html页面可引用
     var dialog = require('@flyme/modaldialog')
 ```
+
 每种类型的弹出框都有两种调用方式，直接传多个参数或者使用对象作为参数。
 
 1. 提示框：

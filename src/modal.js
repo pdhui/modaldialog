@@ -170,8 +170,12 @@ var _ = {
       top: dlgPosY + 'px'
     });
 
+    _.assign(dialogDom.querySelector('.dialog-mask').style,{
+      height: this.winH + 50 + 'px'
+    });
+
     if(options.animated)
-      dialogDom.className += ' dlg-animation';
+      dialogDom.querySelector('.modal-dialog-main').className += ' dlg-animation';
 
     this._eventListener = this.proxy(this._clickEvent,dialogDom,options);
     this.dialogDom = dialogDom;
@@ -204,10 +208,14 @@ var _ = {
       dialogDom.parentNode.removeChild(dialogDom);
       this.destroyScroll();
 
-      if(!isNotInvoke)
+      if(!isNotInvoke){
         closedListeners.forEach(function(listener){
           listener(self);
         });
+      }else{
+        if(options.cancelCallback)
+          options.cancelCallback();
+      }
 
       this._eventListener = null;
       this.dialogDom = dialogDom = null;

@@ -128,7 +128,7 @@ var hashHistory = require('./hashHistory.js');
       infoFormHtml.push(item.value);
       infoFormHtml.push('</label><input class="form-text" type="text" name="' + item.name + '"/></div>');
     }
-
+    infoFormHtml.push('<div class="error-tip"></div>');
     infoFormHtml.push("</form>");
 
     infoFormDom = domUtil.createHtmlDom(infoFormHtml.join(''));
@@ -153,6 +153,8 @@ var hashHistory = require('./hashHistory.js');
   };
 
   ModalDialog.hideLoading = function(){
+    if(!document.getElementById('loading-box'))
+      return;
     document.getElementById('loading-box').style.display = 'none';
   };
   ModalDialog.showMask = function(){

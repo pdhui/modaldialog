@@ -1,13 +1,13 @@
 {
   "name": "@flyme/modaldialog",
-  "version": "1.2.0",
+  "version": "1.2.6",
   "description": "popup dialog",
   "main": "./build/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "example": "webpack --config ./webpack.config.test.js",
-    "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.test.js"
+    "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.test.js --host=172.17.132.184 --port=8099"
   },
   "repository": {
     "type": "git",

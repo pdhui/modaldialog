@@ -39,9 +39,10 @@ module.exports = {
     }
 
     function startTouch(e){
-      var touch = e.touches[0];
+      var touch = e.touches[0],
+          target = utils.closest(e.target,'dialog-content');
 
-      if(e.target.className.indexOf('dialog-content') >= 0){
+      if(!!target){
         startPosx = touch.screenX;
         startPosy = touch.screenY;
         isTouch = true;
@@ -65,7 +66,7 @@ module.exports = {
           else if(distance > 0)
             distance = 0;
           currentTarget.attributes['data-pos'].value = distance;
-          scrollTo(target,currentPosY,distance);
+          scrollTo(dlgContent,currentPosY,distance);
 
           startPosx = posX;
           startPosy = posY;
@@ -82,8 +83,10 @@ module.exports = {
       startPosy = null;
       isTouch = false;
     }
-
     function scrollTo(target,curPosY,y){
+      target.style.webkitTransform  = 'translate3d(0px,' + y + 'px,0px)';
+    }
+    function scrollTo_test(target,curPosY,y){
       var step = 5;
 
       lastPosY = y;

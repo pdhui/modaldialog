@@ -3,6 +3,7 @@
   text-align: center;
   width: 90%;
   margin: 0 auto;
+  z-index: 9000;
   .dialog-mask{
     display: block;
   }
@@ -29,10 +30,6 @@
     max-height: 200px;
     overflow: hidden;
     position: relative;
-    padding-top: 10px;
-    .dialog-content{
-      // position: absolute;
-    }
   }
   footer{
     border-top: 1px solid #ccc;
@@ -86,7 +83,7 @@
       }
     }
   }
-  &.dlg-animation{
+  .dlg-animation{
     -webkit-transform-origin: center center;
     -webkit-animation: dialogAnimate 0.15s ease-in;
   }
@@ -115,9 +112,7 @@
 .dialog-mask{
   position: fixed;
   top: 0px;
-  bottom: 0px;
   left: 0px;
-  right: 0px;
   width: 100%;
   height: 100%;
   z-index: 8999;
