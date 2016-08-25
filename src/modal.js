@@ -2,7 +2,7 @@ var utils = require('./dom.js');
 var scrollDlg = require('./dlgscroll.js');
 var _ = {
   assign: utils.assign
-};
+}, winH, winW;
 /*
 生成对话框模板内容
  */
@@ -12,7 +12,7 @@ var _ = {
 
     header = utils.replaceTemlate(header,options);
 
-    templateHtml.push('<div class="modal-dialog ' + options.clazz + '" style="position:fixed;"><div class="dialog-mask"></div><div class="modal-dialog-main"><header>');
+    templateHtml.push('<div class="modal-dialog ' + options.clazz + '"><div class="dialog-mask"></div><div class="modal-dialog-main"><header>');
     templateHtml.push(header);
     templateHtml.push('</header><section><div class="dialog-content"></div></section><footer>');
     templateHtml.push(createButtons.call(this,options));
@@ -20,6 +20,14 @@ var _ = {
 
     return templateHtml.join('');
   }
+
+  function resizeWin(){
+    winH = window.innerHeight ? window.innerHeight : document.body.clientHeight;
+    winW = window.innerWidth ? window.innerWidth : document.body.clientWidth;
+  }
+  utils.bindEvent(window,'resize',resizeWin);
+
+  resizeWin();
   /*
   创建底部按钮
    */
@@ -94,6 +102,7 @@ var _ = {
  * okCallback 确定按钮回调函数
  * cancelCallback 取消按钮回调函数
  * buttons [{cls:'sure',callback:fn,name:'name'}]
+ * useBackground 单击背景时执行的回调函数
  */
   var defaultSettings = {
         clazz: 'dialog-theme',
@@ -102,7 +111,8 @@ var _ = {
         title: '温馨提示',
         header: '<span class="dialog-title">{title}</span>',
         animated: true,
-        buttons: null
+        buttons: null,
+        useBackground: 'cancel'
       },
       beforeListeners = [],
       afterListeners = [],
@@ -130,6 +140,8 @@ var _ = {
 
     ModalDialog.dialogList[id] = dialog = new ModalDialog.create(options);
 
+    ModalDialog.modalCount ++;
+
     afterListeners.forEach(function(listener){
       listener(dialog);
     });
@@ -154,15 +166,14 @@ var _ = {
 
     this.destroyScroll = scrollDlg.initTouch(dialogDom);
 
-    if(!this.winH)
-      this.winH = window.innerHeight ? window.innerHeight : document.body.clientHeight;
-    if(!this.winW)
-      this.winW = window.innerWidth ? window.innerWidth : document.body.clientWidth;
+    this.winH = winH;
+    this.winW = winW;
 
     dlgH = dialogDom.offsetHeight;
     dlgW = dialogDom.offsetWidth;
     dlgPosY = (this.winH - dlgH > 0 ) ? (this.winH - dlgH)/2 : this.winH*0.1;
     dlgPosX = (this.winW - dlgW > 0 ) ? (this.winW - dlgW)/2 : this.winW*0.1;
+
 
     _.assign(dialogDom.style,{
       display: 'block',
@@ -170,12 +181,19 @@ var _ = {
       top: dlgPosY + 'px'
     });
 
-    _.assign(dialogDom.querySelector('.dialog-mask').style,{
-      height: this.winH + 50 + 'px'
-    });
+    // _.assign(dialogDom.querySelector('.dialog-mask').style,{
+    //   height: ModalDialog.maxH + 50 + 'px'
+    // });
 
     if(options.animated)
       dialogDom.querySelector('.modal-dialog-main').className += ' dlg-animation';
+    if(options.useBackground){
+      var userbgr = options.useBackground;
+      if(!options._callBacks[userbgr]){
+        options._callBacks[userbgr] = function(){};
+      }
+      dialogDom.querySelector('.dialog-mask').dataset.id = options.useBackground;
+    }
 
     this._eventListener = this.proxy(this._clickEvent,dialogDom,options);
     this.dialogDom = dialogDom;
@@ -206,7 +224,7 @@ var _ = {
       }
       utils.unBindEvent(dialogDom,'click',this._eventListener);
       dialogDom.parentNode.removeChild(dialogDom);
-      this.destroyScroll();
+      this.destroyScroll && this.destroyScroll();
 
       if(!isNotInvoke){
         closedListeners.forEach(function(listener){
@@ -221,6 +239,8 @@ var _ = {
       this.dialogDom = dialogDom = null;
 
       delete ModalDialog.dialogList[this.id];
+
+      ModalDialog.modalCount --;
     },
     _clickEvent: function(e,dialogDom,options){
       var target = e.target,
@@ -279,5 +299,6 @@ var _ = {
   };
 
   ModalDialog.dialogList = {};
+  ModalDialog.modalCount = 0;
 
   module.exports = ModalDialog;

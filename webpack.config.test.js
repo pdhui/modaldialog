@@ -12,7 +12,7 @@ module.exports = {
         path: path.join(__dirname , "/example/"),
         libraryTarget: "umd"
     },
-    devtool:'sourcemap',
+    devtool:'inline-source-map',
     module: {
         loaders: [
             {

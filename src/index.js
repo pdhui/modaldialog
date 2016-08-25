@@ -174,14 +174,21 @@ var hashHistory = require('./hashHistory.js');
   };
 
   var defaultConfig = {
-    useHash: false
-  };
+      useHash: false
+    },
+    isConfig = false;
+
   ModalDialog.config = function(config){
     var options = domUtil.assign({},defaultConfig,config);
 
+    if(isConfig){
+      console.info('modaldialg only can config once');
+      return;
+    }
     if(options.useHash){
       initHash();
     }
+    isConfig = true;
   }
 
   function initHash(){
@@ -201,9 +208,11 @@ var hashHistory = require('./hashHistory.js');
      queue --> hash --> dialogId --> modal
      */
     ModalDialog.afterListener(function(dialog){
-      var hashVl = hashListener.autoUpdateHash();
-      dialogMap[hashVl] = dialog.id;
-      hashQueue.push(hashVl);
+      setTimeout(function(){
+        var hashVl = hashListener.autoUpdateHash();
+        dialogMap[hashVl] = dialog.id;
+        hashQueue.push(hashVl);
+      },Math.min(ModalDialog.modalCount,10));
     });
 
     ModalDialog.closedListener(function(dialog){

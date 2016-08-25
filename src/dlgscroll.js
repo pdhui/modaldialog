@@ -58,8 +58,8 @@ module.exports = {
           currentPosY = currentTarget.attributes['data-pos'].value*1 || 0,
           distance;
 
-      if(isTouch){
-        if(Math.abs(posX - startPosx) < 10 && Math.abs(posY - startPosy) > 10){
+      if(isTouch && maxHeight < 0){
+        if(Math.abs(posX - startPosx) < 5 && Math.abs(posY - startPosy) > 5){
           distance = currentPosY + posY - startPosy ;
           if(distance < maxHeight)
             distance = maxHeight;
