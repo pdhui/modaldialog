@@ -5,24 +5,24 @@ var hasClose;
 
 dialog.config({useHash:true});
 
-document.getElementById('btn2').addEventListener('click',function(){
-  // dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少然而，我们可以看到 Webpack 打包后的 all.js 件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可文件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可以看到 Webpack 打包后的 all.js 文件不。然而，我们可以看到 Webpack 打包后的 all.js 文件不仅没有压缩，而且代码当中的注释也没有去掉Webpack 同样提供了 UglifyJsPlugin 的插件来进行压缩代码操作。但是在我尝试的过程中，这个插件和 html-loader 配合使用的时候会出现错误，因此在这里我使用了 Gulp 来进行代码压缩的工作。Webpack 与 Gulp 配合使用也相当简单，只需要安装 gulp-webpack安装 Gulp 和其他所需的工具缺点：通过设备宽度范围区间这样的媒体查询来动态改变rem基准值，其实不够精确，比如：宽度为360px 和 宽度为320px的手机，因为屏宽在同一范围区间内(<375px)，所以会被同等对待(rem基准值相同)，而事实上他们的屏幕宽度并不相等，它们的布局也应该有所不同。最终，结论就是：这样的做法，没有做到足够的精确，但是够用。本部分将专注于 JavaScript 语言本身，而并非局限于网页或其他宿主环境。想要了解网页有关的 API',"确认放弃领奖",function(){
+// document.getElementById('btn2').addEventListener('click',function(){
+//   dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少然而，我们可以看到 Webpack 打包后的 all.js 件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可文件不然而，我们可以看到 Webpack 打包后的 all.js 文件不然而，我们可以看到 Webpack 打包后的 all.js 文件不。然而，我们可以看到 Webpack 打包后的 all.js 文件不仅没有压缩，而且代码当中的注释也没有去掉Webpack 同样提供了 UglifyJsPlugin 的插件来进行压缩代码操作。但是在我尝试的过程中，这个插件和 html-loader 配合使用的时候会出现错误，因此在这里我使用了 Gulp 来进行代码压缩的工作。Webpack 与 Gulp 配合使用也相当简单，只需要安装 gulp-webpack安装 Gulp 和其他所需的工具缺点：通过设备宽度范围区间这样的媒体查询来动态改变rem基准值，其实不够精确，比如：宽度为360px 和 宽度为320px的手机，因为屏宽在同一范围区间内(<375px)，所以会被同等对待(rem基准值相同)，而事实上他们的屏幕宽度并不相等，它们的布局也应该有所不同。最终，结论就是：这样的做法，没有做到足够的精确，但是够用。本部分将专注于 JavaScript 语言本身，而并非局限于网页或其他宿主环境。想要了解网页有关的 API',"确认放弃领奖",function(){
 // dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少');
-   console.log('i am alert');
-   if(!hasClose){
-    dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少。1<input type="t','kk',function(){
-      // hasClose = true;
-      dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少');
-      return true;
-   });
-   return true;
-   }
+   // console.log('i am alert');
+   // if(!hasClose){
+   //  dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少。1<input type="t','kk',function(){
+   //    // hasClose = true;
+   //    dialog.alert('在上线之前，我们还应该将代码进行压缩尽量把文件的体积减到最少');
+   //    return true;
+   // });
+   // return true;
+   // }
   // });
    // dialog.confirm('弹框内容区域此处展示各种描述弹框内容区域此处展示各种描述',function(){
    //    console.log('i am confirm');
    //    dialog.alert('在上线之前');
    //  },"确认放弃领奖");
-},false)
+// },false)
 
 // dialog.confirm('弹框内容区域此处展示各种描述弹框内容区域此处展示各种描述',function(){
 //   console.log('i am confirm');
@@ -54,10 +54,16 @@ document.getElementById('btn2').addEventListener('click',function(){
 // dialog.alert({selector:document.getElementsByTagName('h1')[0]});
 // dialog.confirm({selector:document.getElementById('info-form')});
 
-// dialog.confirm({content:'弹框内容区域此处展示各种描述弹框内容区域此处展示各种描述<input type="text" id="username" />',okCallback:function(){
-//   console.log('i am confirm: ' + document.getElementById('username').value);
-//   dialog.alert('在上线之前');
-// },title:"确认放弃领奖",reverse:true});
+var conDlg = dialog.confirm({content:'弹框内容区域此处展示各种描述弹框内容区域此处展示各种描述内容区域此处展示各种描述内容区域此处展示各种描述内容区域此处展示各种描述<input type="text" id="username" />',okCallback:function(){
+  console.log('i am confirm: ' + document.getElementById('username').value);
+  var username = document.getElementById('username');
+  var txt = document.createElement('div');
+  txt.innerHTML = '请输入正确的内容<div >weff描述弹框内容区域此处展示各种描述内容区域此处展示各种描述内容区域此处展示各种描述内容区域此处展描述弹框内容区域此处展示各种描述内容区域此处展示各种描述内容区域此处展示各种描述内容区域此处展</div>';
+  username.parentNode.appendChild(txt);
+  // dialog.alert('在上线之前');
+  conDlg.refresh();
+  return true;
+},title:"确认放弃领奖",reverse:true});
 
 // dialog.showLoading();
 // setTimeout(function(){

@@ -153,8 +153,7 @@ var _ = {
 
   ModalDialog.create = function(options){
     var dialogDom,
-        dlgPosY,dlgPosX,
-        dlgW, dlgH;
+        dlgPos;
 
     this.callbacks = options._callBacks;
     this.id = options.id;
@@ -164,26 +163,15 @@ var _ = {
     insertContent(dialogDom,options);
     document.body.appendChild(dialogDom);
 
-    this.destroyScroll = scrollDlg.initTouch(dialogDom);
+    this.dlgScroll = scrollDlg.initTouch(dialogDom);
 
-    this.winH = winH;
-    this.winW = winW;
-
-    dlgH = dialogDom.offsetHeight;
-    dlgW = dialogDom.offsetWidth;
-    dlgPosY = (this.winH - dlgH > 0 ) ? (this.winH - dlgH)/2 : this.winH*0.1;
-    dlgPosX = (this.winW - dlgW > 0 ) ? (this.winW - dlgW)/2 : this.winW*0.1;
-
+    dlgPos = this.getPos(dialogDom);
 
     _.assign(dialogDom.style,{
       display: 'block',
-      left: dlgPosX + 'px',
-      top: dlgPosY + 'px'
+      left: dlgPos.left + 'px',
+      top: dlgPos.top + 'px'
     });
-
-    // _.assign(dialogDom.querySelector('.dialog-mask').style,{
-    //   height: ModalDialog.maxH + 50 + 'px'
-    // });
 
     if(options.animated)
       dialogDom.querySelector('.modal-dialog-main').className += ' dlg-animation';
@@ -204,6 +192,18 @@ var _ = {
   };
   _.assign(ModalDialog.create.prototype,{
     callbacks: null,
+    getPos: function(dialogDom){
+      dialogDom = dialogDom || this.dialogDom;
+      if(!dialogDom){
+        return {left:0,top:0};
+      }
+      var dlgH = dialogDom.offsetHeight;
+      var dlgW = dialogDom.offsetWidth;
+      var dlgPosY = (winH - dlgH > 0 ) ? (winH - dlgH)/2 : winH*0.1;
+      var dlgPosX = (winW - dlgW > 0 ) ? (winW - dlgW)/2 : winW*0.1;
+
+      return {left: dlgPosX, top: dlgPosY};
+    },
     closeDialog:function(isNotInvoke){
       var dialogDom = this.dialogDom,
           options = this.options,
@@ -224,7 +224,7 @@ var _ = {
       }
       utils.unBindEvent(dialogDom,'click',this._eventListener);
       dialogDom.parentNode.removeChild(dialogDom);
-      this.destroyScroll && this.destroyScroll();
+      this.dlgScroll.destroyScroll && this.dlgScroll.destroyScroll();
 
       if(!isNotInvoke){
         closedListeners.forEach(function(listener){
@@ -241,6 +241,17 @@ var _ = {
       delete ModalDialog.dialogList[this.id];
 
       ModalDialog.modalCount --;
+    },
+    refresh: function(){
+      var dialogDom = this.dialogDom,
+          dlgPos = this.getPos(dialogDom);
+
+      _.assign(dialogDom.style,{
+        display: 'block',
+        left: dlgPos.left + 'px',
+        top: dlgPos.top + 'px'
+      });
+      this.dlgScroll.refresh();
     },
     _clickEvent: function(e,dialogDom,options){
       var target = e.target,

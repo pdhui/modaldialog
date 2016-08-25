@@ -208,11 +208,9 @@ var hashHistory = require('./hashHistory.js');
      queue --> hash --> dialogId --> modal
      */
     ModalDialog.afterListener(function(dialog){
-      setTimeout(function(){
-        var hashVl = hashListener.autoUpdateHash();
-        dialogMap[hashVl] = dialog.id;
-        hashQueue.push(hashVl);
-      },Math.min(ModalDialog.modalCount,10));
+      var hashVl = hashListener.autoUpdateHash();
+      dialogMap[hashVl] = dialog.id;
+      hashQueue.push(hashVl);
     });
 
     ModalDialog.closedListener(function(dialog){
