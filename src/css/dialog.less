@@ -1,56 +1,102 @@
+@baseFontSize: 16px;
+@splitLineColor: #d5d5d5;
+@sureBtnColor: #517bd1;
+
+@correctIcon: '../images/correct.png';
+@decoprize: '../images/decoprize.png';
+@deco2Elec: '../images/deco2Elec.png';
+@decoSingleElec: '../images/decorateElec.png';
+
+.grayShow{
+  color: #7d7d7d;
+}
+.function-rem(@px) {
+  return: @px / @baseFontSize * 1rem;
+}
+
 .modal-dialog{
-  border-radius: 3px;
+  border-radius: rem(1px);
   text-align: center;
-  width: 90%;
+  width: rem(324px);
   margin: 0 auto;
   z-index: 9000;
   position:fixed;
+  box-shadow: 0px 0px rem(7px) 0px rgba(0, 0, 0, 0.2);
+  &.dlg-no-title{
+    header{
+      height: rem(28px);
+    }
+    .dialog-content{
+      color: #000;
+    }
+    section{
+      text-align: left;
+    }
+  }
+  &.dlg-has-title{
+    header{
+      padding: rem(29px) 0px rem(10px) 0px;
+      font-size: rem(18px);
+    }
+  }
+  &.alert-dialog{
+    section{
+      text-align: center;
+    }
+  }
   .dialog-mask{
     display: block;
+    background: rgba(0,0,0,0.2);
   }
   .modal-dialog-main{
     position: relative;
     z-index: 9000;
     background: #fafafa;
+    font-size: rem(16px);
+    border-radius: rem(3px);
   }
   .dialog-title{
     color: #000;
-    font-size: 16px;
   }
   .dialog-content{
-    color: #000;
+    color: #323232;
+    line-height: 1.6;
   }
-  header{
-    height: 40px;
-    line-height: 40px;
+  em{
+    font-style: normal;
+  }
+  input{
+    outline: 0;
+    border: 0;
+    background: transparent;
+    font-size: rem(16px);
   }
   section{
-    text-align: center;
-    width: 83%;
+    padding: 0px rem(26px);
     margin: 0 auto;
-    max-height: 200px;
+    max-height: rem(188px);
     overflow: hidden;
     position: relative;
   }
   footer{
-    border-top: 1px solid #ccc;
-    height: 46px;
-    line-height: 46px;
-    margin-top: 20px;
+    border-top: rem(1px) solid @splitLineColor;
+    height: rem(45px);
+    line-height: rem(45px);
+    margin-top: rem(20px);
     overflow: hidden;
     button{
       outline: none;
       border: 0;
       padding: 0;
       background: none;
-      font-size: 16px;
-      height: 46px;
+      font-size: rem(16px);
+      height: rem(45px);
       &.modal-dialog-onebtn{
         width: 100%;
       }
       &:after{
         content: '';
-        border-right: 1px solid #ccc;
+        border-right: rem(1px) solid @splitLineColor;
         position: absolute;
         top: 0px;
         display: block;
@@ -72,7 +118,7 @@
       color: #000000;
     }
     .sure-btn{
-      color: #65bd6a;
+      color: @sureBtnColor;
     }
   }
   &.alert-dialog{
@@ -84,29 +130,73 @@
       }
     }
   }
-  .dlg-animation{
-    -webkit-transform-origin: center center;
-    -webkit-animation: dialogAnimate 0.15s ease-in;
+  .charge-form{
+    position: relative;
+    padding-top: rem(7px);
+    padding-bottom: rem(11px);
+    .form-tip{
+      position: absolute;
+      display: none;
+      font-weight: 300;
+      padding: rem(3px) 0 0 rem(12px);
+      font-size: rem(12px);
+    }
+    .valid-input{
+      border-bottom: rem(1px) solid @splitLineColor;
+      padding-bottom: rem(7px);
+      width: 100%;
+      box-sizing: border-box;
+      &:focus{
+        &+label{
+          color: #000;
+        }
+        border-bottom-color: #517bd1;
+      }
+    }
+    &.dlg-success:after{
+      content: '';
+      display: block;
+      background: url(@correctIcon) no-repeat;
+      position: absolute;
+      top: rem(13px);
+      right: rem(13px);
+      width: rem(19px);
+      height: rem(14px);
+      background-size: contain;
+    }
+    &.dlg-error{
+      input{
+        border-bottom-color: #df2b18;
+      }
+      .form-tip{
+        display: block;
+        color: #df2b18;
+      }
+    }
   }
-  @-webkit-keyframes dialogAnimate {
-    0% {
-      -webkit-transform: rotateZ(0); }
-    20% {
-      -webkit-transform: rotateZ(3deg); }
-    40% {
-      -webkit-transform: rotateZ(0); }
-    60% {
-      -webkit-transform: rotateZ(-3deg); }
-    70% {
-      -webkit-transform: rotateZ(0deg); }
-    80% {
-      -webkit-transform: rotateZ(1deg); }
-    90% {
-      -webkit-transform: rotateZ(0deg); }
-    95% {
-      -webkit-transform: rotateZ(-1deg); }
-    100% {
-      -webkit-transform: rotateZ(0);
+}
+.charge-dialog{
+  header{
+    height: rem(40px);
+  }
+  section{
+    overflow: initial;
+  }
+  label{
+    position: absolute;
+    left: rem(12px);
+    .grayShow;
+  }
+  input{
+    padding: 0px 0px rem(7px) rem(92px);
+  }
+  .hascomfirm{
+    input{
+      .grayShow;
+    }
+    .form-tip{
+      color: #517bd1;
+      display: block;
     }
   }
 }
@@ -120,112 +210,237 @@
   background: rgba(0,0,0,0.5);
   display: none;
 }
-.dlg-award-list{
-  ul{
-    li{
-      overflow: hidden;
-      padding: 10px 0px;
-      position: relative;
-      &:after{
-        content: '';
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
-        border-bottom: 1px dashed #000;
-        width: 80%;
-        display: block;
-      }
-      img{
-        float: left;
-        width: 50px;
+.myaward-dialog{
+  section{
+    padding: 0 rem(19px);
+  }
+  .dlg-award-list{
+    ul{
+      padding-top: rem(6px);
+      li{
+        overflow: hidden;
+        padding: rem(3px) 0px;
         position: relative;
-        z-index: 3;
-        width: 20%
-      }
-      .item-title{
-        float: left;
+        height: rem(46px);
+        line-height: rem(46px);
+        &:after{
+          content: '';
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          border-bottom: rem(1px) solid @splitLineColor;
+          width: 100%;
+          display: block;
+        }
+        &:last-child{
+          &:after{
+            display: none;
+          }
+        }
+        img{
+          float: left;
+          position: relative;
+          z-index: 3;
+          height: rem(46px);
+        }
+        .item-title{
+          padding-left: rem(12px);
+          float: left;
+          max-width: rem(152px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-align: left;
+        }
+        .item-oper{
+          font-style: normal;
+          font-size:  rem(16px);
+          color: #517bd1;
+          float: right;
+        }
       }
     }
   }
-  .address-controller{
-    height: 50px;
-    line-height: 50px;
-    color:#323232;
+  footer{
+    margin-top: rem(19px);
+  }
+}
+.rule-dlg{
+  section{
+    max-height: rem(295px);
+    padding: 0 rem(32px);
+  }
+  .dialog-content{
+    color: #000;
     text-align: left;
-    padding-top: 25px;
-    .dlg-address{
-      float: left;
-      width: 40%;
-      margin-left: 16%;
-    }
-    .dlg-input{
-      float: left;
-      width: 40%;
-      color: #64a45e;
+    font-size: rem(13px);
+    margin-top: rem(6px);
+  }
+}
+.winner-list-dlg{
+  section{
+    max-height: rem(295px);
+  }
+  footer{
+    margin-top: 0px;
+  }
+  .inr-winlist{
+    color: #000;
+    padding-bottom: rem(26px);
+    ul{
+      list-style: none;
+      text-align: left;
+      line-height: 1.4;
+      li{
+        border-bottom: 1px solid @splitLineColor;
+        padding: rem(3px) rem(13px) rem(7px);
+        &:first-child{
+          padding: rem(2px) rem(13px) rem(8px);
+        }
+        &:last-child{
+          border-bottom: 0;
+        }
+        em{
+          font-size: rem(12px);
+        }
+        .prz-tle{
+          font-size: rem(14px);
+        }
+      }
     }
   }
 }
-.personinfo-dialog{
-  header{
-    height: 10px;
-  }
-  section{
-    max-height: 215px;
-  }
-  footer{
-    border-top:none;
-    text-align: center;
-    margin: 10px 0px 20px 0px;
-    font-size: 16px;
-    .sure-btn,.cancle-btn{
-      float: none;
-      display: inline-block;
-      width: 115px;
-      border-radius: 15px;
-      height: 32px;
-      line-height: 32px;
-      margin-right: 10px;
-      color: #fff;
+.prize-dlg{
+  .inr-prz{
+    color: #000;
+    .prz-name{
+      font-weight: 300;
+      color:#508aeb;
     }
-    .sure-btn{
-      background: #64a45e;
-    }
-    .cancle-btn{
-      background: #afafaf;
-
+    .dec-prize{
+      width: rem(117px);
+      margin: rem(10px) auto 0px;
+      position: relative;
       &:after{
         content: '';
-        display: none;
+        display: block;
+        position: absolute;
+        top:0px;
+        left:0px;
+        width: 100%;
+        height: rem(62px);
+        background: url(@decoprize) no-repeat left top;
+        background-size: contain;
       }
     }
   }
-  .form-item{
-    height: 40px;
+}
+.virtual-dlg{
+  .charge-form{
+    text-align: left;
+    padding: rem(10px) 0;
+    .valid-input{
+      padding-left: rem(12px);
+    }
+    &.dlg-error{
+      padding: rem(10px) 0 rem(1px);
+      .form-tip{
+        position: static;
+        padding: rem(2px) 0 0 rem(11px);
+      }
+    }
+  }
+  footer{
+    margin-top: rem(16px);
+  }
+}
+.electronic-dlg{
+  &.dlg-has-title{
+    header{
+      padding-bottom: rem(8px);
+    }
+  }
+  &.dlg-no-title{
+    section{
+      text-align: center;
+    }
+  }
+  .dec-code{
     position: relative;
-    line-height: 40px;
-    color: #323232;
-    margin-bottom: 15px;
+    padding-top: rem(9px);
     &:after{
       content: '';
-      position: absolute;
-      bottom: 0px;
-      right: 0px;
-      border-bottom: 1px dashed #000;
-      width: 100%;
       display: block;
+      position: absolute;
+      top: rem(-5px);
+      left:0px;
+      width: 100%;
+      height: 100%;
+      background: url(@deco2Elec) no-repeat center;
+      background-size: 89%;
     }
-    .form-text{
-      height: 32px;
-      line-height: 32px;
-      background: #fafafa;
-      outline: none;
-      border: none;
+  }
+  .ticket-code{
+    line-height: rem(37px);
+    height: rem(37px);
+    width: rem(272px);
+    margin-bottom: rem(7px);
+    color: #fff;
+    border-radius: rem(2px);
+    background-color: #508aeb;
+    span{
+      position: relative;
+      z-index: 1;
     }
+    &:last-child{
+      margin-bottom: rem(10px);
+    }
+  }
+  .ele-userule{
+    text-align: left;
+    color: #7F7F7F;
+    font-size: rem(12px);
+  }
+  &.single-ticket{
+    .dec-code{
+      &:after{
+        background-image: url(@decoSingleElec);
+      }
+      .ticket-code:last-child{
+        display: none;
+      }
+    }
+    section{
+      max-height: 125px;
+    }
+  }
+}
+.actual-dlg{
+  footer{
+    margin-top: rem(16px);
+  }
+}
+.personinfo-dialog{
+  section{
+    max-height: rem(250px);
+  }
+  .dlg-error{
+    &:last-child{
+      .valid-input{
+        padding-bottom: rem(28px);
+      }
+    }
+    .form-tip{
+      position: static;
+    }
+  }
+  .dirty{
     label{
-      float: left;
-      width: 80px;
-      text-align: left;
+      color: #000;
     }
+  }
+  footer{
+    margin-top: rem(18px);
   }
 }
 #loading-box {

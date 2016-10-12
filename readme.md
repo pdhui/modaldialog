@@ -55,29 +55,75 @@ var context = {
 dialog.confirm(context)
 ```
 3.奖品列表框
-
-inputCallback是填写按钮的回调函数
-
-datalist参数格式如下：[{imgUrl:'xx.jpg',name:'pro 5'},{imgUrl:'xx.jpg',name:'魅族 5'},{imgUrl:'xx.jpg',name:'pro 6'}]
 ```javascript
 dialog.alertAwardList(datalist,title,inputCallback,okFn,cancelFn,btText1,btText2)
 ```
+调用方式：
+```javascript
+dialog.alertAwardList([
+    {imgUrl:award1,name:'话费50元',type:'call_charge',hascomfirm:true,phone: '12312341234'},
+    {imgUrl:award1,name:'话费50元',type:'call_charge'},
+    {
+      imgUrl:award1,
+      name:'魅族优惠券 200 元',
+      type:'electronic',
+      voucher: 'DORKE28048222823:12887570099',
+      desc: '魅族优惠券 200 元',
+      winMessage: '使用方法：前去美团－通用券兑换,输入该券,即可\r\n使用方法：前去美团－通用券兑换,输入该券,即可'
+    },
+    {imgUrl:award2,name:'Pro 6',type:'actual'},
+    {imgUrl:award2,name:'Pro 6',type:'actual',hascomfirm:true,values:['panda','1231234123','广东省珠海市666']}],(idx,item,data)=>{
+      console.log('ok',idx,item,data);
+    });
+```
+hascomfirm表示已经领取过，只针对虚拟券和实物奖品
 4.个人信息框
 
-formField：表单的文本域对象，默认值是这个
-
-[
-    {name:'recName',value:'收件人:'},
-    {name:'mobilephone',value:'手机号码:'},
-    {name:'recAddress',value:'收件地址:'},
-    {name:'message',value:'留言:'}
-]
-
-values：每个表单域的值，数组类型，与formField的顺序一一对应。
 ```javascript
-dialog.alertPersonInfoDlg(formField,values,okFn,cancelFn,cancelStr,sureStr)
+dialog.alertPersonInfoDlg(okFn,cancelFn,values,formField,btText1,btText2)
 ```
-5.加载提示框
+5.中奖框
+
+* 虚拟券：alertElectronicDlg (context,title,okFn,cancelFn,btText1)
+
+```javascript
+    addExample('带标题-一个虚拟券奖品','oneElectronicDlg',function(){
+      dialog.alertElectronicDlg({
+          voucher: 'DORKE28048222823',
+          winMessage: '使用方法：1.前去美团－通用券兑换,输入该券,即可\r\n2.前去美团－通用券兑换,
+          desc: '美团优惠券500元'
+        }
+      );
+    })
+    .addExample('带标题-虚拟券奖品-两个码','electronicDlg',function(){
+      dialog.alertElectronicDlg({
+          voucher: 'DORKE28048222823:12887570099',
+          winMessage: '使用方法：前去美团－通用券兑换,输入该券,即可',
+          desc: '美团优惠券500元'
+        }
+      );
+    })
+```
+
+* 实物奖：alertActualDlg(data,okFn,cancelFn)
+
+```javascript
+    dialog.alertActualDlg({
+      imgUrl: prizeUrl,
+      desc: 'mx6 一台'
+    }
+  );
+```
+
+* 流量|话费：alertVirtualDlg(data,okFn,cancelFn)
+```javascript
+   dialog.alertVirtualDlg({
+      imgUrl: prize,
+      desc: '话费50元'
+    }
+  );
+```
+6.加载提示框
 
 * 显示
 ```javascript
@@ -87,7 +133,7 @@ dialog.showLoading()
 ```javascript
 dialog.hideLoading()
 ```
-
+更多请参考例子demo
 ##有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以在issues提意见或用以下联系方式跟我交流
 

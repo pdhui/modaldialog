@@ -2,6 +2,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack = require('webpack')
 var path = require('path')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var lessFunctionsPlugin = require('less-plugin-functions');
 
 module.exports = {
     entry: {
@@ -25,10 +26,29 @@ module.exports = {
                 loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
                 exclude: '/node_modules/'
             },
-            { test: /\.js$/, exclude: /node_modules/, loader: 'babel' }
+            {
+                test: /\.(jpe?g|png|gif|svg|webp)$/i,
+                loaders: [
+                    'image?{bypassOnDebug: true, progressive:true, \
+                        optimizationLevel: 3, pngquant:{quality: "65-80"}}',
+                    'url?limit=10000&name=/img/[hash:8].[name].[ext]',
+                ],
+                exclude: '/node_modules/'
+            },
+            { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
+            {
+                test: /\.html$/,
+                loader: 'html',
+                exclude: '/node_modules/'
+            }
         ]
     },
     plugins: [
         new ExtractTextPlugin("../example/[name].css")
-    ]
+    ],
+    lessLoader: {
+        lessPlugins: [
+          new lessFunctionsPlugin()
+        ]
+    }
 }

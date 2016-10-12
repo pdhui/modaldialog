@@ -110,7 +110,7 @@ var _ = {
         sureStr: '确定',
         title: '温馨提示',
         header: '<span class="dialog-title">{title}</span>',
-        animated: true,
+        animated: false,
         buttons: null,
         useBackground: 'cancel'
       },

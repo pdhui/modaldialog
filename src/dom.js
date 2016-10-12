@@ -14,7 +14,7 @@ module.exports = {
     var regx = new RegExp(/{(.*?)}/g),
         temp;
     while(temp = regx.exec(str)){
-      str = str.replace(temp[0],data[temp[1]]);
+      str = str.replace(temp[0],data[temp[1]] || '');
     }
     return str;
   },
@@ -49,16 +49,26 @@ module.exports = {
   },
   closest: function(dom,cls){
     var clsRegx = new RegExp('(^|\\s+)'+ cls + '(\\s+|$)'),
+        tagRegx = new RegExp('^'+ cls + '$'),
         parent = dom;
 
-    if(!!dom.className.match(clsRegx))
+    if(test(dom))
       return dom;
 
     while(!!(parent = parent.parentNode) &&  parent.nodeName.toLowerCase() != 'html'){
-      if(!!parent.className.match(clsRegx)){
+      if(test(parent)){
         return parent;
       }
     }
     return null;
+
+    function test(dom){
+
+      if(!!dom.className.match(clsRegx)){
+        return true;
+      }else if(tagRegx.test(dom.nodeName.toLowerCase())){
+        return true;
+      }
+    }
   }
 }
