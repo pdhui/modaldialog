@@ -77,6 +77,7 @@ dialog.alertAwardList([
     });
 ```
 hascomfirm表示已经领取过，只针对虚拟券和实物奖品
+
 4.个人信息框
 
 ```javascript
@@ -134,6 +135,7 @@ dialog.showLoading()
 dialog.hideLoading()
 ```
 更多请参考例子demo
+
 ##有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以在issues提意见或用以下联系方式跟我交流
 

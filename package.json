@@ -1,20 +1,20 @@
 {
   "name": "@flyme/modaldialog",
-  "version": "1.4.2",
+  "version": "1.5.8",
   "description": "popup dialog",
   "main": "./build/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "example": "webpack --config ./webpack.config.test.js",
-    "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.test.js --host=172.17.132.184 --port=8099"
+    "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.test.js --host=127.0.0.1 --port=8099"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/pdhui/modaldialog.git"
   },
   "publishConfig": {
-    "registry": "http://172.17.132.227:8888/"
+
   },
   "homepage": "https://github.com/pdhui/modaldialog#readme",
   "author": "panda.xiong",
@@ -49,5 +49,8 @@
       "syntax-class-properties",
       "syntax-class-constructor-call"
     ]
+  },
+  "dependencies": {
+    "clipboard": "^1.5.13"
   }
 }

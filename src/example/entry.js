@@ -5,10 +5,7 @@ var utils = require('../dom.js');
 var award1 = require('../images/myaward1.png');
 var award2 = require('../images/myaward2.png');
 var prize = require('../images/prize.png');
-
-var hasClose;
-
-dialog.config({useHash:true});
+var Clipboard = require('clipboard');
 
 var example = {
   _events: {},
@@ -73,8 +70,16 @@ example.addExample('不带标题-确认框2行','confirm2',function(){
       desc: '魅族优惠券 200 元',
       winMessage: '使用方法：前去美团－通用券兑换,输入该券,即可\r\n使用方法：前去美团－通用券兑换,输入该券,即可'
     },
+    {
+      imgUrl:award1,
+      name:'一个码-魅族优惠券 200 元',
+      type:'electronic',
+      voucher: 'DORKE28048222823',
+      desc: '魅族优惠券 200 元',
+      winMessage: '使用方法：前去美团－通用券兑换,输入该券,即可\r\n使用方法：前去美团－通用券兑换,输入该券,即可'
+    },
     {imgUrl:award2,name:'Pro 6',type:'actual'},
-    {imgUrl:award2,name:'Pro 6',type:'actual',hascomfirm:true,values:['panda','1231234123','广东省珠海市666']}],(idx,item,data)=>{
+    {imgUrl:award2,name:'Pro 6',type:'actual',hascomfirm:true,values:['panda','1231234123','广东省珠海市香洲区唐家湾嗷嗷啊666']}],(idx,item,data)=>{
       console.log('ok',idx,item,data);
     });
 }).addExample('带标题-我的奖品框两个','myAwardstwo',function(){
@@ -121,7 +126,11 @@ example.addExample('不带标题-确认框2行','confirm2',function(){
 
   dialog.alertVirtualDlg({
       imgUrl: prize,
-      desc: '话费50元'
+      desc: '话费50元',
+      winMessage: '智能网号码（130、131、132、155、156等号段）中奖用户，因运营商充值受限无法充值。'
+    },
+    function(){
+      console.log(this,arguments);
     }
   );
 }).addExample('带标题-虚拟券奖品','electronicDlg',function(){
@@ -134,7 +143,8 @@ example.addExample('不带标题-确认框2行','confirm2',function(){
 }).addExample('带标题-实物奖品','actualDlg',function(){
   dialog.alertActualDlg({
       imgUrl: prize,
-      desc: 'mx6 一台'
+      desc: 'mx6 一台',
+      winMessage: '使用方法：前去美团－通用券兑换,输入该券,即可换行吧换行吧'
     }
   );
 }).addExample('不带标题-填写实物奖品收件人信息','fillformDlg',function(){
@@ -146,4 +156,58 @@ example.addExample('不带标题-确认框2行','confirm2',function(){
       desc: '美团优惠券500元'
     }
   );
+}).addExample('测试loading','loading',function(){
+    dialog.showLoading();
+    dialog.showLoading();
+    dialog.hideLoading();
+    setTimeout(function(){
+      dialog.hideLoading();
+    }, 1000);
+
 });
+
+var tools = {
+  supportCopy: true,
+  copyAndGo: function(btn,text,url,options){
+    var clipboard = new Clipboard(btn, {
+        text: function(trigger) {
+            return text;
+        }
+    });
+    options = options || {};
+
+    clipboard.on('success', function(e) {
+      e.clearSelection();
+      clipboard.destroy();
+
+      options.sucessCallback && options.sucessCallback();
+    })
+
+    clipboard.on('error', function(e) {
+      clipboard.destroy();
+      options.failCallback && options.failCallback();
+    });
+    return clipboard;
+  }
+};
+
+dialog.config({
+  useHash:true,
+  copyTool: tools
+});
+
+dialog.afterListener(function(dialog){
+  $(dialog.dialogDom).delegate('input,textarea','focus',function(){
+    var charDlg = $(this).closest('.modal-dialog');
+    charDlg.attr('oritop',charDlg.css('top'));
+    charDlg.css('top','30px');
+
+  }).delegate('input,textarea','blur',function(evt){
+    console.log(evt.target)
+    var charDlg = $(this).closest('.modal-dialog'),
+        oritop = charDlg.attr('oritop');
+
+    if(oritop != null && oritop != '')
+      charDlg.css('top',oritop);
+  });
+})

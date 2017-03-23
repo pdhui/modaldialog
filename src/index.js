@@ -82,7 +82,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
   };
 
   ModalDialog.confirmMobile = function(phone,okFn,cancelFn,isConfirm,title,btText1,btText2){
-    var template = '<div class="charge-content"><div class="charge-form"><input type="text" class="valid-input charge-phone"/><label>手机号码:</label>' +
+    var template = '<div class="charge-content"><div class="charge-form"><input type="tel" class="valid-input charge-phone"/><label>手机号码:</label>' +
                 '<strong class="form-tip">请填写正确的手机号码' +
                 '</strong></div></div>',
         settings, dlg,
@@ -108,7 +108,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
     settings.clazz = 'charge-dialog';
 
     if(isConfirm){
-      inputDom.classList.add('hascomfirm');
+      inputDom.classList.add('hasconfirm');
       inputDom.querySelector('.form-tip').textContent = '已领奖';
       temp = inputDom.querySelector('input');
       temp.setAttribute('disabled',true);
@@ -141,15 +141,16 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
     }
 
   };
-  ModalDialog.alertAwardList = function(datalist,okFn,cancelFn,title,btText1){
+  ModalDialog.alertAwardList = function(datalist,okFn,cancelFn,options){
     var awardListHtml =['<div class="dlg-award-list"><ul>'],
         settings, result;
 
-    settings = createParams({
+    options = options || {};
+    settings = domUtil.assign(createParams({
       dataList:datalist,
-      title: title || '我的奖品',
-      sureStr: btText1
-    });
+      title: '我的奖品',
+      awardHandle: function(){}
+    }),options);
 
     settings.clazz = 'myaward-dialog';
 
@@ -165,22 +166,31 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
             typeVl = '查看券码';
             break;
           case 'actual':
-            if(item.hascomfirm){
+            if(item.hasconfirm){
               typeVl = '修改地址';
-              awardListHtml.push(' hascomfirm');
+              awardListHtml.push(' hasconfirm');
             }else{
               typeVl = '填写地址';
             }
             break;
           case 'call_charge':
-          case 'wangsu_data_recharge':
-            if(item.hascomfirm){
+          case 'liumi_data_recharge':
+          case 'mz_money_recharge':
+          case 'mz_data_recharge':
+            if(item.hasconfirm){
               typeVl = '查看号码';
-              awardListHtml.push(' hascomfirm');
+              awardListHtml.push(' hasconfirm');
             }else{
               typeVl = '填写号码';
             }
             break;
+          default:
+            if(item.hasconfirm){
+              typeVl = item.showconfirmBtn || '查看信息';
+              awardListHtml.push(' hasconfirm');
+            }else{
+              typeVl = item.confirmBtn || '填写信息';
+            }
         }
 
       awardListHtml.push('" >' + typeVl);
@@ -194,7 +204,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
       var target = evt.target,
           liItem = domUtil.closest(target,'li'),
           idx = liItem.getAttribute('data-idx'),
-          hascomfirm = target.classList.contains('hascomfirm'),
+          hasconfirm = target.classList.contains('hasconfirm'),
           awardItem = result[idx];
 
       var proxyOkFn = okFn && okFn.bind(this,idx,awardItem),
@@ -208,12 +218,14 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
             ModalDialog.alertPersonInfoDlg(proxyOkFn,proxyCancelFn,awardItem.values);
             break;
           case 'call_charge':
-          case 'wangsu_data_recharge':
-            ModalDialog.confirmMobile(awardItem.phone,proxyOkFn,proxyCancelFn,hascomfirm);
+          case 'liumi_data_recharge':
+          case 'mz_money_recharge':
+          case 'mz_data_recharge':
+            ModalDialog.confirmMobile(awardItem.phone,proxyOkFn,proxyCancelFn,hasconfirm);
             break;
+          default:
+            settings.awardHandle(idx,awardItem);
         }
-
-        return true;
     }
     return ModalDialog.alert(settings);
   };
@@ -242,10 +254,11 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
 
   ModalDialog.alertVirtualDlg = function(data,okFn,cancelFn){
     var template = domUtil.createHtmlDom(domUtil.replaceTemlate(prizeTmpl,data)),
+        dlg,
         wrapInput;
 
     wrapInput = WrapMbIpt({target: template});
-    ModalDialog.confirm({
+    dlg = ModalDialog.confirm({
       selector: template,
       title: '中奖啦！',
       clazz: 'virtual-dlg prize-dlg',
@@ -264,7 +277,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
       }
 
       wrapInput && wrapInput.destroy();
-      if(okFn && !okFn.call(dlg,e))
+      if(okFn && !okFn.call(dlg,dlg.dialogDom.querySelector('.charge-phone').value,e))
         template = null;
     }
 
@@ -280,6 +293,9 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
         clz = 'electronic-dlg prize-dlg',
         template;
 
+    var copyTool = ModalDialog.options.copyTool,
+        clipboard;
+
     context.voucher1 = vouchers[0];
     context.voucher2 = vouchers[1];
 
@@ -288,12 +304,19 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
 
     template = domUtil.replaceTemlate(elePrizeTmpl,context);
 
+    if(copyTool.supportCopy && !vouchers[1]){
+      btText1 = '复制并兑换';
+      clipboard = copyTool.copyAndGo('.modal-dialog .sure-btn', vouchers[0]);
+    }
     ModalDialog.confirm({
       content: template,
       title: title != null ? title : '中奖啦！',
       clazz: clz,
       okCallback:okFn,
-      cancelCallback:cancelFn,
+      cancelCallback:()=>{
+        clipboard && clipboard.destroy();
+        return cancelFn && cancelFn();
+      },
       sureStr: btText1 || '立即使用',
       cancelStr: '确定'
     });
@@ -322,6 +345,8 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
         dlg,
         validInputs = [];
 
+    var maxWPerL;
+
     if(!isPlainObject(okFn)){
       settings = createParams({
         formField:formField,
@@ -336,7 +361,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
     }
 
     formField = settings.formField = settings.formField || [
-            {name:'recName',value:'联系人',option: {
+            {name:'recName',value:'联 系 人',option: {
                 keyDownValid: null,
                 keyUpValid: null,
                 changeValid: null
@@ -344,7 +369,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
             },
             {name:'mobilephone',value:'手机号码',errMsg: '请填写正确的手机号码',bevalid: true,option:{initValid:'handleKeyUp'}},
             {
-              name:'recAddress',value:'收货地址',errMsg: '请填写正确的地址',required:true,initValid:'handleChange',
+              name:'recAddress',value:'收货地址',errMsg: '请填写正确的地址',multiLine:true,required:true,initValid:'handleChange',minLen:8,
               option: {
                 keyDownValid: null,
                 keyUpValid: null,
@@ -367,7 +392,15 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
       if(item.required){
         beValid += ' required';
       }
-      infoFormHtml.push('<div class="charge-form' + beValid + '"><input class="valid-input" type="text" name="' + item.name + '"/><label>');
+
+      infoFormHtml.push('<div class="charge-form' + beValid + '">');
+      if(item.multiLine){
+        infoFormHtml.push('<span class="hiddentxt ' + item.name + '_hidden"></span>');
+        infoFormHtml.push('<textarea class="valid-input" type="text" name="' + item.name + '" rows="1"></textarea>');
+      }else
+        infoFormHtml.push('<input class="valid-input" type="text" name="' + item.name + '"/>');
+
+      infoFormHtml.push('<label>');
       infoFormHtml.push(item.value + '</label>');
 
       if(item.errMsg)
@@ -380,7 +413,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
 
     infoFormDom = domUtil.createHtmlDom(infoFormHtml.join(''));
 
-    inputs = infoFormDom.querySelectorAll('input');
+    inputs = infoFormDom.querySelectorAll('.valid-input');
     values = settings.values;
     for(var i=0,len=inputs.length;i<len;i++){
       var inputItem = inputs[i],
@@ -399,7 +432,12 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
       }
 
       if(values[i] && fieldItem.initValid){
-        wrapInput[fieldItem.initValid]({target:inputItem});
+        inputItem.style.height = '3.625rem';
+        wrapInput[fieldItem.initValid]({target:inputItem, isInitValid: true});
+      }
+
+      if(fieldItem.multiLine && (values[i] == null || values[i] == '')){
+        inputItem.addEventListener('keyup',txtAreaKeyup,false);
       }
     }
 
@@ -415,15 +453,17 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
           item,styles,
           dirty = 0,
           formVals = [],
-          formValue;
+          formValue,
+          fieldItem;
 
       for(var i=0,len=iforms.length; i < len; i++){
         item = iforms[i];
         styles = item.classList,
         formValue = item.querySelector('.valid-input').value;
+        fieldItem = formField[i];
 
         if((styles.contains('bevalid') && !styles.contains('dlg-success')) ||
-              (item.classList.contains('required') && formValue.length == 0)){
+              (item.classList.contains('required') && formValue.length < fieldItem.minLen)){
 
           item.classList.add('dlg-error');
           dirty ++;
@@ -448,13 +488,43 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
     }
 
     function clearInput(){
+      inputItem.removeEventListener('keyup',txtAreaKeyup);
       validInputs.forEach(function(item){
         item.destroy();
       });
     }
-  };
 
+    function txtAreaKeyup(e){
+      var target = e.target,
+          hiddentxt = target.previousElementSibling,
+          val = target.value,
+          hiddentxtWidth,
+          nextWidth;
+
+      if(!maxWPerL){
+        hiddentxtWidth = Math.round(getComputedStyle(hiddentxt).width.replace('px',''));
+      }
+
+      hiddentxt.textContent = val;
+      nextWidth = Math.round(getComputedStyle(hiddentxt).width.replace('px',''));
+
+      if(!maxWPerL && target.scrollHeight > target.clientHeight){
+        maxWPerL = hiddentxtWidth;
+        if(!maxWPerL){
+          maxWPerL = nextWidth - 10;
+        }
+      }
+
+      if(nextWidth > maxWPerL){
+        target.style.height = '3.625rem';
+      }else{
+        target.style.height = '2.0625rem';
+      }
+    }
+  };
+  var loadingCount = 0;
   ModalDialog.showLoading = function(){
+    loadingCount ++;
     if(!document.getElementById('loading-box')){
       document.body.appendChild(domUtil.createHtmlDom('<div id="loading-box" class="dialog-mask"><div class="load-contain">' +
         '<span class="load1"></span><span class="load2"></span></div></div>'));
@@ -465,7 +535,12 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
   ModalDialog.hideLoading = function(){
     if(!document.getElementById('loading-box'))
       return;
-    document.getElementById('loading-box').style.display = 'none';
+
+    loadingCount--;
+    if(loadingCount < 0)
+      loadingCount = 0;
+    if(loadingCount === 0)
+      document.getElementById('loading-box').style.display = 'none';
   };
   ModalDialog.showMask = function(){
     var dialogMask = document.getElementById('app-mask');
@@ -484,13 +559,15 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
   };
 
   var defaultConfig = {
-      useHash: false
+      useHash: false,
+      copyTool: {}
     },
     isConfig = false;
 
   ModalDialog.config = function(config){
     var options = domUtil.assign({},defaultConfig,config);
 
+    ModalDialog.options = options;
     if(isConfig){
       console.info('modaldialg only can config once');
       return;

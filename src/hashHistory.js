@@ -24,6 +24,8 @@ const hashHistory = (options)=>{
       matches = regx.exec(str);
       if(matches){
         str = matches[1];
+      }else {
+        str = '';
       }
     }
     return str;

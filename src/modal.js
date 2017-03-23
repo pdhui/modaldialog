@@ -25,9 +25,9 @@ var _ = {
     winH = window.innerHeight ? window.innerHeight : document.body.clientHeight;
     winW = window.innerWidth ? window.innerWidth : document.body.clientWidth;
   }
-  utils.bindEvent(window,'resize',resizeWin);
-
-  resizeWin();
+  // utils.bindEvent(window,'resize',resizeWin);
+//TODO:
+  // resizeWin();
   /*
   创建底部按钮
    */
@@ -197,6 +197,7 @@ var _ = {
       if(!dialogDom){
         return {left:0,top:0};
       }
+      resizeWin();
       var dlgH = dialogDom.offsetHeight;
       var dlgW = dialogDom.offsetWidth;
       var dlgPosY = (winH - dlgH > 0 ) ? (winH - dlgH)/2 : winH*0.1;

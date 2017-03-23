@@ -65,10 +65,11 @@
   em{
     font-style: normal;
   }
-  input{
+  input,textarea{
     outline: 0;
     border: 0;
     background: transparent;
+    font: inherit;
     font-size: rem(16px);
   }
   section{
@@ -190,7 +191,7 @@
   input{
     padding: 0px 0px rem(7px) rem(92px);
   }
-  .hascomfirm{
+  .hasconfirm{
     input{
       .grayShow;
     }
@@ -334,6 +335,11 @@
       }
     }
   }
+  .ele-userule{
+    text-align: left;
+    color: #7F7F7F;
+    font-size: rem(12px);
+  }
 }
 .virtual-dlg{
   .charge-form{
@@ -396,11 +402,6 @@
       margin-bottom: rem(10px);
     }
   }
-  .ele-userule{
-    text-align: left;
-    color: #7F7F7F;
-    font-size: rem(12px);
-  }
   &.single-ticket{
     .dec-code{
       &:after{
@@ -424,10 +425,15 @@
   section{
     max-height: rem(250px);
   }
+  textarea.valid-input{
+    padding: 0px 0px 0.4375rem 5.75rem;
+    transition: height 300ms ease;
+    resize: none;
+  }
   .dlg-error{
     &:last-child{
       .valid-input{
-        padding-bottom: rem(28px);
+        // padding-bottom: rem(28px);
       }
     }
     .form-tip{
@@ -482,4 +488,11 @@
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
+}
+.hiddentxt {
+    display: inline-block;
+    position: absolute;
+    top: -9999px;
+    left: 0px;
+    font-size: rem(16px);
 }

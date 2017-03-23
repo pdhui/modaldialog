@@ -99,6 +99,13 @@ module.exports = {
       distX += deltaX;
       distY += deltaY;
 
+      if( nodeName != 'input' && nodeName != 'select' && nodeName != 'textarea'){
+        e.preventDefault();
+        e.stopPropagation();
+      }else{
+        return;
+      }
+
       if ( (timestamp - endTime > 300 && Math.abs(distY) < 10) || !isTouch || maxHeight >= 0) {
         e.preventDefault();
         return;
@@ -111,10 +118,6 @@ module.exports = {
 
       translate(dlgContent,newY);
 
-      if( nodeName != 'input' && nodeName != 'select' && nodeName != 'textarea'){
-        e.preventDefault();
-        e.stopPropagation();
-      }
       if ( timestamp - startTime > 300 ) {
         startTime = timestamp;
         startX = x;

@@ -58,7 +58,8 @@ WrapMbIpt.create.prototype = {
   handleChange(e){
     var target = e.target,
         value = target.value,
-        styles = target.parentNode.classList;
+        styles = target.parentNode.classList,
+        isInitValid = e.isInitValid;
 
     if(this.options.changeValid){
       if(!this.options.changeValid(e,value)){
@@ -70,10 +71,12 @@ WrapMbIpt.create.prototype = {
       }
     }
 
-    if(value.length > 0){
-      styles.add('dirty');
-    }else{
-      styles.remove('dirty');
+    if(!isInitValid){
+      if(value.length > 0){
+        styles.add('dirty');
+      }else{
+        styles.remove('dirty');
+      }
     }
   },
   destroy(){
