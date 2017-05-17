@@ -163,7 +163,17 @@ example.addExample('不带标题-确认框2行','confirm2',function(){
     setTimeout(function(){
       dialog.hideLoading();
     }, 1000);
+}).addExample('框中框','dlgofdlg',function(){
+  var isAlerted = false;
+  dialog.alert('父框内容父框内容父框内容父框内容父框内容父框内容','父框标题',function(){
+    if(isAlerted) return;
 
+    dialog.alert('子框内容','');
+
+    isAlerted = true;
+
+    return true;
+  });
 });
 
 var tools = {

@@ -3,6 +3,7 @@ var scrollDlg = require('./dlgscroll.js');
 var _ = {
   assign: utils.assign
 }, winH, winW;
+
 /*
 生成对话框模板内容
  */
@@ -12,11 +13,11 @@ var _ = {
 
     header = utils.replaceTemlate(header,options);
 
-    templateHtml.push('<div class="modal-dialog ' + options.clazz + '"><div class="dialog-mask"></div><div class="modal-dialog-main"><header>');
+    templateHtml.push('<div class="rc-modal"><div class="dialog-mask"></div><div class="modal-dialog ' + options.clazz + '"><div class="modal-dialog-main"><header>');
     templateHtml.push(header);
     templateHtml.push('</header><section><div class="dialog-content"></div></section><footer>');
     templateHtml.push(createButtons.call(this,options));
-    templateHtml.push('</footer></div></div>');
+    templateHtml.push('</footer></div></div></div>');
 
     return templateHtml.join('');
   }
@@ -153,21 +154,23 @@ var _ = {
 
   ModalDialog.create = function(options){
     var dialogDom,
-        dlgPos;
+        dlgPos,
+        dlgMainDom;
 
     this.callbacks = options._callBacks;
     this.id = options.id;
 
     dialogDom = utils.createHtmlDom(getHtmlContent.call(this,options));
-    dialogDom.setAttribute('data-pos',0);
+
     insertContent(dialogDom,options);
     document.body.appendChild(dialogDom);
 
     this.dlgScroll = scrollDlg.initTouch(dialogDom);
 
-    dlgPos = this.getPos(dialogDom);
+    dlgMainDom = dialogDom.querySelector('.modal-dialog');
+    dlgPos = this.getPos(dlgMainDom);
 
-    _.assign(dialogDom.style,{
+    _.assign(dlgMainDom.style,{
       display: 'block',
       left: dlgPos.left + 'px',
       top: dlgPos.top + 'px'
@@ -260,9 +263,9 @@ var _ = {
           self = this;
 
       if(typeof this.callbacks[id] == 'function' && !this.callbacks[id].call(this,e)){
-        setTimeout(function(){
+        // setTimeout(function(){
           self.closeDialog();
-        },1);
+        // },1);
       }
     },
     proxy: function(fn){
@@ -313,4 +316,4 @@ var _ = {
   ModalDialog.dialogList = {};
   ModalDialog.modalCount = 0;
 
-  module.exports = ModalDialog;
+module.exports = ModalDialog;

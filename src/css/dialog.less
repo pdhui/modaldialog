@@ -13,7 +13,10 @@
 .function-rem(@px) {
   return: @px / @baseFontSize * 1rem;
 }
-
+.rc-modal{
+  position: absolute;
+  z-index: 9999;
+}
 .modal-dialog{
   border-radius: rem(1px);
   text-align: center;
@@ -209,7 +212,7 @@
   width: 100%;
   z-index: 8999;
   background: rgba(0,0,0,0.5);
-  display: none;
+  // display: none;
 }
 .myaward-dialog{
   section{

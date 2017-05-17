@@ -1,6 +1,6 @@
 {
   "name": "@flyme/modaldialog",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "description": "popup dialog",
   "main": "./build/main.js",
   "scripts": {
