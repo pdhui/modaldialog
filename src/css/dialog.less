@@ -6,6 +6,7 @@
 @decoprize: '../images/decoprize.png';
 @deco2Elec: '../images/deco2Elec.png';
 @decoSingleElec: '../images/decorateElec.png';
+@maskBg: '../images/mask.png';
 
 .grayShow{
   color: #7d7d7d;
@@ -13,9 +14,14 @@
 .function-rem(@px) {
   return: @px / @baseFontSize * 1rem;
 }
+
+//是为了弹多个框时，可以每个框的遮罩层都层叠显示
 .rc-modal{
   position: absolute;
   z-index: 9999;
+  width: 100%;
+  height: 100%;
+  top: 0;
 }
 .modal-dialog{
   border-radius: rem(1px);
@@ -46,10 +52,6 @@
     section{
       text-align: center;
     }
-  }
-  .dialog-mask{
-    display: block;
-    background: rgba(0,0,0,0.2);
   }
   .modal-dialog-main{
     position: relative;
@@ -205,14 +207,15 @@
   }
 }
 .dialog-mask{
-  position: fixed;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   z-index: 8999;
-  background: rgba(0,0,0,0.5);
-  // display: none;
+  background: url(@maskBg);
+  // background: rgba(0,0,0,0.5);
 }
 .myaward-dialog{
   section{
@@ -454,6 +457,7 @@
 }
 #loading-box {
   background-color: rgba(40,40,40,.2);
+  position: fixed;
   .load-contain {
     position: fixed;
     width: 40px;

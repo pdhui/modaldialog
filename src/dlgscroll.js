@@ -127,7 +127,6 @@ module.exports = {
     function toucheEnd(e){
       var duration = Date.now() - startTime,
           newY = Math.round(y),
-          distanceY = Math.abs(newY - startY),
           time = 0,
           momentumY;
 

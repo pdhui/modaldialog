@@ -155,7 +155,8 @@ var _ = {
   ModalDialog.create = function(options){
     var dialogDom,
         dlgPos,
-        dlgMainDom;
+        dlgMainDom,
+        offsetH;
 
     this.callbacks = options._callBacks;
     this.id = options.id;
@@ -164,6 +165,8 @@ var _ = {
 
     insertContent(dialogDom,options);
     document.body.appendChild(dialogDom);
+
+    offsetH = document.documentElement.offsetHeight;
 
     this.dlgScroll = scrollDlg.initTouch(dialogDom);
 
@@ -178,6 +181,7 @@ var _ = {
 
     if(options.animated)
       dialogDom.querySelector('.modal-dialog-main').className += ' dlg-animation';
+
     if(options.useBackground){
       var userbgr = options.useBackground;
       if(!options._callBacks[userbgr]){
@@ -185,6 +189,8 @@ var _ = {
       }
       dialogDom.querySelector('.dialog-mask').dataset.id = options.useBackground;
     }
+
+    dialogDom.querySelector('.dialog-mask').style.height = offsetH + 'px';
 
     this._eventListener = this.proxy(this._clickEvent,dialogDom,options);
     this.dialogDom = dialogDom;
