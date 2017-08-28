@@ -1,6 +1,9 @@
 ## modalDialog 弹出框
 
 内含了 提示框，确认框，我的奖品列表框，填写个人信息框，加载中提示框。
+
+[在线demo地址](http://appff.meizu.com/front/example/dialog/index.html)
+
 ## 公共参数
 
  * clazz: 弹出框的css类名
@@ -15,7 +18,10 @@
 
 弹出框里面的dom元素如果有data-id属性值，则相当于绑定了click事件，事件的回调函数名为传给ModalDialog的options对象中key等于data-id的值所对应的value。
 
- -----首先
+ -----
+
+ 加载弹框样式和js库
+
 ```javascript
     require('@flyme/modaldialog/lib/main.css')'//加载css文件，然后在html页面可引用
     var dialog = require('@flyme/modaldialog')
@@ -136,7 +142,7 @@ dialog.hideLoading()
 ```
 更多请参考例子demo
 
-##有问题反馈
+## 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以在issues提意见或用以下联系方式跟我交流
 
 * 邮件(xuweixiong2006@gmail.com)

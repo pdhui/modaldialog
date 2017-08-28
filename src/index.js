@@ -103,21 +103,20 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
     }
 
     inputDom = settings.selector = domUtil.createHtmlDom(template);
-
+    temp = inputDom.querySelector('input');
 
     settings.clazz = 'charge-dialog';
 
     if(isConfirm){
       inputDom.classList.add('hasconfirm');
       inputDom.querySelector('.form-tip').textContent = '已领奖';
-      temp = inputDom.querySelector('input');
       temp.setAttribute('disabled',true);
       temp.value = settings.phone;
 
       settings.cancelCallback = null;
       dlg = ModalDialog.alert(settings);
     }else{
-      wrapInput = WrapMbIpt({target: inputDom});
+      wrapInput = WrapMbIpt({target: temp});
       dlg = ModalDialog.confirm(settings);
     }
 
@@ -125,6 +124,11 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
 
     function proxyOkFn(e){
       var iform = inputDom.querySelector('.charge-form');
+
+      if(wrapInput){
+        wrapInput.handleKeyUp();
+        wrapInput.handleChange();
+      }
       if(!iform.classList.contains('dlg-success') && !isConfirm){
         iform.classList.add('dlg-error');
         return true;
@@ -230,8 +234,26 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
     return ModalDialog.alert(settings);
   };
 
+  let isAlertRule;
+
   ModalDialog.alertRule = function(context){
-    return ModalDialog.alert(context,'活动说明',null,null,'rule-dlg');
+    if(isAlertRule)
+      return;
+
+    isAlertRule = true;
+
+    return ModalDialog.alert({
+          clazz: 'rule-dlg',
+          title: '活动说明',
+          content: context,
+          okCallback: isAlert,
+          cancelAlert: isAlert,
+          useBackground: 'cancelAlert'
+      });
+
+    function isAlert(){
+      isAlertRule = false;
+    }
   };
 
   ModalDialog.alertWinnerList = function(data){
@@ -257,7 +279,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
         dlg,
         wrapInput;
 
-    wrapInput = WrapMbIpt({target: template});
+    wrapInput = WrapMbIpt({target: template.querySelector('input')});
     dlg = ModalDialog.confirm({
       selector: template,
       title: '中奖啦！',
@@ -270,6 +292,11 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
 
     function proxyOkFn(e){
       var iform = template.querySelector('.charge-form');
+
+      if(wrapInput){
+        wrapInput.handleKeyUp();
+        wrapInput.handleChange();
+      }
 
       if(!iform.classList.contains('dlg-success')){
         iform.classList.add('dlg-error');
@@ -455,6 +482,12 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
           formVals = [],
           formValue,
           fieldItem;
+
+      for(var vi=0,vilen = validInputs.length; vi < vilen; vi++){
+        var validitem = validInputs[vi];
+        validitem.handleKeyUp && validitem.handleKeyUp();
+        validitem.handleChange && validitem.handleChange();
+      }
 
       for(var i=0,len=iforms.length; i < len; i++){
         item = iforms[i];

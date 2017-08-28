@@ -1,7 +1,14 @@
 .grayShow {
   color: #7d7d7d;
 }
-.modal-dialog {
+.rc-modal {
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+.rc-modal .modal-dialog {
   border-radius: 0.0625rem;
   text-align: center;
   width: 20.25rem;
@@ -25,10 +32,6 @@
 }
 .modal-dialog.alert-dialog section {
   text-align: center;
-}
-.modal-dialog .dialog-mask {
-  display: block;
-  background: rgba(0, 0, 0, 0.2);
 }
 .modal-dialog .modal-dialog-main {
   position: relative;
@@ -175,14 +178,14 @@
   display: block;
 }
 .dialog-mask {
-  position: fixed;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   z-index: 8999;
-  background: rgba(0, 0, 0, 0.5);
-  display: none;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAQMAAAC3/F3+AAAABGdBTUEAALGPC/xhBQAAAANQTFRFAAAAp3o92gAAAAF0Uk5TgK1eW0YAAAALSURBVAjXY2DABwAAHgABboVHMgAAAABJRU5ErkJggg==);
 }
 .myaward-dialog section {
   padding: 0 1.1875rem;
@@ -387,6 +390,7 @@
 }
 #loading-box {
   background-color: rgba(40, 40, 40, 0.2);
+  position: fixed;
 }
 #loading-box .load-contain {
   position: fixed;

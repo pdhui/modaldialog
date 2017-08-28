@@ -27,7 +27,7 @@ var ease = {
 module.exports = {
   initTouch: function(dialog){
     var dlgContent =  dialog.querySelector('.dialog-content'),
-        section = dialog.getElementsByTagName('section')[0],
+        section = dialog.querySelector('section'),
         scrollTargeStyle = dlgContent.style,
         wrapperHeight = getComputedStyle(section).getPropertyValue('height').replace('px','')*1,
         maxHeight, startPosx, startPosy, isTouch,

@@ -33,6 +33,8 @@ WrapMbIpt.create = function(options){
 WrapMbIpt.create.prototype = {
   constructor: WrapMbIpt.create,
   handleKeyDown: function(e){
+    e= e || {target: this.options.target};
+
     var target = e.target,
         value = target.value;
 
@@ -40,6 +42,8 @@ WrapMbIpt.create.prototype = {
     this.options.keyDownValid && this.options.keyDownValid(e,value);
   },
   handleKeyUp(e){
+    e= e || {target: this.options.target};
+
     var target = e.target,
         value = target.value,
         parentNd = target.parentNode;
@@ -56,6 +60,8 @@ WrapMbIpt.create.prototype = {
       parentNd.classList.remove('dlg-error');
   },
   handleChange(e){
+    e= e || {target: this.options.target};
+
     var target = e.target,
         value = target.value,
         styles = target.parentNode.classList,
