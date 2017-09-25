@@ -282,7 +282,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
     wrapInput = WrapMbIpt({target: template.querySelector('input')});
     dlg = ModalDialog.confirm({
       selector: template,
-      title: '中奖啦！',
+      title: data.title != null ? data.title : '中奖啦！',
       clazz: 'virtual-dlg prize-dlg',
       okCallback:proxyOkFn,
       cancelCallback:proxyCancelFn,
@@ -314,7 +314,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
       template = null;
     }
   };
-  ModalDialog.alertElectronicDlg = function(context,title,okFn,cancelFn,btText1){
+  ModalDialog.alertElectronicDlg = function(context,okFn,cancelFn,btText1){
 
     var vouchers = context.voucher.split(':'),
         clz = 'electronic-dlg prize-dlg',
@@ -337,7 +337,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
     }
     ModalDialog.confirm({
       content: template,
-      title: title != null ? title : '中奖啦！',
+      title: context.title != null ? context.title : '中奖啦！',
       clazz: clz,
       okCallback:okFn,
       cancelCallback:()=>{
@@ -353,7 +353,7 @@ actualPrizeTmpl = actualPrizeTmpl.replace(/\r\n/g,'');
 
     ModalDialog.confirm({
       content: template,
-      title: '中奖啦！',
+      title: data.title != null ? data.title : '中奖啦！',
       clazz: 'actual-dlg prize-dlg',
       okCallback:toFillForm,
       cancelCallback:cancelFn,

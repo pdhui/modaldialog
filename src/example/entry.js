@@ -147,6 +147,14 @@ example.addExample('不带标题-确认框2行','confirm2',function(){
       winMessage: '使用方法：前去美团－通用券兑换,输入该券,即可换行吧换行吧'
     }
   );
+}).addExample('修改标题-实物奖品','actualDlg',function(){
+  dialog.alertActualDlg({
+      imgUrl: prize,
+      desc: 'mx6 一台',
+      winMessage: '使用方法：前去美团－通用券兑换,输入该券,即可换行吧换行吧',
+      title: '抢到啦~'
+    }
+  );
 }).addExample('不带标题-填写实物奖品收件人信息','fillformDlg',function(){
   dialog.alertPersonInfoDlg();
 }).addExample('带标题-一个虚拟券奖品','oneElectronicDlg',function(){
