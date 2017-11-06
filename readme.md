@@ -1,8 +1,6 @@
 ## modalDialog 弹出框
 
-内含了 提示框，确认框，我的奖品列表框，填写个人信息框，加载中提示框。
-
-[在线demo地址](http://appff.meizu.com/front/example/dialog/index.html)
+ 提示框，确认框。
 
 ## 公共参数
 
@@ -23,8 +21,10 @@
  加载弹框样式和js库
 
 ```javascript
-    require('@flyme/modaldialog/lib/main.css')'//加载css文件，然后在html页面可引用
+    //默认引入的是可以点击back键关闭弹框的库
     var dialog = require('@flyme/modaldialog')
+    //若想引入最小的弹框库，则这么引入：
+    var dialog = require('@flyme/modaldialog/build/core.js')
 ```
 
 每种类型的弹出框都有两种调用方式，直接传多个参数或者使用对象作为参数。
@@ -60,87 +60,6 @@ var context = {
     };
 dialog.confirm(context)
 ```
-3.奖品列表框
-```javascript
-dialog.alertAwardList(datalist,title,inputCallback,okFn,cancelFn,btText1,btText2)
-```
-调用方式：
-```javascript
-dialog.alertAwardList([
-    {imgUrl:award1,name:'话费50元',type:'call_charge',hascomfirm:true,phone: '12312341234'},
-    {imgUrl:award1,name:'话费50元',type:'call_charge'},
-    {
-      imgUrl:award1,
-      name:'魅族优惠券 200 元',
-      type:'electronic',
-      voucher: 'DORKE28048222823:12887570099',
-      desc: '魅族优惠券 200 元',
-      winMessage: '使用方法：前去美团－通用券兑换,输入该券,即可\r\n使用方法：前去美团－通用券兑换,输入该券,即可'
-    },
-    {imgUrl:award2,name:'Pro 6',type:'actual'},
-    {imgUrl:award2,name:'Pro 6',type:'actual',hascomfirm:true,values:['panda','1231234123','广东省珠海市666']}],(idx,item,data)=>{
-      console.log('ok',idx,item,data);
-    });
-```
-hascomfirm表示已经领取过，只针对虚拟券和实物奖品
-
-4.个人信息框
-
-```javascript
-dialog.alertPersonInfoDlg(okFn,cancelFn,values,formField,btText1,btText2)
-```
-5.中奖框
-
-* 虚拟券：alertElectronicDlg (context,title,okFn,cancelFn,btText1)
-
-```javascript
-    addExample('带标题-一个虚拟券奖品','oneElectronicDlg',function(){
-      dialog.alertElectronicDlg({
-          voucher: 'DORKE28048222823',
-          winMessage: '使用方法：1.前去美团－通用券兑换,输入该券,即可\r\n2.前去美团－通用券兑换,
-          desc: '美团优惠券500元'
-        }
-      );
-    })
-    .addExample('带标题-虚拟券奖品-两个码','electronicDlg',function(){
-      dialog.alertElectronicDlg({
-          voucher: 'DORKE28048222823:12887570099',
-          winMessage: '使用方法：前去美团－通用券兑换,输入该券,即可',
-          desc: '美团优惠券500元'
-        }
-      );
-    })
-```
-
-* 实物奖：alertActualDlg(data,okFn,cancelFn)
-
-```javascript
-    dialog.alertActualDlg({
-      imgUrl: prizeUrl,
-      desc: 'mx6 一台'
-    }
-  );
-```
-
-* 流量|话费：alertVirtualDlg(data,okFn,cancelFn)
-```javascript
-   dialog.alertVirtualDlg({
-      imgUrl: prize,
-      desc: '话费50元'
-    }
-  );
-```
-6.加载提示框
-
-* 显示
-```javascript
-dialog.showLoading()
-```
-* 隐藏
-```javascript
-dialog.hideLoading()
-```
-更多请参考例子demo
 
 ## 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以在issues提意见或用以下联系方式跟我交流

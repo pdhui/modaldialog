@@ -1,4 +1,3 @@
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack = require('webpack')
 var path = require('path')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -18,12 +17,12 @@ module.exports = {
         loaders: [
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
+                loader: 'style-loader!css-loader!less-loader',
                 exclude: '/node_modules/'
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
+                loader: 'style-loader!css-loader!less-loader',
                 exclude: '/node_modules/'
             },
             {
@@ -44,11 +43,14 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin("../example/[name].css")
+
     ],
     lessLoader: {
         lessPlugins: [
           new lessFunctionsPlugin()
         ]
+    },
+    devServer:{
+        disableHostCheck: true
     }
 }

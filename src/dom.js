@@ -72,5 +72,17 @@ module.exports = {
         return true;
       }
     }
+  },
+  createParams: function(param){
+    var res = {};
+
+    for(var p in param){
+      if(param.hasOwnProperty(p)){
+        if(typeof param[p] != 'undefined'){
+          res[p] = param[p];
+        }
+      }
+    }
+    return res;
   }
 }

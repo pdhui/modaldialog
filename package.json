@@ -1,8 +1,8 @@
 {
   "name": "@flyme/modaldialog",
-  "version": "1.5.14",
+  "version": "1.6.0",
   "description": "popup dialog",
-  "main": "./build/main.js",
+  "main": "./build/withHashDialog.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pdhui/modaldialog.git"
+    "url": "https://github.com/tangpo/modaldialog.git"
   },
   "publishConfig": {
 
   },
-  "homepage": "https://github.com/pdhui/modaldialog#readme",
+  "homepage": "https://github.com/tangpo/modaldialog#readme",
   "author": "panda.xiong",
   "license": "MIT",
   "devDependencies": {

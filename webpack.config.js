@@ -1,4 +1,3 @@
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack = require('webpack')
 var path = require('path')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -6,7 +5,8 @@ var lessFunctionsPlugin = require('less-plugin-functions');
 
 module.exports = {
     entry: {
-      main:"./src/index.js"
+      core: ["./src/modal.js"],
+      withHashDialog: './src/dialogWithHash.js'
     },
     output: {
         filename: "[name].js",
@@ -19,12 +19,14 @@ module.exports = {
         loaders: [
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
+                // loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
+                loader: 'style-loader!css-loader!less-loader',
                 exclude: '/node_modules/'
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
+                // loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
+                loader: 'style-loader!css-loader!less-loader',
                 exclude: '/node_modules/'
             },
             {
@@ -45,7 +47,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin("../lib/[name].css"),
+        // new ExtractTextPlugin("../lib/[name].css"),
         new webpack.optimize.UglifyJsPlugin({
             mangle: {
                 except: ['$', 'exports', 'require']

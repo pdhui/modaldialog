@@ -1,8 +1,12 @@
+require('./css/base.less');
+
 var utils = require('./dom.js');
 var scrollDlg = require('./dlgscroll.js');
 var _ = {
   assign: utils.assign
 }, winH, winW;
+
+function noop(){}
 
 /*
 生成对话框模板内容
@@ -289,6 +293,58 @@ var _ = {
     }
   });
 
+  ModalDialog.alert = function(content,title,callback,dom,cls){
+    var clz = content.clazz ? content.clazz : (cls ? cls : '');
+
+    clz += ' alert-dialog';
+
+    if(typeof content !== 'object'){
+      content = utils.createParams({
+                  title: title,
+                  content: content,
+                  okCallback:callback,
+                  selector: dom
+               });
+    }
+
+    content.okCallback = content.okCallback || noop;
+
+    if(!content.title)
+      clz += ' dlg-no-title';
+    else
+      clz += ' dlg-has-title';
+
+    content.clazz = clz;
+    return ModalDialog(content);
+  }
+
+  ModalDialog.confirm = function(content,sureFn,title,btText1,btText2,cancelFn,cls){
+    var clz = content.clazz ? content.clazz : (cls ? cls : '');
+
+    clz += ' confirm-dialog';
+
+    if(typeof content !== 'object'){
+      content = utils.createParams({
+                  title: title,
+                  content: content,
+                  okCallback:sureFn,
+                  cancelCallback:cancelFn,
+                  sureStr: btText2,
+                  cancelStr:btText1
+               });
+    }
+
+    if(!content.title)
+      clz += ' dlg-no-title';
+    else
+      clz += ' dlg-has-title';
+
+    content.okCallback = content.okCallback || noop;
+    content.cancelCallback = content.cancelCallback || noop;
+    content.clazz = clz;
+    return ModalDialog(content);
+  };
+
   ModalDialog.afterListener = function(listener){
     afterListeners.push(listener);
 
@@ -318,6 +374,32 @@ var _ = {
       })
     }
   };
+
+  var _plugins = [];
+
+  ModalDialog.addPlugin = function(fn){
+    _plugins.push(fn);
+  };
+
+  ModalDialog.defaultConfig = {};
+  var isConfig = false;
+
+  ModalDialog.config = function(config){
+    var options = utils.assign({},ModalDialog.defaultConfig,config);
+
+    ModalDialog.options = options;
+    if(isConfig){
+      console.info('modaldialg only can config once');
+      return;
+    }
+
+    for(var i=0, len=_plugins.length; i < len; i++){
+      _plugins[i](ModalDialog, options);
+    }
+
+    isConfig = true;
+  }
+
 
   ModalDialog.dialogList = {};
   ModalDialog.modalCount = 0;
