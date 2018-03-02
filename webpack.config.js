@@ -1,9 +1,12 @@
 var webpack = require('webpack')
 var path = require('path')
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var CleanWebpackPlugin = require('clean-webpack-plugin');
+// var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var lessFunctionsPlugin = require('less-plugin-functions');
 
-module.exports = {
+var isProduction = process.env.NODE_ENV == 'production' ? true : false;
+
+var config = {
     entry: {
       core: ["./src/modal.js"],
       withHashDialog: './src/dialogWithHash.js'
@@ -14,19 +17,12 @@ module.exports = {
         libraryTarget: "umd",
         library: "pdDialog",
     },
-    //devtool:'sourcemap',
     module: {
         loaders: [
             {
-                test: /\.css$/,
+                test: /\.(css|less)$/,
                 // loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
-                loader: 'style-loader!css-loader!less-loader',
-                exclude: '/node_modules/'
-            },
-            {
-                test: /\.less$/,
-                // loader: ExtractTextPlugin.extract('style-loader', 'css-loader?!less-loader'),
-                loader: 'style-loader!css-loader!less-loader',
+                loader: 'raw-loader!extract-loader!css-loader!less-loader',
                 exclude: '/node_modules/'
             },
             {
@@ -48,15 +44,22 @@ module.exports = {
     },
     plugins: [
         // new ExtractTextPlugin("../lib/[name].css"),
-        new webpack.optimize.UglifyJsPlugin({
-            mangle: {
-                except: ['$', 'exports', 'require']
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     mangle: {
+        //         except: ['$', 'exports', 'require']
+        //     }
+        // })
     ],
     lessLoader: {
         lessPlugins: [
           new lessFunctionsPlugin()
         ]
     }
+};
+
+if(!isProduction){
+  config.plugins.pop();
+  config.devtool = 'inline-source-map';
 }
+
+module.exports = config;

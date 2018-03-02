@@ -16,7 +16,15 @@ module.exports = {
     while(temp = regx.exec(str)){
       str = str.replace(temp[0],data[temp[1]] || '');
     }
-    return str;
+    return str.replace(/[\r\n]*/g,'');
+  },
+  fnTemplate: function(str, data){
+    var regx = new RegExp(/\$fn\.(.+?)\((.*?)\)/g);
+
+    return str.replace(regx, function(expr, fn, val){
+      return data[fn](val);
+    }).replace(/[\r\n]*/g,'');;
+
   },
   bindEvent: function(dom,name,fn){
     dom.addEventListener

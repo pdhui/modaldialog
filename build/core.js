@@ -1,1 +1,845 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.pdDialog=t():e.pdDialog=t()}(this,function(){return function(e){function t(o){if(n[o])return n[o].exports;var r=n[o]={exports:{},id:o,loaded:!1};return e[o].call(r.exports,r,r.exports,t),r.loaded=!0,r.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,exports,t){e.exports=t(1)},function(e,exports,t){"use strict";function n(){}function o(e){var t=[],n=e.header;return n=d.replaceTemlate(n,e),t.push('<div class="rc-modal"><div class="dialog-mask"></div><div class="modal-dialog '+e.clazz+'"><div class="modal-dialog-main"><header>'),t.push(n),t.push('</header><section><div class="dialog-content"></div></section><footer>'),t.push(i.call(this,e)),t.push("</footer></div></div></div>"),t.join("")}function r(){c=window.innerHeight?window.innerHeight:document.body.clientHeight,s=window.innerWidth?window.innerWidth:document.body.clientWidth}function i(e){var t=e.buttons||[],n='<button type="button" class="{cls}" data-id="{id}" >{name}</button>',o="",r=this,i="";return e.cancelCallback&&t.push({id:"cancel",name:e.cancelStr,callback:e.cancelCallback,cls:"cancle-btn"}),0==t.length&&(i=" modal-dialog-onebtn"),e.okCallback&&t.push({id:"ok",name:e.sureStr,callback:e.okCallback,cls:"sure-btn"+i}),e.reverse&&(t=t.reverse()),t.forEach(function(e,i){t.length-1==i&&(e.cls+=" last"),o+=d.replaceTemlate(n,e),r.callbacks[e.id]=e.callback}),o}function a(e,t){if(t.selector){var n=document.createComment("dialog-target replace"),o=t.selector,r=getComputedStyle(o).getPropertyValue("display");o.parentNode&&(o.parentNode.replaceChild(n,o),e._commentDom=n,"none"==r&&(o.style.display="block"),e._originDisplay=r),e.querySelector(".dialog-content").appendChild(o)}else e.querySelector(".dialog-content").innerHTML=t.content.replace(/(\r\n|\n|\r)/gm,"<br/>")}var l="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};t(2);var c,s,d=t(7),u=t(8),f={assign:d.assign},p={clazz:"dialog-theme",cancelStr:"取消",sureStr:"确定",title:"温馨提示",header:'<span class="dialog-title">{title}</span>',animated:!1,buttons:null,useBackground:"cancel"},g=[],h=[],m=[],v=0,b=function e(t){var n,o;return t=f.assign({},p,t),t._callBacks=t._callBacks||{},o=t.id=t.id||v,Object.keys(t).forEach(function(e){"function"==typeof t[e]&&(t._callBacks[e]=t[e])}),g.forEach(function(e){e(t)}),e.dialogList[o]=n=new e.create(t),e.modalCount++,h.forEach(function(e){e(n)}),v++,n};b.create=function(e){var t,n,r,i;if(this.callbacks=e._callBacks,this.id=e.id,t=d.createHtmlDom(o.call(this,e)),a(t,e),document.body.appendChild(t),i=document.documentElement.offsetHeight,this.dlgScroll=u.initTouch(t),r=t.querySelector(".modal-dialog"),n=this.getPos(r),f.assign(r.style,{display:"block",left:n.left+"px",top:n.top+"px"}),e.animated&&(t.querySelector(".modal-dialog-main").className+=" dlg-animation"),e.useBackground){var l=e.useBackground;e._callBacks[l]||(e._callBacks[l]=function(){}),t.querySelector(".dialog-mask").dataset.id=e.useBackground}return t.querySelector(".dialog-mask").style.height=i+"px",this._eventListener=this.proxy(this._clickEvent,t,e),this.dialogDom=t,this.options=e,d.bindEvent(t,"click",this._eventListener),this},f.assign(b.create.prototype,{callbacks:null,getPos:function(e){if(e=e||this.dialogDom,!e)return{left:0,top:0};r();var t=e.offsetHeight,n=e.offsetWidth,o=c-t>0?(c-t)/2:.1*c,i=s-n>0?(s-n)/2:.1*s;return{left:i,top:o}},closeDialog:function(e){var t,n,o=this.dialogDom,r=this.options,i=this;o.style.display="none",r.selector&&o._commentDom&&(t=r.selector,n=o._commentDom,t.style.display=o._originDisplay,n.parentNode.replaceChild(t,n),o._commentDom=null,o._originDisplay=null),d.unBindEvent(o,"click",this._eventListener),o.parentNode.removeChild(o),this.dlgScroll.destroyScroll&&this.dlgScroll.destroyScroll(),e?r.cancelCallback&&r.cancelCallback():m.forEach(function(e){e(i)}),this._eventListener=null,this.dialogDom=o=null,delete b.dialogList[this.id],b.modalCount--},refresh:function(){var e=this.dialogDom,t=this.getPos(e);f.assign(e.style,{display:"block",left:t.left+"px",top:t.top+"px"}),this.dlgScroll.refresh()},_clickEvent:function(e,t,n){var o=e.target,r=o.getAttribute("data-id"),i=this;"function"!=typeof this.callbacks[r]||this.callbacks[r].call(this,e)||i.closeDialog()},proxy:function(e){var t=this,n=Array.prototype.slice.call(arguments,1);return function(){var o=Array.prototype.slice.call(arguments);n.length>0&&(o=o.concat(n)),e.apply(t,o)}}}),b.alert=function(e,t,o,r,i){var a=e.clazz?e.clazz:i?i:"";return a+=" alert-dialog","object"!==("undefined"==typeof e?"undefined":l(e))&&(e=d.createParams({title:t,content:e,okCallback:o,selector:r})),e.okCallback=e.okCallback||n,a+=e.title?" dlg-has-title":" dlg-no-title",e.clazz=a,b(e)},b.confirm=function(e,t,o,r,i,a,c){var s=e.clazz?e.clazz:c?c:"";return s+=" confirm-dialog","object"!==("undefined"==typeof e?"undefined":l(e))&&(e=d.createParams({title:o,content:e,okCallback:t,cancelCallback:a,sureStr:i,cancelStr:r})),s+=e.title?" dlg-has-title":" dlg-no-title",e.okCallback=e.okCallback||n,e.cancelCallback=e.cancelCallback||n,e.clazz=s,b(e)},b.afterListener=function(e){return h.push(e),function(){h=h.filter(function(t){return t!=e})}},b.preListener=function(e){return g.push(e),function(){g=g.filter(function(t){return t!=e})}},b.closedListener=function(e){return m.push(e),function(){m=m.filter(function(t){return t!=e})}};var y=[];b.addPlugin=function(e){y.push(e)},b.defaultConfig={};var k=!1;b.config=function(e){var t=d.assign({},b.defaultConfig,e);if(b.options=t,k)return void console.info("modaldialg only can config once");for(var n=0,o=y.length;n<o;n++)y[n](b,t);k=!0},b.dialogList={},b.modalCount=0,e.exports=b},function(e,exports,t){var n=t(3);"string"==typeof n&&(n=[[e.id,n,""]]);t(6)(n,{});n.locals&&(e.exports=n.locals)},function(e,exports,t){exports=e.exports=t(4)(),exports.push([e.id,'.rc-modal{position:absolute;z-index:9999;width:100%;height:100%;top:0}.rc-modal .modal-dialog{border-radius:.0625rem;text-align:center;width:20.25rem;margin:0 auto;z-index:9000;position:fixed;box-shadow:0 0 .4375rem 0 rgba(0,0,0,.2)}.modal-dialog.dlg-no-title header{height:1.75rem}.modal-dialog.dlg-no-title .dialog-content{color:#000}.modal-dialog.dlg-no-title section{text-align:left}.modal-dialog.dlg-has-title header{padding:1.8125rem 0 .625rem;font-size:1.125rem}.modal-dialog.alert-dialog section{text-align:center}.modal-dialog .modal-dialog-main{position:relative;z-index:9000;background:#fafafa;font-size:1rem;border-radius:.1875rem}.modal-dialog .dialog-title{color:#000}.modal-dialog .dialog-content{color:#323232;line-height:1.6}.modal-dialog em{font-style:normal}.modal-dialog section{padding:0 1.625rem;margin:0 auto;max-height:11.75rem;overflow:hidden;position:relative}.modal-dialog footer{border-top:.0625rem solid #d5d5d5;height:2.8125rem;line-height:2.8125rem;margin-top:1.25rem;overflow:hidden}.modal-dialog footer button{outline:none;border:0;padding:0;background:none;font-size:1rem;height:2.8125rem}.modal-dialog footer button.modal-dialog-onebtn{width:100%}.modal-dialog footer button:after{content:"";border-right:.0625rem solid #d5d5d5;position:absolute;top:0;display:block;height:100%;right:0}.modal-dialog footer button.last:after{display:none}.modal-dialog footer .cancle-btn,.modal-dialog footer .sure-btn{width:50%;float:left;position:relative}.modal-dialog footer .cancle-btn{color:#000}.modal-dialog footer .sure-btn{color:#517bd1}.modal-dialog.alert-dialog footer{text-align:center}.modal-dialog.alert-dialog footer .sure-btn{float:none;margin:0 auto}.dialog-mask{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;z-index:8999;background:url('+t(5)+")}",""])},function(e,exports){e.exports=function(){var e=[];return e.toString=function(){for(var e=[],t=0;t<this.length;t++){var n=this[t];n[2]?e.push("@media "+n[2]+"{"+n[1]+"}"):e.push(n[1])}return e.join("")},e.i=function(t,n){"string"==typeof t&&(t=[[null,t,""]]);for(var o={},r=0;r<this.length;r++){var i=this[r][0];"number"==typeof i&&(o[i]=!0)}for(r=0;r<t.length;r++){var a=t[r];"number"==typeof a[0]&&o[a[0]]||(n&&!a[2]?a[2]=n:n&&(a[2]="("+a[2]+") and ("+n+")"),e.push(a))}},e}},function(e,exports){e.exports="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAQMAAAC3/F3+AAAABGdBTUEAALGPC/xhBQAAAANQTFRFAAAAp3o92gAAAAF0Uk5TgK1eW0YAAAALSURBVAjXY2DABwAAHgABboVHMgAAAABJRU5ErkJggg=="},function(e,exports,t){function n(e,t){for(var n=0;n<e.length;n++){var o=e[n],r=f[o.id];if(r){r.refs++;for(var i=0;i<r.parts.length;i++)r.parts[i](o.parts[i]);for(;i<o.parts.length;i++)r.parts.push(c(o.parts[i],t))}else{for(var a=[],i=0;i<o.parts.length;i++)a.push(c(o.parts[i],t));f[o.id]={id:o.id,refs:1,parts:a}}}}function o(e){for(var t=[],n={},o=0;o<e.length;o++){var r=e[o],i=r[0],a=r[1],l=r[2],c=r[3],s={css:a,media:l,sourceMap:c};n[i]?n[i].parts.push(s):t.push(n[i]={id:i,parts:[s]})}return t}function r(e,t){var n=h(),o=b[b.length-1];if("top"===e.insertAt)o?o.nextSibling?n.insertBefore(t,o.nextSibling):n.appendChild(t):n.insertBefore(t,n.firstChild),b.push(t);else{if("bottom"!==e.insertAt)throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");n.appendChild(t)}}function i(e){e.parentNode.removeChild(e);var t=b.indexOf(e);t>=0&&b.splice(t,1)}function a(e){var t=document.createElement("style");return t.type="text/css",r(e,t),t}function l(e){var t=document.createElement("link");return t.rel="stylesheet",r(e,t),t}function c(e,t){var n,o,r;if(t.singleton){var c=v++;n=m||(m=a(t)),o=s.bind(null,n,c,!1),r=s.bind(null,n,c,!0)}else e.sourceMap&&"function"==typeof URL&&"function"==typeof URL.createObjectURL&&"function"==typeof URL.revokeObjectURL&&"function"==typeof Blob&&"function"==typeof btoa?(n=l(t),o=u.bind(null,n),r=function(){i(n),n.href&&URL.revokeObjectURL(n.href)}):(n=a(t),o=d.bind(null,n),r=function(){i(n)});return o(e),function(t){if(t){if(t.css===e.css&&t.media===e.media&&t.sourceMap===e.sourceMap)return;o(e=t)}else r()}}function s(e,t,n,o){var r=n?"":o.css;if(e.styleSheet)e.styleSheet.cssText=y(t,r);else{var i=document.createTextNode(r),a=e.childNodes;a[t]&&e.removeChild(a[t]),a.length?e.insertBefore(i,a[t]):e.appendChild(i)}}function d(e,t){var n=t.css,o=t.media;if(o&&e.setAttribute("media",o),e.styleSheet)e.styleSheet.cssText=n;else{for(;e.firstChild;)e.removeChild(e.firstChild);e.appendChild(document.createTextNode(n))}}function u(e,t){var n=t.css,o=t.sourceMap;o&&(n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(o))))+" */");var r=new Blob([n],{type:"text/css"}),i=e.href;e.href=URL.createObjectURL(r),i&&URL.revokeObjectURL(i)}var f={},p=function(e){var t;return function(){return"undefined"==typeof t&&(t=e.apply(this,arguments)),t}},g=p(function(){return/msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase())}),h=p(function(){return document.head||document.getElementsByTagName("head")[0]}),m=null,v=0,b=[];e.exports=function(e,t){t=t||{},"undefined"==typeof t.singleton&&(t.singleton=g()),"undefined"==typeof t.insertAt&&(t.insertAt="bottom");var r=o(e);return n(r,t),function(e){for(var i=[],a=0;a<r.length;a++){var l=r[a],c=f[l.id];c.refs--,i.push(c)}if(e){var s=o(e);n(s,t)}for(var a=0;a<i.length;a++){var c=i[a];if(0===c.refs){for(var d=0;d<c.parts.length;d++)c.parts[d]();delete f[c.id]}}}};var y=function(){var e=[];return function(t,n){return e[t]=n,e.filter(Boolean).join("\n")}}()},function(e,exports){"use strict";e.exports={createHtmlDom:function(){var e=document.createElement("div");return function(t){var n;return e.innerHTML=t,n=e.children[0],e.removeChild(n),n}}(),replaceTemlate:function(e,t){for(var n,o=new RegExp(/{(.*?)}/g);n=o.exec(e);)e=e.replace(n[0],t[n[1]]||"");return e},bindEvent:function(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent("on"+t,n)},unBindEvent:function(e,t,n){e.removeEventListener?e.removeEventListener(t,n,!1):e.detachEvent("on"+t,n)},getUrlParam:function(e){var t=new RegExp("(^|&)"+e+"=([^&]*)(&|$)","i"),n=window.location.search.substr(1).match(t);return null!=n?decodeURI(n[2]):null},assign:function(){for(var e=arguments[0],t=[].slice.call(arguments,1),n=0,o=t.length;n<o;n++){var r=t[n];if(r)for(var i in r)r.hasOwnProperty(i)&&(e[i]=r[i])}return e},closest:function(e,t){function n(e){return!!e.className.match(o)||(!!r.test(e.nodeName.toLowerCase())||void 0)}var o=new RegExp("(^|\\s+)"+t+"(\\s+|$)"),r=new RegExp("^"+t+"$"),i=e;if(n(e))return e;for(;(i=i.parentNode)&&"html"!=i.nodeName.toLowerCase();)if(n(i))return i;return null},createParams:function(e){var t={};for(var n in e)e.hasOwnProperty(n)&&"undefined"!=typeof e[n]&&(t[n]=e[n]);return t}}},function(e,exports,t){"use strict";function n(e,t){var n=getComputedStyle(e),o=0;return t&&(o=1*n.getPropertyValue("margin-top").replace("px","")+1*n.getPropertyValue("margin-bottom").replace("px","")),1*n.getPropertyValue("height").replace("px","")+1*n.paddingTop.replace("px","")+1*n.paddingBottom.replace("px","")+1*n.borderTopWidth.replace("px","")+1*n.borderBottomWidth.replace("px","")+o}var o=t(7),r={circular:{style:"cubic-bezier(0.1, 0.57, 0.1, 1)"}};e.exports={initTouch:function(e){function t(e){var t,n=e.touches[0],r=o.closest(e.target,"dialog-content");r?(C&&(f(),C=!1,t=u(),c(Math.round(t.x),Math.round(t.y))),h=n.pageX,m=n.pageY,b=Date.now(),k=y=0,x=D,A=z,v=!0):v=!1}function i(e){var t,n=e.touches[0],o=n.pageX,r=n.pageY,i=e.target.nodeName.toLowerCase(),a=Date.now(),l=r-m,s=o-h;if(h=o,m=r,k+=s,y+=l,"input"!=i&&"select"!=i&&"textarea"!=i){if(e.preventDefault(),e.stopPropagation(),a-L>300&&Math.abs(y)<10||!v||g>=0)return void e.preventDefault();t=z+l,(t>0||t<g)&&(t=z+l/3),c(w,t),a-b>300&&(b=a,x=D,A=z)}}function a(e){var t,n=Date.now()-b,o=Math.round(z),r=0;h=null,m=null,L=Date.now(),C=0,s(w,500)||g>=0||(l(w,o),n<300&&(t=d(z,A,n),o=t.destination,r=t.duration,C=1),o!=z&&l(w,o,r))}function l(e,t,n){n=n||0,C=n>0,f(n),c(e,t)}function c(e,t){S.webkitTransform="translate3d(0px,"+t+"px,0px)",z=t}function s(e,t){var n=z;return t=t||0,n>=0?n=0:n<g&&(n=g),n!=z&&(l(e,n,t),!0)}function d(e,t,n){var o,r,i=e-t,a=Math.abs(i)/n,l=6e-4;return o=e+a*a/(2*l)*(i<0?-1:1),r=a/l,o<g?(o=g-B/2.5*(a/8),i=Math.abs(o-e),r=i/a):o>0&&(o=B/2.5*(a/8),i=Math.abs(e)+o,r=i/a),{destination:Math.round(o),duration:r}}function u(){var e,t,n=window.getComputedStyle(w,null);return n=n.webkitTransform.split(")")[0].split(", "),e=+(n[12]||n[4]),t=+(n[13]||n[5]),{x:e,y:t}}function f(e){e=e||0,S.transitionDuration=e+"ms"}function p(){C&&(f(),s(w)||(C=0))}var g,h,m,v,b,y,k,x,A,C,w=e.querySelector(".dialog-content"),E=e.querySelector("section"),S=w.style,B=1*getComputedStyle(E).getPropertyValue("height").replace("px",""),L=0,D=0,z=0;return g=B-n(w,!0),S.transitionTimingFunction=r.circular.style,o.bindEvent(e,"touchmove",i),o.bindEvent(e,"touchstart",t),o.bindEvent(e,"touchend",a),o.bindEvent(w,"transitionend",p),o.bindEvent(w,"webkitTransitionEnd",p),{destroyScroll:function(){o.unBindEvent(e,"touchmove",i),o.unBindEvent(e,"touchstart",t),o.unBindEvent(e,"touchend",a),o.unBindEvent(w,"transitionend",p),o.unBindEvent(w,"webkitTransitionEnd",p),w=E=null},refresh:function(){B=1*getComputedStyle(E).getPropertyValue("height").replace("px",""),g=B-n(w,!0)}}}}}])});
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["pdDialog"] = factory();
+	else
+		root["pdDialog"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(2);
+
+
+/***/ }),
+/* 1 */,
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var baseCss = __webpack_require__(3);
+
+	var utils = __webpack_require__(4);
+	var scrollDlg = __webpack_require__(5);
+	var _ = {
+	  assign: utils.assign
+	},
+	    winH,
+	    winW;
+
+	function noop() {}
+
+	//动态插入css样式
+	function insertStyleToHead(baseFontSize) {
+	  var style = document.createElement('style');
+
+	  style.innerHTML = utils.fnTemplate(baseCss, {
+	    rem: function rem(px) {
+	      return px.replace(/(\d+)px/, function (expr, val) {
+	        return val * 1 / baseFontSize + 'rem';
+	      });
+	    }
+	  });
+	  var headDom = document.querySelector('head');
+	  var firstLink = headDom.querySelector('link');
+
+	  if (!firstLink) headDom.appendChild(style);else headDom.insertBefore(style, firstLink);
+	}
+
+	/*
+	生成对话框模板内容
+	 */
+	function getHtmlContent(options) {
+	  var templateHtml = [],
+	      header = options.header;
+
+	  templateHtml.push('<div class="rc-modal"><div class="dialog-mask"></div><div class="modal-dialog ' + options.clazz + '"><div class="modal-dialog-main">');
+	  if (options.title != null && options.title != '') {
+	    templateHtml.push('<header>' + utils.replaceTemlate(header, options) + '</header>');
+	  }
+	  templateHtml.push('<section><div class="dialog-content"></div></section><footer>');
+	  templateHtml.push(createButtons.call(this, options));
+	  templateHtml.push('</footer></div></div></div>');
+
+	  return templateHtml.join('');
+	}
+
+	function resizeWin() {
+	  winH = window.innerHeight ? window.innerHeight : document.body.clientHeight;
+	  winW = window.innerWidth ? window.innerWidth : document.body.clientWidth;
+	}
+	// utils.bindEvent(window,'resize',resizeWin);
+	//TODO:
+	// resizeWin();
+	/*
+	创建底部按钮
+	 */
+	function createButtons(options) {
+	  var btns = options.buttons || [],
+	      template = '<button type="button" class="{cls}" data-id="{id}" >{name}</button>',
+	      btnTmpls = '',
+	      self = this,
+	      oneBtnClz = '';
+
+	  if (options.cancelCallback) {
+	    btns.push({
+	      id: 'cancel',
+	      name: options.cancelStr,
+	      callback: options.cancelCallback,
+	      cls: "cancle-btn"
+	    });
+	  }
+
+	  if (btns.length == 0) oneBtnClz = ' modal-dialog-onebtn';
+
+	  if (options.okCallback) {
+	    btns.push({
+	      id: 'ok',
+	      name: options.sureStr,
+	      callback: options.okCallback,
+	      cls: "sure-btn" + oneBtnClz
+	    });
+	  }
+
+	  if (options.reverse) btns = btns.reverse();
+
+	  btns.forEach(function (item, index) {
+	    if (btns.length - 1 == index) item.cls += ' last';
+	    btnTmpls += utils.replaceTemlate(template, item);
+	    self.callbacks[item.id] = item.callback;
+	  });
+
+	  return btnTmpls;
+	}
+
+	function insertContent(dom, options) {
+	  if (options.selector) {
+	    var comment = document.createComment("dialog-target replace"),
+	        selector = options.selector,
+	        oriDisplay = getComputedStyle(selector).getPropertyValue('display');
+
+	    if (selector.parentNode) {
+	      selector.parentNode.replaceChild(comment, selector);
+	      dom._commentDom = comment;
+	      if (oriDisplay == 'none') {
+	        selector.style.display = 'block';
+	      }
+	      dom._originDisplay = oriDisplay;
+	    }
+
+	    dom.querySelector('.dialog-content').appendChild(selector);
+	  } else dom.querySelector('.dialog-content').innerHTML = options.content.replace(/(\r\n|\n|\r)/gm, '<br/>');
+	}
+	/**
+	 * [ModalDialog description]
+	 * clazz: 弹出框的css类名
+	 * cancelStr 取消按钮的按钮名
+	 * sureStr 确定按钮的按钮名
+	 * title 弹出框的标题
+	 * header 表示头部的html模板
+	 * okCallback 确定按钮回调函数
+	 * cancelCallback 取消按钮回调函数
+	 * buttons [{cls:'sure',callback:fn,name:'name'}]
+	 * useBackground 单击背景时执行的回调函数
+	 */
+	var defaultSettings = {
+	  clazz: 'dialog-theme',
+	  cancelStr: '取消',
+	  sureStr: '确定',
+	  title: null,
+	  header: '<span class="dialog-title">{title}</span>',
+	  animated: false,
+	  buttons: null,
+	  useBackground: 'cancel',
+	  complete: false
+	},
+	    beforeListeners = [],
+	    afterListeners = [],
+	    closedListeners = [],
+	    _count = 0;
+
+	var ModalDialog = function ModalDialog(options) {
+	  var dialog, id;
+
+	  options = _.assign({}, defaultSettings, options);
+
+	  options._callBacks = options._callBacks || {};
+	  id = options.id = options.id || _count;
+
+	  Object.keys(options).forEach(function (name) {
+	    if (typeof options[name] === 'function') {
+	      options._callBacks[name] = options[name];
+	    }
+	  });
+
+	  beforeListeners.forEach(function (listener) {
+	    listener(options);
+	  });
+
+	  ModalDialog.dialogList[id] = dialog = new ModalDialog.create(options);
+
+	  ModalDialog.modalCount++;
+
+	  afterListeners.forEach(function (listener) {
+	    listener(dialog);
+	  });
+
+	  _count++;
+
+	  return dialog;
+	};
+
+	ModalDialog.create = function (options) {
+	  var dialogDom, dlgPos, dlgMainDom, offsetH;
+
+	  this.callbacks = options._callBacks;
+	  this.id = options.id;
+
+	  dialogDom = utils.createHtmlDom(getHtmlContent.call(this, options));
+
+	  insertContent(dialogDom, options);
+	  document.body.appendChild(dialogDom);
+
+	  offsetH = document.documentElement.offsetHeight;
+
+	  this.dlgScroll = scrollDlg.initTouch(dialogDom);
+
+	  dlgMainDom = dialogDom.querySelector('.modal-dialog');
+	  dlgPos = this.getPos(dlgMainDom);
+
+	  _.assign(dlgMainDom.style, {
+	    display: 'block',
+	    left: dlgPos.left + 'px',
+	    top: dlgPos.top + 'px'
+	  });
+
+	  if (options.animated) dialogDom.querySelector('.modal-dialog-main').className += ' dlg-animation';
+
+	  if (options.useBackground) {
+	    var userbgr = options.useBackground;
+	    if (!options._callBacks[userbgr]) {
+	      options._callBacks[userbgr] = function () {};
+	    }
+	    dialogDom.querySelector('.dialog-mask').dataset.id = options.useBackground;
+	  }
+
+	  dialogDom.querySelector('.dialog-mask').style.height = offsetH + 'px';
+
+	  this._eventListener = this.proxy(this._clickEvent, dialogDom, options);
+	  this.dialogDom = dialogDom;
+	  this.options = options;
+	  utils.bindEvent(dialogDom, 'click', this._eventListener);
+
+	  return this;
+	};
+	_.assign(ModalDialog.create.prototype, {
+	  callbacks: null,
+	  getPos: function getPos(dialogDom) {
+	    dialogDom = dialogDom || this.dialogDom;
+	    if (!dialogDom) {
+	      return { left: 0, top: 0 };
+	    }
+	    resizeWin();
+	    var dlgH = dialogDom.offsetHeight;
+	    var dlgW = dialogDom.offsetWidth;
+	    var dlgPosY = winH - dlgH > 0 ? (winH - dlgH) / 2 : winH * 0.1;
+	    var dlgPosX = winW - dlgW > 0 ? (winW - dlgW) / 2 : winW * 0.1;
+
+	    return { left: dlgPosX, top: dlgPosY };
+	  },
+	  closeDialog: function closeDialog(isNotInvoke) {
+	    var dialogDom = this.dialogDom,
+	        options = this.options,
+	        selector,
+	        _commentDom,
+	        self = this;
+
+	    this.removeDialog(dialogDom, options);
+
+	    if (options.selector && dialogDom._commentDom) {
+	      selector = options.selector;
+	      _commentDom = dialogDom._commentDom;
+
+	      selector.style.display = dialogDom._originDisplay;
+	      _commentDom.parentNode.replaceChild(selector, _commentDom);
+
+	      dialogDom._commentDom = null;
+	      dialogDom._originDisplay = null;
+	    }
+	    utils.unBindEvent(dialogDom, 'click', this._eventListener);
+	    // dialogDom.parentNode.removeChild(dialogDom);
+	    this.dlgScroll.destroyScroll && this.dlgScroll.destroyScroll();
+
+	    if (!isNotInvoke) {
+	      closedListeners.forEach(function (listener) {
+	        listener(self);
+	      });
+	    } else {
+	      if (options.cancelCallback) options.cancelCallback();
+	    }
+
+	    this._eventListener = null;
+	    this.dialogDom = dialogDom = null;
+
+	    options.complete && options.complete();
+
+	    delete ModalDialog.dialogList[this.id];
+
+	    ModalDialog.modalCount--;
+	  },
+	  removeDialog: function removeDialog(dlgDom) {
+	    utils.bindEvent(dlgDom, 'transitionend', _removeTransition);
+	    utils.bindEvent(dlgDom, 'webkitTransitionEnd', _removeTransition);
+
+	    dlgDom.style.opacity = 0;
+
+	    function _removeTransition() {
+	      utils.unBindEvent(dlgDom, 'transitionend', _removeTransition);
+	      utils.unBindEvent(dlgDom, 'webkitTransitionEnd', _removeTransition);
+	      dlgDom.parentNode.removeChild(dlgDom);
+	    }
+	  },
+	  refresh: function refresh() {
+	    var dialogDom = this.dialogDom.querySelector('.modal-dialog'),
+	        dlgPos = this.getPos(dialogDom);
+
+	    _.assign(dialogDom.style, {
+	      display: 'block',
+	      left: dlgPos.left + 'px',
+	      top: dlgPos.top + 'px'
+	    });
+	    this.dlgScroll.refresh();
+	  },
+	  _clickEvent: function _clickEvent(e, dialogDom, options) {
+	    var target = e.target,
+	        id = target.getAttribute('data-id'),
+	        self = this;
+
+	    if (typeof this.callbacks[id] == 'function' && !this.callbacks[id].call(this, e)) {
+	      // setTimeout(function(){
+	      self.closeDialog();
+	      // },1);
+	    }
+	  },
+	  proxy: function proxy(fn) {
+	    var self = this,
+	        wrapArgs = Array.prototype.slice.call(arguments, 1);
+
+	    return function () {
+	      var args = Array.prototype.slice.call(arguments);
+
+	      if (wrapArgs.length > 0) args = args.concat(wrapArgs);
+
+	      fn.apply(self, args);
+	    };
+	  }
+	});
+
+	ModalDialog.alert = function (content, title, callback, dom, cls) {
+	  var clz = content.clazz ? content.clazz : cls ? cls : '';
+
+	  clz += ' alert-dialog';
+
+	  if ((typeof content === 'undefined' ? 'undefined' : _typeof(content)) !== 'object') {
+	    content = utils.createParams({
+	      title: title,
+	      content: content,
+	      okCallback: callback,
+	      selector: dom
+	    });
+	  }
+
+	  content.okCallback = content.okCallback || noop;
+
+	  if (!content.title) clz += ' dlg-no-title';else clz += ' dlg-has-title';
+
+	  content.clazz = clz;
+	  return ModalDialog(content);
+	};
+
+	ModalDialog.confirm = function (content, sureFn, title, btText1, btText2, cancelFn, cls) {
+	  var clz = content.clazz ? content.clazz : cls ? cls : '';
+
+	  clz += ' confirm-dialog';
+
+	  if ((typeof content === 'undefined' ? 'undefined' : _typeof(content)) !== 'object') {
+	    content = utils.createParams({
+	      title: title,
+	      content: content,
+	      okCallback: sureFn,
+	      cancelCallback: cancelFn,
+	      sureStr: btText2,
+	      cancelStr: btText1
+	    });
+	  }
+
+	  if (!content.title) clz += ' dlg-no-title';else clz += ' dlg-has-title';
+
+	  content.okCallback = content.okCallback || noop;
+	  content.cancelCallback = content.cancelCallback || noop;
+	  content.clazz = clz;
+	  return ModalDialog(content);
+	};
+
+	ModalDialog.afterListener = function (listener) {
+	  afterListeners.push(listener);
+
+	  return function () {
+	    afterListeners = afterListeners.filter(function (item) {
+	      return item != listener;
+	    });
+	  };
+	};
+
+	ModalDialog.preListener = function (listener) {
+	  beforeListeners.push(listener);
+
+	  return function () {
+	    beforeListeners = beforeListeners.filter(function (item) {
+	      return item != listener;
+	    });
+	  };
+	};
+
+	ModalDialog.closedListener = function (listener) {
+	  closedListeners.push(listener);
+
+	  return function () {
+	    closedListeners = closedListeners.filter(function (item) {
+	      return item != listener;
+	    });
+	  };
+	};
+
+	var _plugins = [];
+
+	ModalDialog.addPlugin = function (fn) {
+	  _plugins.push(fn);
+	};
+
+	ModalDialog.defaultConfig = {};
+	var isConfig = false;
+
+	ModalDialog.config = function (config) {
+	  var options = utils.assign({}, ModalDialog.defaultConfig, config);
+
+	  ModalDialog.options = options;
+	  if (isConfig) {
+	    console.info('modaldialg only can config once');
+	    return;
+	  }
+
+	  for (var i = 0, len = _plugins.length; i < len; i++) {
+	    _plugins[i](ModalDialog, options);
+	  }
+
+	  insertStyleToHead(options.baseFontSize || 16);
+
+	  isConfig = true;
+	};
+
+	ModalDialog.dialogList = {};
+	ModalDialog.modalCount = 0;
+
+	ModalDialog.DomUtils = utils;
+
+	module.exports = ModalDialog;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+	module.exports = ".rc-modal {\n  position: absolute;\n  z-index: 9999;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  transition: opacity 0.3s ease-out;\n}\n.rc-modal .modal-dialog {\n  border-radius: $fn.rem( 1px );\n  text-align: center;\n  width: $fn.rem( 324px );\n  margin: 0 auto;\n  z-index: 9000;\n  position: fixed;\n  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.2);\n}\n.modal-dialog.dlg-no-title header {\n  height: $fn.rem( 28px );\n}\n.modal-dialog.dlg-no-title .dialog-content {\n  color: #000;\n}\n.modal-dialog.dlg-no-title section {\n  text-align: left;\n}\n.modal-dialog.dlg-has-title header {\n  padding: 0 0 $fn.rem( 10px ) 0;\n  font-size: $fn.rem( 18px );\n}\n.modal-dialog.alert-dialog section {\n  text-align: center;\n}\n.modal-dialog .modal-dialog-main {\n  position: relative;\n  z-index: 9000;\n  background: #fafafa;\n  font-size: $fn.rem( 16px );\n  border-radius: $fn.rem( 3px );\n  padding-top: $fn.rem( 28px );\n}\n.modal-dialog .dialog-title {\n  color: #000;\n}\n.modal-dialog .dialog-content {\n  color: #323232;\n  line-height: 1.6;\n}\n.modal-dialog em {\n  font-style: normal;\n}\n.modal-dialog section {\n  padding: 0px $fn.rem( 26px );\n  margin: 0 auto;\n  max-height: $fn.rem( 188px );\n  overflow: hidden;\n  position: relative;\n}\n.modal-dialog footer {\n  border-top: solid #d5d5d5;\n  border-top-width: $fn.rem( 1px );\n  height: $fn.rem( 45px );\n  line-height: $fn.rem( 45px );\n  margin-top: $fn.rem( 20px );\n  overflow: hidden;\n}\n.modal-dialog footer button {\n  outline: none;\n  border: 0;\n  padding: 0;\n  background: none;\n  font-size: $fn.rem( 16px );\n  height: $fn.rem( 45px );\n}\n.modal-dialog footer button.modal-dialog-onebtn {\n  width: 100%;\n}\n.modal-dialog footer button:after {\n  content: '';\n  border-right: solid #d5d5d5;\n  border-right-width: $fn.rem( 1px );\n  position: absolute;\n  top: 0px;\n  display: block;\n  height: 100%;\n  right: 0px;\n}\n.modal-dialog footer button.last:after {\n  display: none;\n}\n.modal-dialog footer .sure-btn,\n.modal-dialog footer .cancle-btn {\n  width: 50%;\n  float: left;\n  position: relative;\n}\n.modal-dialog footer .cancle-btn {\n  color: #000000;\n}\n.modal-dialog footer .sure-btn {\n  color: #517bd1;\n}\n.modal-dialog.alert-dialog footer {\n  text-align: center;\n}\n.modal-dialog.alert-dialog footer .sure-btn {\n  float: none;\n  margin: 0 auto;\n}\n.dialog-mask {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  width: 100%;\n  z-index: 8999;\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAQMAAAC3/F3+AAAABGdBTUEAALGPC/xhBQAAAANQTFRFAAAAp3o92gAAAAF0Uk5TgK1eW0YAAAALSURBVAjXY2DABwAAHgABboVHMgAAAABJRU5ErkJggg==);\n}\n"
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  createHtmlDom: function createHtml() {
+	    var div = document.createElement('div');
+
+	    return function (html) {
+	      var temp;
+	      div.innerHTML = html;
+	      temp = div.children[0];
+	      div.removeChild(temp);
+	      return temp;
+	    };
+	  }(),
+	  replaceTemlate: function replaceTemlate(str, data) {
+	    var regx = new RegExp(/{(.*?)}/g),
+	        temp;
+	    while (temp = regx.exec(str)) {
+	      str = str.replace(temp[0], data[temp[1]] || '');
+	    }
+	    return str.replace(/[\r\n]*/g, '');
+	  },
+	  fnTemplate: function fnTemplate(str, data) {
+	    var regx = new RegExp(/\$fn\.(.+?)\((.*?)\)/g);
+
+	    return str.replace(regx, function (expr, fn, val) {
+	      return data[fn](val);
+	    }).replace(/[\r\n]*/g, '');;
+	  },
+	  bindEvent: function bindEvent(dom, name, fn) {
+	    dom.addEventListener ? dom.addEventListener(name, fn, false) : dom.attachEvent('on' + name, fn);
+	  },
+	  unBindEvent: function unBindEvent(dom, name, fn) {
+	    dom.removeEventListener ? dom.removeEventListener(name, fn, false) : dom.detachEvent('on' + name, fn);
+	  },
+	  getUrlParam: function getUrlParam(key) {
+	    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)", "i");
+	    var r = window.location.search.substr(1).match(reg);
+	    if (r != null) return decodeURI(r[2]);
+	    return null;
+	  },
+	  assign: function assign() {
+	    var temp = arguments[0];
+	    var args = [].slice.call(arguments, 1);
+	    for (var i = 0, len = args.length; i < len; i++) {
+	      var item = args[i];
+	      if (!item) continue;
+	      for (var p in item) {
+	        if (item.hasOwnProperty(p)) {
+	          temp[p] = item[p];
+	        }
+	      }
+	    }
+	    return temp;
+	  },
+	  closest: function closest(dom, cls) {
+	    var clsRegx = new RegExp('(^|\\s+)' + cls + '(\\s+|$)'),
+	        tagRegx = new RegExp('^' + cls + '$'),
+	        parent = dom;
+
+	    if (test(dom)) return dom;
+
+	    while (!!(parent = parent.parentNode) && parent.nodeName.toLowerCase() != 'html') {
+	      if (test(parent)) {
+	        return parent;
+	      }
+	    }
+	    return null;
+
+	    function test(dom) {
+
+	      if (!!dom.className.match(clsRegx)) {
+	        return true;
+	      } else if (tagRegx.test(dom.nodeName.toLowerCase())) {
+	        return true;
+	      }
+	    }
+	  },
+	  createParams: function createParams(param) {
+	    var res = {};
+
+	    for (var p in param) {
+	      if (param.hasOwnProperty(p)) {
+	        if (typeof param[p] != 'undefined') {
+	          res[p] = param[p];
+	        }
+	      }
+	    }
+	    return res;
+	  }
+	};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(4);
+
+	function getHeight(sel, isOuter) {
+	  var sectionStyle = getComputedStyle(sel),
+	      marginH = 0;
+
+	  if (isOuter) {
+	    marginH = sectionStyle.getPropertyValue('margin-top').replace('px', '') * 1 + sectionStyle.getPropertyValue('margin-bottom').replace('px', '') * 1;
+	  }
+	  return sectionStyle.getPropertyValue('height').replace('px', '') * 1 + sectionStyle.paddingTop.replace('px', '') * 1 + sectionStyle.paddingBottom.replace('px', '') * 1 + sectionStyle.borderTopWidth.replace('px', '') * 1 + sectionStyle.borderBottomWidth.replace('px', '') * 1 + marginH;
+	}
+
+	var ease = {
+	  circular: {
+	    style: 'cubic-bezier(0.1, 0.57, 0.1, 1)'
+	  }
+	};
+
+	module.exports = {
+	  initTouch: function initTouch(dialog) {
+	    var dlgContent = dialog.querySelector('.dialog-content'),
+	        section = dialog.querySelector('section'),
+	        scrollTargeStyle = dlgContent.style,
+	        wrapperHeight = getComputedStyle(section).getPropertyValue('height').replace('px', '') * 1,
+	        maxHeight,
+	        startPosx,
+	        startPosy,
+	        isTouch,
+	        startTime,
+	        distY,
+	        distX,
+	        endTime = 0,
+	        x = 0,
+	        y = 0,
+	        startX,
+	        startY,
+	        isInTransition;
+
+	    maxHeight = wrapperHeight - getHeight(dlgContent, true);
+
+	    scrollTargeStyle.transitionTimingFunction = ease.circular.style;
+
+	    utils.bindEvent(dialog, 'touchmove', stopScrollMove);
+	    utils.bindEvent(dialog, 'touchstart', startTouch);
+	    utils.bindEvent(dialog, 'touchend', toucheEnd);
+	    utils.bindEvent(dlgContent, 'transitionend', _transitionEnd);
+	    utils.bindEvent(dlgContent, 'webkitTransitionEnd', _transitionEnd);
+
+	    return {
+	      destroyScroll: function destroyScroll() {
+	        utils.unBindEvent(dialog, 'touchmove', stopScrollMove);
+	        utils.unBindEvent(dialog, 'touchstart', startTouch);
+	        utils.unBindEvent(dialog, 'touchend', toucheEnd);
+	        utils.unBindEvent(dlgContent, 'transitionend', _transitionEnd);
+	        utils.unBindEvent(dlgContent, 'webkitTransitionEnd', _transitionEnd);
+	        dlgContent = section = null;
+	      },
+	      refresh: function refresh() {
+	        wrapperHeight = getComputedStyle(section).getPropertyValue('height').replace('px', '') * 1;
+	        maxHeight = wrapperHeight - getHeight(dlgContent, true);
+	      }
+	    };
+
+	    function startTouch(e) {
+	      var touch = e.touches[0],
+	          target = utils.closest(e.target, 'dialog-content'),
+	          pos;
+
+	      if (!!target) {
+	        if (isInTransition) {
+	          _transitionTime();
+	          isInTransition = false;
+	          pos = getComputedPosition();
+	          translate(Math.round(pos.x), Math.round(pos.y));
+	        }
+	        startPosx = touch.pageX;
+	        startPosy = touch.pageY;
+	        startTime = Date.now();
+	        distX = distY = 0;
+	        startX = x;
+	        startY = y;
+	        isTouch = true;
+	      } else {
+	        isTouch = false;
+	      }
+	    }
+	    function stopScrollMove(e) {
+	      var touch = e.touches[0],
+	          posX = touch.pageX,
+	          posY = touch.pageY,
+	          nodeName = e.target.nodeName.toLowerCase(),
+	          timestamp = Date.now();
+
+	      var deltaY = posY - startPosy,
+	          deltaX = posX - startPosx,
+	          newY;
+
+	      startPosx = posX;
+	      startPosy = posY;
+
+	      distX += deltaX;
+	      distY += deltaY;
+
+	      if (nodeName != 'input' && nodeName != 'select' && nodeName != 'textarea') {
+	        e.preventDefault();
+	        e.stopPropagation();
+	      } else {
+	        return;
+	      }
+
+	      if (timestamp - endTime > 300 && Math.abs(distY) < 10 || !isTouch || maxHeight >= 0) {
+	        e.preventDefault();
+	        return;
+	      }
+
+	      newY = y + deltaY;
+	      if (newY > 0 || newY < maxHeight) {
+	        newY = y + deltaY / 3;
+	      }
+
+	      translate(dlgContent, newY);
+
+	      if (timestamp - startTime > 300) {
+	        startTime = timestamp;
+	        startX = x;
+	        startY = y;
+	      }
+	    }
+	    function toucheEnd(e) {
+	      var duration = Date.now() - startTime,
+	          newY = Math.round(y),
+	          time = 0,
+	          momentumY;
+
+	      startPosx = null;
+	      startPosy = null;
+	      endTime = Date.now();
+	      isInTransition = 0;
+
+	      if (resetPosition(dlgContent, 500) || maxHeight >= 0) {
+	        return;
+	      }
+
+	      scrollTo(dlgContent, newY);
+
+	      if (duration < 300) {
+	        momentumY = momentum(y, startY, duration);
+	        newY = momentumY.destination;
+	        time = momentumY.duration;
+	        isInTransition = 1;
+	      }
+
+	      if (newY != y) {
+	        scrollTo(dlgContent, newY, time);
+	      }
+	    }
+	    function scrollTo(target, posy, time) {
+	      time = time || 0;
+	      isInTransition = time > 0;
+	      _transitionTime(time);
+	      translate(target, posy);
+	    }
+	    function translate(target, posy) {
+	      scrollTargeStyle.webkitTransform = 'translate3d(0px,' + posy + 'px,0px)';
+	      y = posy;
+	    }
+	    function resetPosition(target, time) {
+	      var posY = y;
+
+	      time = time || 0;
+
+	      if (posY >= 0) {
+	        posY = 0;
+	      } else if (posY < maxHeight) {
+	        posY = maxHeight;
+	      }
+
+	      if (posY == y) {
+	        return false;
+	      }
+
+	      scrollTo(target, posY, time);
+	      return true;
+	    }
+
+	    function momentum(current, start, time) {
+	      var distance = current - start,
+	          speed = Math.abs(distance) / time,
+	          deceleration = 0.0006,
+	          destination,
+	          duration;
+
+	      destination = current + speed * speed / (2 * deceleration) * (distance < 0 ? -1 : 1); // s=(at^2)/2
+	      duration = speed / deceleration; // v=at
+
+	      if (destination < maxHeight) {
+	        destination = maxHeight - wrapperHeight / 2.5 * (speed / 8);
+	        distance = Math.abs(destination - current);
+	        duration = distance / speed;
+	      } else if (destination > 0) {
+	        destination = wrapperHeight / 2.5 * (speed / 8);
+	        distance = Math.abs(current) + destination;
+	        duration = distance / speed;
+	      }
+
+	      return {
+	        destination: Math.round(destination),
+	        duration: duration
+	      };
+	    }
+
+	    function getComputedPosition() {
+	      var matrix = window.getComputedStyle(dlgContent, null),
+	          x,
+	          y;
+
+	      matrix = matrix.webkitTransform.split(')')[0].split(', ');
+	      x = +(matrix[12] || matrix[4]);
+	      y = +(matrix[13] || matrix[5]);
+
+	      return { x: x, y: y };
+	    }
+
+	    function _transitionTime(time) {
+	      time = time || 0;
+	      scrollTargeStyle.transitionDuration = time + 'ms';
+	    }
+	    function _transitionEnd() {
+	      if (!isInTransition) return;
+	      _transitionTime();
+	      if (!resetPosition(dlgContent)) {
+	        isInTransition = 0;
+	      }
+	    }
+	  }
+	};
+
+/***/ })
+/******/ ])
+});
+;

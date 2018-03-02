@@ -22,7 +22,8 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loader: 'style-loader!css-loader!less-loader',
+                // loader: 'style-loader!css-loader!less-loader',
+                loader: 'raw-loader!extract-loader!css-loader!less-loader',
                 exclude: '/node_modules/'
             },
             {
@@ -34,7 +35,12 @@ module.exports = {
                 ],
                 exclude: '/node_modules/'
             },
-            { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
+            {
+                test: /\.js$/,
+                // exclude: /node_modules/,
+                include: [/.*[\/\\]src/,/node_modules[\/\\]@flyme[\/\\].*[\/\\]src/],
+                loader: 'babel-loader?babelrc=false'
+            },
             {
                 test: /\.html$/,
                 loader: 'html',
@@ -52,5 +58,16 @@ module.exports = {
     },
     devServer:{
         disableHostCheck: true
+    },
+    "babel": {
+        "presets": [
+          "es2015"
+        ],
+        "plugins": [
+          "syntax-object-rest-spread",
+          "syntax-export-extensions",
+          "syntax-class-properties",
+          "syntax-class-constructor-call"
+        ]
     }
 }

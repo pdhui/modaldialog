@@ -5,16 +5,17 @@
 @maskBg: '../images/mask.png';
 
 .function-rem(@px) {
-  return: @px / @baseFontSize * 1rem;
+  return: ~'$fn.rem('@px~')';
 }
 
-//是为了弹多个框时，可以每个框的遮罩层都层叠显示
+//是为了弹多个框时，可以每个框的遮罩层都层叠显示 @px / @baseFontSize * 1rem
 .rc-modal{
   position: absolute;
   z-index: 9999;
   width: 100%;
   height: 100%;
   top: 0;
+  transition: opacity .3s ease-out;
   .modal-dialog{
     border-radius: rem(1px);
     text-align: center;
@@ -22,7 +23,7 @@
     margin: 0 auto;
     z-index: 9000;
     position:fixed;
-    box-shadow: 0px 0px rem(7px) 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -40,7 +41,7 @@
   }
   &.dlg-has-title{
     header{
-      padding: rem(29px) 0px rem(10px) 0px;
+      padding: 0 0 rem(10px) 0;
       font-size: rem(18px);
     }
   }
@@ -55,6 +56,7 @@
     background: #fafafa;
     font-size: rem(16px);
     border-radius: rem(3px);
+    padding-top: rem(28px);
   }
   .dialog-title{
     color: #000;
@@ -74,7 +76,8 @@
     position: relative;
   }
   footer{
-    border-top: rem(1px) solid @splitLineColor;
+    border-top: solid @splitLineColor;
+    border-top-width: rem(1px);
     height: rem(45px);
     line-height: rem(45px);
     margin-top: rem(20px);
@@ -91,7 +94,8 @@
       }
       &:after{
         content: '';
-        border-right: rem(1px) solid @splitLineColor;
+        border-right: solid @splitLineColor;
+        border-right-width: rem(1px);
         position: absolute;
         top: 0px;
         display: block;

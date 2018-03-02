@@ -13,6 +13,7 @@
  * okCallback：确定按钮的回调函数【alert框时只有这个回调函数，没有其他的回调函数】
  * cancelCallback：取消按钮的回调函数
  * selector：html页面的某个dom元素节点，会作为弹出框的内容，此时，content定义的内容无效【只有提示框和确认框有用】
+ * complete: 关闭弹框后执行的回调方法
 
 弹出框里面的dom元素如果有data-id属性值，则相当于绑定了click事件，事件的回调函数名为传给ModalDialog的options对象中key等于data-id的值所对应的value。
 

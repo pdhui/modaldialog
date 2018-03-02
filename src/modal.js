@@ -1,4 +1,4 @@
-require('./css/base.less');
+var baseCss = require('./css/base.less');
 
 var utils = require('./dom.js');
 var scrollDlg = require('./dlgscroll.js');
@@ -8,6 +8,29 @@ var _ = {
 
 function noop(){}
 
+//动态插入css样式
+function insertStyleToHead(baseFontSize){
+  var style = document.createElement('style');
+
+  style.innerHTML = utils.fnTemplate(
+    baseCss,
+    {
+      rem: function(px){
+        return px.replace(/(\d+)px/,function(expr, val){
+          return (val *1 / baseFontSize) + 'rem';
+        });
+      }
+    });
+  var headDom = document.querySelector('head');
+  var firstLink = headDom.querySelector('link');
+
+  if(!firstLink)
+    headDom.appendChild(style);
+  else
+    headDom.insertBefore(style, firstLink);
+
+}
+
 /*
 生成对话框模板内容
  */
@@ -15,11 +38,11 @@ function noop(){}
     var templateHtml = [],
         header = options.header;
 
-    header = utils.replaceTemlate(header,options);
-
-    templateHtml.push('<div class="rc-modal"><div class="dialog-mask"></div><div class="modal-dialog ' + options.clazz + '"><div class="modal-dialog-main"><header>');
-    templateHtml.push(header);
-    templateHtml.push('</header><section><div class="dialog-content"></div></section><footer>');
+    templateHtml.push('<div class="rc-modal"><div class="dialog-mask"></div><div class="modal-dialog ' + options.clazz + '"><div class="modal-dialog-main">');
+    if(options.title != null && options.title != ''){
+      templateHtml.push('<header>' + utils.replaceTemlate(header,options) + '</header>');
+    }
+    templateHtml.push('<section><div class="dialog-content"></div></section><footer>');
     templateHtml.push(createButtons.call(this,options));
     templateHtml.push('</footer></div></div></div>');
 
@@ -113,11 +136,12 @@ function noop(){}
         clazz: 'dialog-theme',
         cancelStr: '取消',
         sureStr: '确定',
-        title: '温馨提示',
+        title: null,
         header: '<span class="dialog-title">{title}</span>',
         animated: false,
         buttons: null,
-        useBackground: 'cancel'
+        useBackground: 'cancel',
+        complete: false
       },
       beforeListeners = [],
       afterListeners = [],
@@ -225,7 +249,8 @@ function noop(){}
           _commentDom,
           self = this;
 
-      dialogDom.style.display = 'none';
+      this.removeDialog(dialogDom, options);
+
       if(options.selector && dialogDom._commentDom){
         selector = options.selector;
         _commentDom = dialogDom._commentDom;
@@ -237,7 +262,7 @@ function noop(){}
         dialogDom._originDisplay = null;
       }
       utils.unBindEvent(dialogDom,'click',this._eventListener);
-      dialogDom.parentNode.removeChild(dialogDom);
+      // dialogDom.parentNode.removeChild(dialogDom);
       this.dlgScroll.destroyScroll && this.dlgScroll.destroyScroll();
 
       if(!isNotInvoke){
@@ -252,12 +277,26 @@ function noop(){}
       this._eventListener = null;
       this.dialogDom = dialogDom = null;
 
+      options.complete && options.complete();
+
       delete ModalDialog.dialogList[this.id];
 
       ModalDialog.modalCount --;
     },
+    removeDialog: function(dlgDom){
+      utils.bindEvent(dlgDom, 'transitionend', _removeTransition)
+      utils.bindEvent(dlgDom,'webkitTransitionEnd', _removeTransition);
+
+      dlgDom.style.opacity = 0;
+
+      function _removeTransition(){
+        utils.unBindEvent(dlgDom,'transitionend',_removeTransition);
+        utils.unBindEvent(dlgDom,'webkitTransitionEnd',_removeTransition);
+        dlgDom.parentNode.removeChild(dlgDom);
+      }
+    },
     refresh: function(){
-      var dialogDom = this.dialogDom,
+      var dialogDom = this.dialogDom.querySelector('.modal-dialog'),
           dlgPos = this.getPos(dialogDom);
 
       _.assign(dialogDom.style,{
@@ -397,11 +436,15 @@ function noop(){}
       _plugins[i](ModalDialog, options);
     }
 
+    insertStyleToHead(options.baseFontSize || 16);
+
     isConfig = true;
   }
 
 
   ModalDialog.dialogList = {};
   ModalDialog.modalCount = 0;
+
+ModalDialog.DomUtils = utils;
 
 module.exports = ModalDialog;
