@@ -291,8 +291,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    resizeWin();
 	    var dlgH = dialogDom.offsetHeight;
 	    var dlgW = dialogDom.offsetWidth;
-	    var dlgPosY = winH - dlgH > 0 ? (winH - dlgH) / 2 : winH * 0.1;
-	    var dlgPosX = winW - dlgW > 0 ? (winW - dlgW) / 2 : winW * 0.1;
+	    var dlgPosY = winH - dlgH >= 0 ? (winH - dlgH) / 2 : winH * 0.1;
+	    var dlgPosX = winW - dlgW >= 0 ? (winW - dlgW) / 2 : winW * 0.1;
 
 	    return { left: dlgPosX, top: dlgPosY };
 	  },
@@ -302,6 +302,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        selector,
 	        _commentDom,
 	        self = this;
+
+	    if (!dialogDom) return 1;
 
 	    this.removeDialog(dialogDom, options);
 
@@ -486,6 +488,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  isConfig = true;
 	};
+
+	utils.bindEvent(window, "orientationchange", function () {
+	  Object.keys(ModalDialog.dialogList).forEach(function (dialog) {
+	    ModalDialog.dialogList[dialog].refresh();
+	  });
+	});
 
 	ModalDialog.dialogList = {};
 	ModalDialog.modalCount = 0;
