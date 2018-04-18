@@ -872,6 +872,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var notifyBackpress = options.notifyBackpress;
 	  var dialogIdList = [];
 
+	  notifyBackpress = notifyBackpress(options);
+
 	  ModalDialog.afterListener(function (dialog) {
 	    dialogIdList.push(dialog.id);
 

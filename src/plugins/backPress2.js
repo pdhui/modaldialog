@@ -6,6 +6,8 @@ function initBackPress(ModalDialog, options){
   let notifyBackpress = options.notifyBackpress;
   let dialogIdList = [];
 
+  notifyBackpress = notifyBackpress(options);
+
   ModalDialog.afterListener(function(dialog){
     dialogIdList.push(dialog.id);
 
