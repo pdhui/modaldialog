@@ -1,7 +1,7 @@
 var dialog = require('../dialogWithHash.js');
 var utils = require('../dom.js');
 // var notifyBackpress = require('@flyme/utils/src/appStoreClient/notifyBackpress.js');
-var flymeUtils = require('@flyme/utils');
+var flymeUtils = require('../../extra-lib/notifyBackpress.js');
 
 var example = {
   _events: {},

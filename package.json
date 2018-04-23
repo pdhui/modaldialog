@@ -1,11 +1,11 @@
 {
   "name": "@flyme/modaldialog",
-  "version": "1.6.15",
+  "version": "1.6.16",
   "description": "popup dialog",
   "main": "./build/withHashDialog.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production webpack --optimize-dedupe",
+    "build": "set NODE_ENV=production && webpack --optimize-dedupe",
     "example": "webpack --config ./webpack.config.test.js",
     "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.test.js --host=127.0.0.1 --port=8099",
     "debug": "NODE_ENV=debug webpack --optimize-dedupe"
@@ -15,7 +15,7 @@
     "url": "https://github.com/tangpo/modaldialog.git"
   },
   "publishConfig": {
-    "registry": "http://appff.meizu.com:8888"
+
   },
   "homepage": "https://github.com/tangpo/modaldialog#readme",
   "author": "panda.xiong",
