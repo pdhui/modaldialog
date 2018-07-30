@@ -99,7 +99,7 @@ const vc = utils.getUrlParam('vc') * 1,
 dialog.config({
   useHash:true,
   baseFontSize: utils.getUrlParam('baseFontSize')*1,
-  notifyBackpress: flymeUtils.notifyBackpress,
+  notifyBackpress: flymeUtils.notifyBackpress(),
   backPress(){
     EventJavascriptInterface.backPress();
   }/*,

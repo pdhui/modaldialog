@@ -74,6 +74,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var generateFn = function generateFn(options) {
 
+	  options = options || {};
+
 	  var isSupportBackpressListener = !options.useBrowser && window.EventJavascriptInterface && !!window.EventJavascriptInterface.listenBackPress,
 	      hashListener = hashHistory();
 

@@ -1,6 +1,6 @@
 {
-  "name": "@flyme/modaldialog",
-  "version": "1.6.16",
+  "name": "modaldialog",
+  "version": "1.6.17",
   "description": "popup dialog",
   "main": "./build/withHashDialog.js",
   "scripts": {
@@ -14,9 +14,7 @@
     "type": "git",
     "url": "https://github.com/tangpo/modaldialog.git"
   },
-  "publishConfig": {
-
-  },
+  "publishConfig": {},
   "homepage": "https://github.com/tangpo/modaldialog#readme",
   "author": "panda.xiong",
   "license": "MIT",
